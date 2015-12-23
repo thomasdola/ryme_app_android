@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:title="@string/menu_inbox"
+        android:icon="@drawable/ic_menu_home"/>
+    <item
+        android:id="@+id/categories"
+        android:icon="@drawable/ic_menu_categories"
+        android:title="@string/menu_categories"
+        />
+
+    <item
+        android:id="@+id/favorites"
+        android:icon="@drawable/ic_menu_favorites"
+        android:title="@string/menu_favorites"
+        />
+
+    <!--<item android:title="Others">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:title="Spam"-->
+                <!--android:icon="@android:drawable/ic_menu_today"/>-->
+            <!--<item-->
+                <!--android:title="Bin"-->
+                <!--android:icon="@android:drawable/ic_menu_delete"/>-->
+        <!--</menu>-->
+    <!--</item>-->
+
+    <group android:id="@+id/group_settings_id">
+        <item
+            android:id="@+id/main_settings"
+            android:title="Settings"
+            android:icon="@drawable/ic_menu_settings"/>
+        <!--<item-->
+            <!--android:title="Help"-->
+            <!--android:icon="@android:drawable/ic_lock_silent_mode_off"/>-->
+    </group>
+
+
+</menu>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<primr.apps.eurakacachet.com.rhyme.helpers.layout.AutoFitRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/artist_list_display_recycler_view">
+
+</primr.apps.eurakacachet.com.rhyme.helpers.layout.AutoFitRecyclerView>

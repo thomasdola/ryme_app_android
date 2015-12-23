@@ -1,0 +1,9 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/favorite_track_list_display_fragment_container"
+    tools:context="primr.apps.eurakacachet.com.rhyme.view.FavoriteTracksFragment">
+
+
+</FrameLayout>
