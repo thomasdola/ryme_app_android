@@ -3,9 +3,6 @@ package primr.apps.eurakacachet.com.rhyme.view;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.LightingColorFilter;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -25,9 +22,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import primr.apps.eurakacachet.com.rhyme.model.Comment;
 import primr.apps.eurakacachet.com.rhyme.R;
-import primr.apps.eurakacachet.com.rhyme.helpers.image_effect.BlurBuilder;
+import primr.apps.eurakacachet.com.rhyme.model.Comment;
 
 
 public class TrackDisplayFragment extends Fragment {
@@ -146,8 +142,8 @@ public class TrackDisplayFragment extends Fragment {
     private void initBlurCollapsingImageHeader(View rootView) {
         mHeader = (ImageView) rootView.findViewById(R.id.header);
         mOldBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.stonebwoy1);
-        Bitmap blurredBitmap = BlurBuilder.blur(getActivity(), mOldBitmap);
-        mHeader.setImageBitmap(blurredBitmap);
+//        Bitmap blurredBitmap = BlurBuilder.blur(getActivity(), mOldBitmap);
+        mHeader.setImageBitmap(mOldBitmap);
     }
 
 

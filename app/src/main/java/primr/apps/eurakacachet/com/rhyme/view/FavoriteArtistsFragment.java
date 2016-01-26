@@ -29,7 +29,6 @@ public class FavoriteArtistsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         mArtistList = new ArrayList<>();
-        mArtistList.add(new Artist("Shatta Walle"));
     }
 
 

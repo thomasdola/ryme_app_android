@@ -18,7 +18,6 @@ import primr.apps.eurakacachet.com.rhyme.R;
  */
 public class FavoritesFragment extends Fragment {
 
-    private static final String CURRENT_TAB_KEY = "current_tab";
     public static TabLayout sTablayout;
     public static ViewPager sViewPager;
     public static int sItemCount = 2;

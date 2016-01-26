@@ -28,7 +28,6 @@ public class TrendingTracksFragment extends Fragment {
 
         mTrackList = new ArrayList<>();
         mTrackList.add(new Track("New Track One"));
-        mTrackList.add(new Track("New Track Two"));
     }
 
 

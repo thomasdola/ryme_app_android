@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="primr.apps.eurakacachet.com.rhyme" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,11 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity android:name=".view.MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".view.PublicTrackDisplayActivity"
@@ -56,6 +62,34 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+        <activity android:name=".view.WelcomeActivityFirst" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.RegisterActivity" >
+        </activity>
+        <activity android:name=".view.LoginActivity" >
+        </activity>
+        <activity
+            android:name=".view.FollowCategoryActivity"
+            android:label="@string/title_activity_follow_category"
+            android:theme="@style/AppTheme" >
+        </activity>
+
+        <!-- SMS Receiver -->
+        <receiver android:name=".receivers.SmsReceiver">
+            <intent-filter android:priority="99999">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
     </application>
 
+    <service android:name="primr.apps.eurakacachet.com.rhyme.services.OtpSenderService"
+             android:exported="false" >
+    </service>
+
 </manifest>
+

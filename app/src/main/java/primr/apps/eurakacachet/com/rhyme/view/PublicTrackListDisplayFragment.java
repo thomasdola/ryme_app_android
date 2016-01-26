@@ -2,6 +2,8 @@ package primr.apps.eurakacachet.com.rhyme.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -78,7 +80,11 @@ public class PublicTrackListDisplayFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Intent intent = PublicTrackDisplayActivity.newIntent(getActivity());
-            startActivity(intent);
+            String transitionName = getString(R.string.track_transition_string);
+            View startView = getActivity().findViewById(R.id.track_cv);
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(getActivity(), startView, transitionName);
+            ActivityCompat.startActivity(getActivity(), intent, optionsCompat.toBundle());
         }
     }
 

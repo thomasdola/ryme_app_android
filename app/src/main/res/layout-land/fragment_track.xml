@@ -5,6 +5,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
+    android:transitionName="@string/track_transition_string"
 tools:context="primr.apps.eurakacachet.com.rhyme.TrackActivityFragment">
 
 <android.support.design.widget.AppBarLayout
@@ -16,11 +17,11 @@ tools:context="primr.apps.eurakacachet.com.rhyme.TrackActivityFragment">
     <android.support.design.widget.CollapsingToolbarLayout
         android:id="@+id/collapsing_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="250dp"
         app:contentScrim="?attr/colorPrimary"
         app:expandedTitleGravity="center_vertical|center_horizontal"
-        app:expandedTitleMarginBottom="80dp"
-        app:expandedTitleTextAppearance="?android:attr/textAppearanceMedium"
+        app:expandedTitleMarginBottom="40dp"
+        app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Medium"
         app:titleEnabled="true"
         app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -35,6 +36,7 @@ tools:context="primr.apps.eurakacachet.com.rhyme.TrackActivityFragment">
             android:id="@+id/track_view_toolbar"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            app:titleMarginBottom="100dp"
             android:gravity="top"
             app:layout_collapseMode="pin"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
@@ -56,23 +58,24 @@ tools:context="primr.apps.eurakacachet.com.rhyme.TrackActivityFragment">
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ic_action_track_stream"
-                    android:src="@drawable/ic_track_stream_selected"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true"/>
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/ic_action_track_stream"-->
+                    <!--android:src="@drawable/ic_action_favorite_star_white"-->
+                    <!--android:layout_alignParentTop="true"-->
+                    <!--android:layout_alignParentStart="true"/>-->
 
 
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:id="@+id/ic_action_track_download"
                     android:src="@drawable/ic_action_track_download"
-                    android:layout_alignTop="@+id/ic_action_track_stream"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true" />
 
 
             </RelativeLayout>
@@ -80,7 +83,7 @@ tools:context="primr.apps.eurakacachet.com.rhyme.TrackActivityFragment">
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="2"
-                android:gravity="center"
+                android:gravity="end"
                 android:paddingEnd="16dp"
                 android:layout_height="match_parent">
 
@@ -171,6 +174,9 @@ tools:context="primr.apps.eurakacachet.com.rhyme.TrackActivityFragment">
 
 <android.support.v7.widget.RecyclerView
     android:id="@+id/comments_list_recycler"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
@@ -180,13 +186,13 @@ tools:context="primr.apps.eurakacachet.com.rhyme.TrackActivityFragment">
 <android.support.design.widget.FloatingActionButton
     android:layout_width="wrap_content"
     android:id="@+id/like_song_fab"
-    app:fabSize="mini"
+    app:fabSize="normal"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/fab_margin"
     android:clickable="true"
     app:layout_anchor="@+id/track_view_appbar"
-    app:layout_anchorGravity="center_vertical|bottom|end"
-    android:src="@drawable/ic_action_favorite_star_white"/>
+    app:layout_anchorGravity="center_vertical|center_horizontal"
+    android:src="@drawable/ic_action_play"/>
 
 <RelativeLayout
     android:id="@+id/add_comment"

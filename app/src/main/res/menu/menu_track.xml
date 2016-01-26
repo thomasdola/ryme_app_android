@@ -4,7 +4,13 @@
     tools:context="primr.apps.eurakacachet.com.rhyme.TrackActivity">
 
     <item
-        android:icon="@drawable/ic_action_favorite_heart"
+        android:icon="@drawable/ic_favorite_track_star_outline"
+        android:id="@+id/favorite_track_action"
+        android:orderInCategory="1"
+        android:title="Profile"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/view_artist_profile"
         android:orderInCategory="1"
         android:title="Profile"

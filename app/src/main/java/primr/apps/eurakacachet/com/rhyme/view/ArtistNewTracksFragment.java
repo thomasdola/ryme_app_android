@@ -31,12 +31,6 @@ public class ArtistNewTracksFragment extends Fragment {
         mTrackList.add(new Track("New Track Two"));
         mTrackList.add(new Track("New Track Two"));
         mTrackList.add(new Track("New Track Two"));
-        mTrackList.add(new Track("New Track Two"));
-        mTrackList.add(new Track("New Track Two"));
-        mTrackList.add(new Track("New Track Two"));
-        mTrackList.add(new Track("New Track Two"));
-        mTrackList.add(new Track("New Track Two"));
-        mTrackList.add(new Track("New Track Two"));
     }
 
     @Override
