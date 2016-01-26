@@ -6,69 +6,74 @@
     android:layout_height="match_parent"
     tools:context="primr.apps.eurakacachet.com.rhyme.view.RegisterActivity">
 
-
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:id="@+id/textLogoImageView"
         android:src="@drawable/ryme_text"
-        android:layout_above="@+id/editText"
-        android:layout_centerHorizontal="true"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberSigned"
-        android:hint="@string/verification_code"
-        android:ems="10"
-        android:id="@+id/editText"
-        android:layout_marginBottom="36dp"
-        android:layout_above="@+id/editText2"
-        android:layout_alignStart="@+id/editText2"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="@string/username_hint"
-        android:ems="10"
-        android:id="@+id/editText2"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:hint="@string/password_hint"
-        android:id="@+id/editText3"
-        android:layout_below="@+id/editText2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
-
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="@string/join_button"
-        android:textAllCaps="false"
-        android:background="@drawable/register_next_button_shape"
-        android:id="@+id/join_button"
-        android:textSize="@dimen/button_text_size"
-        android:textColor="@color/white"
-        android:layout_marginBottom="57dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:contentDescription="@null"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="45dp"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/notice"
+        android:layout_below="@id/textLogoImageView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/agreement_text"
-        android:id="@+id/textView"
-        android:textColor="@color/colorSecondary"
-        android:layout_marginBottom="25dp"
-        android:layout_alignParentBottom="true"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/colorAccent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/notice_success"/>
+
+    <TextView
+        android:id="@+id/noticeB"
+        android:layout_below="@id/notice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:textAlignment="center"
+        android:layout_marginBottom="20dp"
+        android:text="@string/notice_fail"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/noticeB"
+        android:id="@+id/otpEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="number"
+            android:hint="@string/otpCode"
+            android:layout_above="@+id/passwordEditText"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:textAllCaps="false"
+        android:background="@drawable/register_next_button_shape"
+        android:textColor="@color/white"
+        android:textSize="@dimen/button_text_size"
+        android:text="@string/verify"
+        android:id="@+id/verifyOpt"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/otpEditText"
         android:layout_centerHorizontal="true"/>
+
 
 </RelativeLayout>

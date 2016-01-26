@@ -17,7 +17,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        mJoinButton = (Button) findViewById(R.id.join_button);
+        mJoinButton = (Button) findViewById(R.id.verifyOpt);
         mJoinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

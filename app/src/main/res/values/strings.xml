@@ -110,7 +110,7 @@
     <string name="track_transition_string">track_transition</string>
 
     <string name="title_activity_welcome">WelcomeActivity</string>
-    <string name="welcome_next_button">Next</string>
+    <string name="welcome_next_button">Sign Up</string>
     <string name="purpose_text">Sign up to access unlimited musics.</string>
     <string name="sign_in_option">Already have an Account?</string>
     <string name="join_button">Join</string>
@@ -121,4 +121,14 @@
     <string name="sign_in_button">Sign in</string>
     <string name="forgot_password_option">Forgot password?</string>
     <string name="title_activity_follow_category">FollowCategoryActivity</string>
+    <string name="PhoneEditTextHint">Phone Number</string>
+    <string name="dial_code_edit_text_hint">Dial Code</string>
+    <string name="username_text_string">Username</string>
+    <string name="password_hint_text">Password</string>
+    <string name="signInButton">Sign In</string>
+    <string name="otpCode">Enter Code</string>
+    <string name="verify">Verify</string>
+    <string name="phonePurpose">You\'ll receive an SMS to verify your identity.</string>
+    <string name="notice_fail">(Enter the Verfication Code below in case we fail to detect the SMS automatically)</string>
+    <string name="notice_success">Sit back and Relax! While we verify your phone number</string>
 </resources>
