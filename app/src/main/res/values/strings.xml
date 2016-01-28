@@ -131,4 +131,5 @@
     <string name="phonePurpose">You\'ll receive an SMS to verify your identity.</string>
     <string name="notice_fail">(Enter the Verfication Code below in case we fail to detect the SMS automatically)</string>
     <string name="notice_success">Sit back and Relax! While we verify your phone number</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

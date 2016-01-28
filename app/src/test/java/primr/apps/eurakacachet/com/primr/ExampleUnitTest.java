@@ -1,4 +1,4 @@
-package primr.apps.eurakacachet.com.rhyme;
+package primr.apps.eurakacachet.ryme.ryme;
 
 import org.junit.Test;
 

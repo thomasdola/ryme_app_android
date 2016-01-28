@@ -6,7 +6,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
     android:transitionName="@string/track_transition_string"
-tools:context="primr.apps.eurakacachet.com.rhyme.TrackActivityFragment">
+tools:context="primr.apps.eurakacachet.ryme.ryme.TrackActivityFragment">
 
 <android.support.design.widget.AppBarLayout
     android:id="@+id/track_view_appbar"

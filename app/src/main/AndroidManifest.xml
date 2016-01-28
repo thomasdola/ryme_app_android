@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="primr.apps.eurakacachet.com.rhyme" >
+    package="primr.apps.eurakacachet.ryme.ryme" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +14,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".view.MainActivity" >
+        <activity android:name=".ui.view.MainActivity" >
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -22,38 +24,38 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name=".view.PublicTrackDisplayActivity"
-            android:parentActivityName=".view.MainActivity" >
+            android:name=".ui.view.PublicTrackDisplayActivity"
+            android:parentActivityName=".ui.view.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.MainActivity" />
+                android:value=".ui.view.MainActivity" />
         </activity>
         <activity
-            android:name=".view.ArtistProfileActivity"
-            android:parentActivityName=".view.MainActivity" >
+            android:name=".ui.view.ArtistProfileActivity"
+            android:parentActivityName=".ui.view.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.MainActivity" />
+                android:value=".ui.view.MainActivity" />
         </activity>
         <activity
-            android:name=".view.ArtistTrackDisplayActivity"
-            android:parentActivityName=".view.ArtistProfileActivity" >
+            android:name=".ui.view.ArtistTrackDisplayActivity"
+            android:parentActivityName=".ui.view.ArtistProfileActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.ArtistProfileActivity" />
+                android:value=".ui.view.ArtistProfileActivity" />
         </activity>
-        <activity android:name=".view.ProfileArtistActivity" >
+        <activity android:name=".ui.view.ProfileArtistActivity" >
         </activity>
         <activity
-            android:name=".view.SettingsActivity"
+            android:name=".ui.view.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".view.MainActivity"
+            android:parentActivityName=".ui.view.MainActivity"
             android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="primr.apps.eurakacachet.com.rhyme.view.MainActivity" />
+                android:value=".ui.view.MainActivity" />
         </activity>
-        <activity android:name=".view.SearchableActivity" >
+        <activity android:name=".ui.view.SearchableActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -62,34 +64,50 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".view.WelcomeActivityFirst" >
+        <activity android:name=".ui.view.WelcomeActivityFirst" >
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity android:name=".ui.view.RegisterActivity" >
+        </activity>
+        <activity android:name=".ui.view.LoginActivity" >
+        </activity>
+        <activity
+            android:name=".ui.view.FollowCategoryActivity"
+            android:label="@string/title_activity_follow_category"
+            android:theme="@style/AppTheme" >
+        </activity>
+
+        <!-- SMS Receiver -->
+        <receiver android:name=".utils.receivers.SmsReceiver" >
+            <intent-filter android:priority="99999" >
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".ui.view.SplashActivity"
+            android:theme="@style/SplashTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.RegisterActivity" >
-        </activity>
-        <activity android:name=".view.LoginActivity" >
-        </activity>
-        <activity
-            android:name=".view.FollowCategoryActivity"
-            android:label="@string/title_activity_follow_category"
-            android:theme="@style/AppTheme" >
-        </activity>
 
-        <!-- SMS Receiver -->
-        <receiver android:name=".receivers.SmsReceiver">
-            <intent-filter android:priority="99999">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
+        <service
+            android:name=".utils.services.OtpSenderService"
+            android:exported="false" >
+        </service>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
-    <service android:name="primr.apps.eurakacachet.com.rhyme.services.OtpSenderService"
-             android:exported="false" >
-    </service>
-
 </manifest>
-

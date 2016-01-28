@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/favorite_track_list_display_fragment_container"
-    tools:context="primr.apps.eurakacachet.com.rhyme.view.FavoriteTracksFragment">
+    tools:context="primr.apps.eurakacachet.ryme.ryme.ui.view.FavoriteTracksFragment">
 
 
 </FrameLayout>

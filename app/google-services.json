@@ -1,0 +1,45 @@
+{
+  "project_info": {
+    "project_id": "ryme-52764",
+    "project_number": "261016450965",
+    "name": "ryme"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261016450965:android:2ec511c014f5805e",
+        "client_id": "android:primr.apps.eurekacachet.ryme",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "primr.apps.eurekacachet.ryme"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-72929483-1"
+          }
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}

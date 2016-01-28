@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context="primr.apps.eurakacachet.com.rhyme.view.FavoritesFragment"
+    tools:context="primr.apps.eurakacachet.ryme.ryme.ui.view.FavoritesFragment"
     android:layout_height="wrap_content">
 
 
