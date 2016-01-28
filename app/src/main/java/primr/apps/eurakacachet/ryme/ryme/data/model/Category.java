@@ -1,31 +1,62 @@
 package primr.apps.eurakacachet.ryme.ryme.data.model;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Category {
+import java.util.UUID;
 
-    private String mCategoryName;
-    private static List<Category> mCategoryList;
+public class Category implements Parcelable {
 
-    public Category(String name){
-        mCategoryName = name;
+    public String name;
+    public UUID uuid;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Category category = (Category) o;
+
+        if (name != null ? !name.equals(category.name) : category.name != null) return false;
+        return !(uuid != null ? !uuid.equals(category.uuid) : category.uuid != null);
+
     }
 
-    public String getCategoryName() {
-        return mCategoryName;
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
+        return result;
     }
 
-    public static List<Category> getCategories(){
 
-        mCategoryList = new ArrayList<>();
-        mCategoryList.add(new Category("DanceHall"));
-        mCategoryList.add(new Category("HipLife"));
-        mCategoryList.add(new Category("HighLife"));
-        mCategoryList.add(new Category("Gospel"));
-        mCategoryList.add(new Category("HipHop"));
-
-        return mCategoryList;
+    @Override
+    public int describeContents() {
+        return 0;
     }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeSerializable(this.uuid);
+    }
+
+    public Category() {
+    }
+
+    protected Category(Parcel in) {
+        this.name = in.readString();
+        this.uuid = (UUID) in.readSerializable();
+    }
+
+    public static final Parcelable.Creator<Category> CREATOR = new Parcelable.Creator<Category>() {
+        public Category createFromParcel(Parcel source) {
+            return new Category(source);
+        }
+
+        public Category[] newArray(int size) {
+            return new Category[size];
+        }
+    };
 }

@@ -7,9 +7,7 @@ import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.injection.ApplicationContext;
 
-/**
- * Created by GURU on 1/27/2016.
- */
+
 public class PreferencesHelper {
 
     public static final String PREF_FILE_NAME = "ryme_pref_file";

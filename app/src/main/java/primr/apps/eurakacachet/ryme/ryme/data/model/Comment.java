@@ -1,43 +1,69 @@
 package primr.apps.eurakacachet.ryme.ryme.data.model;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Comment {
+import java.util.Date;
 
-    private String mUserName;
-    private String mCommentText;
-    private String mCommentTime;
-    private static List<Comment> commentList;
+public class Comment implements Parcelable {
 
-    public String getUserName() {
-        return mUserName;
+    public String username;
+    public String body;
+    public Date time;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Comment comment = (Comment) o;
+
+        if (username != null ? !username.equals(comment.username) : comment.username != null)
+            return false;
+        if (body != null ? !body.equals(comment.body) : comment.body != null) return false;
+        return !(time != null ? !time.equals(comment.time) : comment.time != null);
+
     }
 
-    public String getCommentText() {
-        return mCommentText;
+    @Override
+    public int hashCode() {
+        int result = username != null ? username.hashCode() : 0;
+        result = 31 * result + (body != null ? body.hashCode() : 0);
+        result = 31 * result + (time != null ? time.hashCode() : 0);
+        return result;
     }
 
-    public String getCommentTime() {
-        return mCommentTime;
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public Comment(String username, String commentTime, String commentText){
-        mCommentText = commentText;
-        mUserName = username;
-        mCommentTime = commentTime;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.username);
+        dest.writeString(this.body);
+        dest.writeLong(time != null ? time.getTime() : -1);
     }
 
-    public static List<Comment> getComments(){
-        commentList = new ArrayList<>();
-        commentList.add(new Comment("thomas", "2s", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" +
-                "tempor incididunt ut labore et dolore magna aliqua. "));
-        commentList.add(new Comment("son", "3s", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" +
-                "tempor incididunt ut labore et dolore magna aliqua. "));
-        commentList.add(new Comment("tino", "4s", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" +
-                "tempor incididunt ut labore et dolore magna aliqua. "));
-
-        return commentList;
+    public Comment() {
     }
+
+    protected Comment(Parcel in) {
+        this.username = in.readString();
+        this.body = in.readString();
+        long tmpTime = in.readLong();
+        this.time = tmpTime == -1 ? null : new Date(tmpTime);
+    }
+
+    public static final Parcelable.Creator<Comment> CREATOR = new Parcelable.Creator<Comment>() {
+        public Comment createFromParcel(Parcel source) {
+            return new Comment(source);
+        }
+
+        public Comment[] newArray(int size) {
+            return new Comment[size];
+        }
+    };
 }

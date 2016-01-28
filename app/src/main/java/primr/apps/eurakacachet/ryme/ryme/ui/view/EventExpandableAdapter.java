@@ -10,7 +10,7 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 import java.util.List;
 
-import primr.apps.eurakacachet.ryme.ryme.data.model.Event;
+import primr.apps.eurakacachet.ryme.ryme.data.model.EventAd;
 import primr.apps.eurakacachet.ryme.ryme.R;
 
 
@@ -37,7 +37,7 @@ public class EventExpandableAdapter extends ExpandableRecyclerAdapter<EventParen
     @Override
     public void onBindParentViewHolder(EventParentViewHolder eventParentViewHolder, int i,
                                        Object o) {
-        Event event = (Event) o;
+        EventAd event = (EventAd) o;
         eventParentViewHolder.mEventFareView.setText(event.getEventFare());
         eventParentViewHolder.mEventViewsView.setText(event.getEventViews());
     }

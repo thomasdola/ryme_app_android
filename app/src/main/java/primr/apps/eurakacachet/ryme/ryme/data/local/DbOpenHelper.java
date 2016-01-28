@@ -8,9 +8,7 @@ import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.injection.ApplicationContext;
 
-/**
- * Created by GURU on 1/27/2016.
- */
+
 public class DbOpenHelper extends SQLiteOpenHelper{
 
     public static final String DATABASE_NAME = "ryme.db";
@@ -25,10 +23,13 @@ public class DbOpenHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.beginTransaction();
         try {
-            //Uncomment line below if you want to enable foreign keys
-            //db.execSQL("PRAGMA foreign_keys=ON;");
-//            db.execSQL(Db.RibotProfileTable.CREATE);
+            db.execSQL(Db.UserProfileTable.CREATE);
             //Add other tables here
+            db.execSQL(Db.CategoryTable.CREATE);
+            db.execSQL(Db.DownloadedTrackTable.CREATE);
+            db.execSQL(Db.LikedTrackTable.CREATE);
+            db.execSQL(Db.FollowingArtistTable.CREATE);
+            db.execSQL(Db.FollowingCategoryTable.CREATE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -36,7 +37,5 @@ public class DbOpenHelper extends SQLiteOpenHelper{
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-    }
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) { }
 }

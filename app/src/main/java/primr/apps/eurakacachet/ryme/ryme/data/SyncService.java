@@ -16,9 +16,7 @@ import primr.apps.eurakacachet.ryme.ryme.utils.NetworkUtil;
 import rx.Subscription;
 import timber.log.Timber;
 
-/**
- * Created by GURU on 1/28/2016.
- */
+
 public class SyncService extends Service{
 
     @Inject DataManager mDataManager;

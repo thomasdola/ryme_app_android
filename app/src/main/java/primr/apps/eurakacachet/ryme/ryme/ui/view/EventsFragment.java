@@ -14,7 +14,7 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import primr.apps.eurakacachet.ryme.ryme.data.model.Event;
+import primr.apps.eurakacachet.ryme.ryme.data.model.EventAd;
 import primr.apps.eurakacachet.ryme.ryme.R;
 
 
@@ -47,9 +47,9 @@ public class EventsFragment extends Fragment {
     }
 
     private ArrayList<ParentObject> generateEvents() {
-        List<Event> events = Event.getEventList();
+        List<EventAd> events = EventAd.getEventList();
         mEventList = new ArrayList<>();
-        for(Event event: events){
+        for(EventAd event: events){
             ArrayList<Object> eventChildList = new ArrayList<>();
             eventChildList.add(new EventChild(event.getEventDescription()));
             event.setChildObjectList(eventChildList);
