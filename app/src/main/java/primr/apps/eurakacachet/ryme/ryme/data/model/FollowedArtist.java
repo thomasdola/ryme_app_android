@@ -6,7 +6,7 @@ import android.os.Parcelable;
 
 import java.util.UUID;
 
-public class FollowingArtist implements Parcelable {
+public class FollowedArtist implements Parcelable {
 
     public UUID id;
 
@@ -15,7 +15,7 @@ public class FollowingArtist implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FollowingArtist that = (FollowingArtist) o;
+        FollowedArtist that = (FollowedArtist) o;
 
         return !(id != null ? !id.equals(that.id) : that.id != null);
 
@@ -26,7 +26,7 @@ public class FollowingArtist implements Parcelable {
         return id != null ? id.hashCode() : 0;
     }
 
-    public FollowingArtist() {
+    public FollowedArtist() {
     }
 
     @Override
@@ -39,17 +39,17 @@ public class FollowingArtist implements Parcelable {
         dest.writeSerializable(this.id);
     }
 
-    protected FollowingArtist(Parcel in) {
+    protected FollowedArtist(Parcel in) {
         this.id = (UUID) in.readSerializable();
     }
 
-    public static final Creator<FollowingArtist> CREATOR = new Creator<FollowingArtist>() {
-        public FollowingArtist createFromParcel(Parcel source) {
-            return new FollowingArtist(source);
+    public static final Creator<FollowedArtist> CREATOR = new Creator<FollowedArtist>() {
+        public FollowedArtist createFromParcel(Parcel source) {
+            return new FollowedArtist(source);
         }
 
-        public FollowingArtist[] newArray(int size) {
-            return new FollowingArtist[size];
+        public FollowedArtist[] newArray(int size) {
+            return new FollowedArtist[size];
         }
     };
 }

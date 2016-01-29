@@ -6,7 +6,7 @@ import android.os.Parcelable;
 
 import java.util.UUID;
 
-public class FollowingCategory implements Parcelable {
+public class FollowedCategory implements Parcelable {
 
     public UUID id;
     public String name;
@@ -16,7 +16,7 @@ public class FollowingCategory implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FollowingCategory that = (FollowingCategory) o;
+        FollowedCategory that = (FollowedCategory) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         return !(name != null ? !name.equals(that.name) : that.name != null);
@@ -30,7 +30,7 @@ public class FollowingCategory implements Parcelable {
         return result;
     }
 
-    public FollowingCategory() {
+    public FollowedCategory() {
     }
 
     @Override
@@ -44,18 +44,18 @@ public class FollowingCategory implements Parcelable {
         dest.writeString(this.name);
     }
 
-    protected FollowingCategory(Parcel in) {
+    protected FollowedCategory(Parcel in) {
         this.id = (UUID) in.readSerializable();
         this.name = in.readString();
     }
 
-    public static final Creator<FollowingCategory> CREATOR = new Creator<FollowingCategory>() {
-        public FollowingCategory createFromParcel(Parcel source) {
-            return new FollowingCategory(source);
+    public static final Creator<FollowedCategory> CREATOR = new Creator<FollowedCategory>() {
+        public FollowedCategory createFromParcel(Parcel source) {
+            return new FollowedCategory(source);
         }
 
-        public FollowingCategory[] newArray(int size) {
-            return new FollowingCategory[size];
+        public FollowedCategory[] newArray(int size) {
+            return new FollowedCategory[size];
         }
     };
 }

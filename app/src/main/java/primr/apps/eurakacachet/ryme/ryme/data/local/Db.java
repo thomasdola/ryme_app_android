@@ -7,8 +7,8 @@ import java.util.UUID;
 
 import primr.apps.eurakacachet.ryme.ryme.data.model.Category;
 import primr.apps.eurakacachet.ryme.ryme.data.model.DownloadedTrack;
-import primr.apps.eurakacachet.ryme.ryme.data.model.FollowingArtist;
-import primr.apps.eurakacachet.ryme.ryme.data.model.FollowingCategory;
+import primr.apps.eurakacachet.ryme.ryme.data.model.FollowedArtist;
+import primr.apps.eurakacachet.ryme.ryme.data.model.FollowedCategory;
 import primr.apps.eurakacachet.ryme.ryme.data.model.LikedTrack;
 import primr.apps.eurakacachet.ryme.ryme.data.model.UserProfile;
 
@@ -19,7 +19,7 @@ public class Db {
     public abstract static class UserProfileTable{
         public static final String TABLE_NAME = "user_profile";
 
-        public static final String COLUMN_ID = "id";
+        public static final String COLUMN_ID = "uuid";
         public static final String COLUMN_USERNAME = "username";
         public static final String COLUMN_STAGE_NAME = "stage_name";
         public static final String COLUMN_PHONE_NUMBER = "phone_number";
@@ -62,7 +62,7 @@ public class Db {
     public abstract static class CategoryTable{
         public static final String TABLE_NAME = "categories";
 
-        public static final String COLUMN_ID = "id";
+        public static final String COLUMN_ID = "uuid";
         public static final String COLUMN_NAME = "name";
 
         public static final String CREATE =
@@ -89,21 +89,21 @@ public class Db {
     public abstract static class FollowingCategoryTable{
         public static final String TABLE_NAME = "following_categories";
 
-        public static final String COLUMN_ID = "id";
+        public static final String COLUMN_ID = "uuid";
 
         public static final String CREATE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         COLUMN_ID + " INTEGER PRIMARY KEY NOT NULL," +
                         " ); ";
 
-        public static ContentValues toContentValues(FollowingCategory category){
+        public static ContentValues toContentValues(FollowedCategory category){
             ContentValues values = new ContentValues();
             values.put(COLUMN_ID, String.valueOf(category.id));
             return values;
         }
 
-        public static FollowingCategory parseCursor(Cursor cursor){
-            FollowingCategory category = new FollowingCategory();
+        public static FollowedCategory parseCursor(Cursor cursor){
+            FollowedCategory category = new FollowedCategory();
             category.id = UUID.fromString(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ID)));
             return category;
         }
@@ -112,21 +112,21 @@ public class Db {
     public abstract static class FollowingArtistTable{
         public static final String TABLE_NAME = "following_artists";
 
-        public static final String COLUMN_ID = "id";
+        public static final String COLUMN_ID = "uuid";
 
         public static final String CREATE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         COLUMN_ID + " INTEGER PRIMARY KEY NOT NULL," +
                         " ); ";
 
-        public static ContentValues toContentValues(FollowingArtist artist){
+        public static ContentValues toContentValues(FollowedArtist artist){
             ContentValues values = new ContentValues();
             values.put(COLUMN_ID, String.valueOf(artist.id));
             return values;
         }
 
-        public static FollowingArtist parseCursor(Cursor cursor){
-            FollowingArtist artist = new FollowingArtist();
+        public static FollowedArtist parseCursor(Cursor cursor){
+            FollowedArtist artist = new FollowedArtist();
             artist.id = UUID.fromString(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ID)));
             return artist;
         }
@@ -135,7 +135,7 @@ public class Db {
     public abstract static class LikedTrackTable{
         public static final String TABLE_NAME = "liked_tracks";
 
-        public static final String COLUMN_ID = "id";
+        public static final String COLUMN_ID = "uuid";
 
         public static final String CREATE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
@@ -144,13 +144,13 @@ public class Db {
 
         public static ContentValues toContentValues(LikedTrack track){
             ContentValues values = new ContentValues();
-            values.put(COLUMN_ID, String.valueOf(track.id));
+            values.put(COLUMN_ID, String.valueOf(track.uuid));
             return values;
         }
 
         public static LikedTrack parseCursor(Cursor cursor){
             LikedTrack track = new LikedTrack();
-            track.id = UUID.fromString(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ID)));
+            track.uuid = UUID.fromString(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ID)));
             return track;
         }
     }
@@ -158,7 +158,7 @@ public class Db {
     public abstract static class DownloadedTrackTable{
         public static final String TABLE_NAME = "downloaded_tracks";
 
-        public static final String COLUMN_ID = "id";
+        public static final String COLUMN_ID = "uuid";
         public static final String COLUMN_UUID = "uuid";
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_COVER = "cover";

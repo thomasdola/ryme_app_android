@@ -6,7 +6,7 @@
     <!-- Enable automatic Activity measurement -->
     <bool name="ga_autoActivityTracking">true</bool>
 
-    <!--  The property id associated with this analytics tracker -->
+    <!--  The property uuid associated with this analytics tracker -->
     <string name="ga_trackingId">UA-72929483-1</string>
 
     <!--

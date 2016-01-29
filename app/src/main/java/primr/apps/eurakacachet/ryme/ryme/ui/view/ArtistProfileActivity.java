@@ -57,7 +57,7 @@ public class ArtistProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 //        initBlurCollapsingImageHeader();
-//        mHeader = (ImageView) findViewById(R.id.artist_profile_header);
+//        mHeader = (ImageView) findViewById(R.uuid.artist_profile_header);
 //        mOldBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.shattawale);
 //        mHeader.setImageBitmap(mOldBitmap);
 
@@ -76,7 +76,7 @@ public class ArtistProfileActivity extends AppCompatActivity {
     }
 
 //    private void initBlurCollapsingImageHeader() {
-//        mHeader = (ImageView) findViewById(R.id.artist_profile_header);
+//        mHeader = (ImageView) findViewById(R.uuid.artist_profile_header);
 //        mOldBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.shattawale);
 //        Bitmap blurredBitmap = BlurBuilder.blur(this, mOldBitmap);
 //        mHeader.setImageBitmap(blurredBitmap);

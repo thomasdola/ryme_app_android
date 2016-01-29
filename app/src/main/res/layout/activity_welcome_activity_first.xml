@@ -11,7 +11,7 @@
         <!--android:layout_width="100dp"-->
         <!--android:layout_height="100dp"-->
         <!--android:src="@drawable/new_logo"-->
-        <!--android:id="@+id/welcome_logo_image_view"-->
+        <!--android:uuid="@+uuid/welcome_logo_image_view"-->
         <!--android:layout_marginTop="77dp"-->
         <!--android:layout_alignParentTop="true"-->
         <!--android:layout_centerHorizontal="true"/>-->

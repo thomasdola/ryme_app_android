@@ -3,14 +3,32 @@ package primr.apps.eurakacachet.ryme.ryme.data.remote;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.List;
+import java.util.UUID;
+
+import primr.apps.eurakacachet.ryme.ryme.data.model.Artist;
+import primr.apps.eurakacachet.ryme.ryme.data.model.Category;
+import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
+import retrofit.http.GET;
+import retrofit.http.Path;
+import rx.Observable;
 
 
 public interface RymeService {
 
     String ENDPOINT = "https://rymeapp.com/api/";
+
+    @GET("tracks/{uuid}")
+    Observable<Track> getTrack(@Path("uuid") UUID uuid);
+
+    @GET("artists/{uuid}")
+    Observable<Artist> getArtist(@Path("uuid") UUID uuid);
+
+    @GET("categories")
+    Observable<List<Category>> getCategories();
 
     class Creator {
 

@@ -15,7 +15,7 @@ import primr.apps.eurakacachet.ryme.ryme.R;
 
 public class PublicTrackDisplayActivity extends AppCompatActivity{
 
-    private static final String EXTRA_TRACK_ID = "id";
+    private static final String EXTRA_TRACK_ID = "uuid";
     private static final String EXTRA_TRACK_TITLE = "trackTitle";
     private UUID mTrackId;
     private String mTrackTitle;

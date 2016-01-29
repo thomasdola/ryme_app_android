@@ -31,8 +31,6 @@ public class ArtistAllTracksFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mTrackList = new ArrayList<>();
-        mTrackList.add(new Track("New Track One"));
-        mTrackList.add(new Track("New Track Two"));
     }
 
 
