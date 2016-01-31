@@ -2,4 +2,4 @@
     android:id="@+id/fragment_new_released_track_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:name="primr.apps.eurakacachet.ryme.ryme.ui.view.TrackDisplayFragment" />
+    android:name="primr.apps.eurakacachet.ryme.ryme.ui.view.trackDisplay.TrackDisplayFragment" />

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="primr.apps.eurakacachet.ryme.ryme.ui.view.ProfileArtistActivity">
+    tools:context="primr.apps.eurakacachet.ryme.ryme.ui.view.artist.profile.ProfileArtistActivity">
 
     <com.github.florent37.materialviewpager.MaterialViewPager
         xmlns:app="http://schemas.android.com/apk/res-auto"

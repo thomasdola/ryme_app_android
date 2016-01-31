@@ -41,6 +41,7 @@ public class DataManager {
         return mPreferencesHelper;
     }
 
+
     public Observable<DownloadedTrack> loadDownloadedTracks(){
         return mDatabaseHelper.getDownloadedTracks().concatMap(new Func1<List<DownloadedTrack>, Observable<? extends DownloadedTrack>>() {
             @Override
@@ -102,7 +103,7 @@ public class DataManager {
                 });
     }
 
-    public Observable<Track> getTracks(UUID[] ids){
+    public Observable<Track> getTracksFromIds(UUID[] ids){
         List<UUID> trackIds = new ArrayList<>(ids.length);
         for (UUID id : ids) {
             trackIds.add(id);
@@ -116,7 +117,7 @@ public class DataManager {
                 });
     }
 
-    public Observable<Artist> getArtists(UUID[] ids){
+    public Observable<Artist> getArtistsFromIds(UUID[] ids){
         List<UUID> artistIds = new ArrayList<>(ids.length);
         for(UUID id : ids ) {
             artistIds.add(id);
@@ -137,11 +138,40 @@ public class DataManager {
     public Observable<Category> syncCategories(){
         return mRymeService.getCategories()
                 .concatMap(new Func1<List<Category>, Observable<? extends Category>>() {
-            @Override
-            public Observable<? extends Category> call(List<Category> categories) {
-                return mDatabaseHelper.setCategories(categories);
-            }
-        });
+                    @Override
+                    public Observable<? extends Category> call(List<Category> categories) {
+                        return mDatabaseHelper.setCategories(categories);
+                    }
+                });
     }
+
+
+//    public Observable<Track> getNewTracks(){}
+//
+//    public Observable<Track> getTrendingTracks(){}
+//
+//    public Observable<Track> getNewTracksInUserCategories(){}
+//
+//    public Observable<Track> getTrendingTracksInUserCategories(){}
+//
+//    public Observable<Track> getTracksForArtist(){}
+//
+//    public Observable<EventAd> getEventAds(){}
+//
+//    public Observable<EventAd> viewEventAd(UUID eventAdId){}
+//
+//    public Observable<Track> likeTrack(UUID trackId){}
+//
+//    public Observable<Track> dislikeTrack(UUID trackId){}
+//
+//    public Observable<Artist> followArtist(UUID artistId){}
+//
+//    public Observable<Artist> unFollowArtist(UUID artistId){}
+//
+//    public Observable<Track> downloadTrack(UUID trackId){}
+//
+//    public Observable<Track> streamTrack(UUID trackId){}
+//
+//    public Observable<Track> viewTrack(UUID trackId){}
 
 }

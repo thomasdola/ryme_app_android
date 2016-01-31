@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="primr.apps.eurakacachet.ryme.ryme.ui.view.LoginActivity">
+    tools:context="primr.apps.eurakacachet.ryme.ryme.ui.view.signin.LoginActivity">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -25,6 +25,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp">
         <EditText
+            android:id="@+id/username_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
@@ -42,6 +43,7 @@
         android:layout_marginBottom="35dp"
         android:layout_centerHorizontal="true">
         <EditText
+            android:id="@+id/password_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password_hint_text"
@@ -60,7 +62,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/button_text_size"
         android:text="@string/signInButton"
-        android:id="@+id/register_next_button"
+        android:id="@+id/login_button"
         android:layout_marginBottom="10dp"
         android:layout_below="@+id/passwordEditText"
         android:layout_centerHorizontal="true"/>

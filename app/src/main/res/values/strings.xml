@@ -114,7 +114,7 @@
     <string name="purpose_text">Sign up to access unlimited musics.</string>
     <string name="sign_in_option">Already have an Account?</string>
     <string name="join_button">Join</string>
-    <string name="agreement_text">By Joining, you agree to our Terms and Privacy Policy.</string>
+    <string name="agreement_text">By Sign up, you agree to our Terms and Privacy Policy.</string>
     <string name="password_hint">Password</string>
     <string name="username_hint">Username</string>
     <string name="verification_code">Verification Code</string>
@@ -132,4 +132,5 @@
     <string name="notice_fail">(Enter the Verfication Code below in case we fail to detect the SMS automatically)</string>
     <string name="notice_success">Sit back and Relax! While we verify your phone number</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="commentHint">What do you think?</string>
 </resources>

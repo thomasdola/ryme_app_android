@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="primr.apps.eurakacachet.ryme.ryme.ui.view.verify_code.VerifyCodeActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:id="@+id/textLogoImageView"
+        android:src="@drawable/ryme_text"
+        android:contentDescription="@null"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="45dp"/>
+
+    <TextView
+        android:id="@+id/notice"
+        android:layout_below="@id/textLogoImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/colorAccent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/notice_success"/>
+
+    <TextView
+        android:id="@+id/noticeB"
+        android:layout_below="@id/notice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:textAlignment="center"
+        android:layout_marginBottom="20dp"
+        android:text="@string/notice_fail"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/noticeB"
+        android:id="@+id/otpEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="number"
+            android:hint="@string/otpCode"
+            android:layout_above="@+id/code_edit"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:textAllCaps="false"
+        android:background="@drawable/register_next_button_shape"
+        android:textColor="@color/white"
+        android:textSize="@dimen/button_text_size"
+        android:text="@string/verify"
+        android:id="@+id/verifyOpt"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/otpEditText"
+        android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>
