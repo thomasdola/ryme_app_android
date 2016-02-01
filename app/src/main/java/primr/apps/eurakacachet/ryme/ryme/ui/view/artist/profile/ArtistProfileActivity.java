@@ -21,19 +21,28 @@ import android.support.v8.renderscript.Element;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.UUID;
+
+import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.artist.allTrack.ArtistAllTracksFragment;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.artist.newTrack.ArtistNewTracksFragment;
 
-public class ArtistProfileActivity extends AppCompatActivity {
+public class ArtistProfileActivity extends AppCompatActivity implements ArtistProfileMvpView{
 
+    @Inject ArtistProfilePresenter mArtistProfilePresenter;
+
+    public static final String EXTRA_ARTIST_ID = "artistId";
     public static TabLayout sTabLayout;
     public static ViewPager sViewPager;
     private Bitmap mOldBitmap;
     private ImageView mHeader;
     public static String POSITION = "POSITION";
     public static int sItemCount = 2;
+    protected UUID mArtistId;
 
 
     @Override
@@ -85,9 +94,35 @@ public class ArtistProfileActivity extends AppCompatActivity {
 //    }
 
 
-    public static Intent newIntent(Context packageContext){
+    public static Intent newIntent(Context packageContext, UUID artistId){
         Intent intent = new Intent(packageContext, ArtistProfileActivity.class);
+        intent.putExtra(EXTRA_ARTIST_ID, artistId);
         return intent;
+    }
+
+    @Override
+    public void toggleFollowButton() {
+        if ( ! mArtistProfilePresenter.isFollowing(mArtistId) ){
+            mArtistProfilePresenter.followArtist(mArtistId);
+            setUnFollowButton();
+        }else{
+            mArtistProfilePresenter.unFollowArtist(mArtistId);
+            setFollowButton();
+        }
+    }
+
+    private void setUnFollowButton() {
+
+    }
+
+    private void setFollowButton() {
+
+    }
+
+    @Override
+    public void updateFollowers(long followers) {
+        TextView followersView = (TextView) findViewById(R.id.followers_text_view);
+        followersView.setText((int) followers);
     }
 
 

@@ -1,23 +1,18 @@
 package primr.apps.eurakacachet.ryme.ryme.ui.view.artist.trackDisplay;
 
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
-import primr.apps.eurakacachet.ryme.ryme.ui.view.trackDisplay.PublicTrackDisplayActivity;
 
 public class ArtistTrackListDisplayFragment extends Fragment{
 
@@ -33,7 +28,7 @@ public class ArtistTrackListDisplayFragment extends Fragment{
         mArtistTracksDisplayRecyclerView = (RecyclerView) rootView.findViewById(R.id.artist_tracks_display_recycler_view);
         mArtistTracksDisplayRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mArtistTrackListDisplayAdapter = new ArtistTrackListDisplayAdapter(mTracks);
+        mArtistTrackListDisplayAdapter = new ArtistTrackListDisplayAdapter(this, mTracks);
         mArtistTracksDisplayRecyclerView.setAdapter(mArtistTrackListDisplayAdapter);
 
         return rootView;
@@ -55,63 +50,5 @@ public class ArtistTrackListDisplayFragment extends Fragment{
         return fragment;
     }
 
-    private class ArtistTrackDisplayViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private TextView mTrackTitleTextView;
-        private TextView mTrackStreamTextView;
-        private TextView mTrackDownloadTextView;
-        private TextView mTrackFavoriteTextView;
-        private TextView mTrackReleasedDateTextView;
-        private Track mTrack;
-
-        public ArtistTrackDisplayViewHolder(View itemView) {
-            super(itemView);
-            itemView.setOnClickListener(this);
-
-            mTrackTitleTextView = (TextView) itemView.findViewById(R.id.artist_track_title_text_view);
-            mTrackStreamTextView = (TextView) itemView.findViewById(R.id.artist_track_stream_text);
-            mTrackDownloadTextView = (TextView) itemView.findViewById(R.id.artist_track_download_text);
-            mTrackFavoriteTextView = (TextView) itemView.findViewById(R.id.artist_track_favorite_text);
-            mTrackReleasedDateTextView = (TextView) itemView.findViewById(R.id.artist_track_released_date);
-        }
-
-        @Override
-        public void onClick(View v) {
-            Intent intent = PublicTrackDisplayActivity.newIntent(getActivity());
-            String transitionName = getString(R.string.track_transition_string);
-            View startView = getActivity().findViewById(R.id.artist_track_cv);
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation(getActivity(), startView, transitionName);
-            ActivityCompat.startActivity(getActivity(), intent, optionsCompat.toBundle());
-        }
-    }
-
-
-    private class ArtistTrackListDisplayAdapter extends RecyclerView.Adapter<ArtistTrackDisplayViewHolder>{
-
-        private ArrayList<Track> mTracksList;
-
-        public ArtistTrackListDisplayAdapter(ArrayList<Track> trackArrayList){
-            mTracksList = trackArrayList;
-        }
-
-        @Override
-        public ArtistTrackDisplayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(R.layout.artist_track_card_view, parent, false);
-
-            return new ArtistTrackDisplayViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(ArtistTrackDisplayViewHolder holder, int position) {
-            holder.mTrackTitleTextView.setText(mTracksList.get(position).title);
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return mTracksList.size();
-        }
-    }
 }

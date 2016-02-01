@@ -10,12 +10,16 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.artist.trackDisplay.ArtistTrackListDisplayFragment;
 
 
 public class ArtistNewTracksFragment extends Fragment {
+
+    @Inject ArtistNewTracksPresenter mArtistNewTracksPresenter;
 
     private ArrayList<Track> mTrackList;
 

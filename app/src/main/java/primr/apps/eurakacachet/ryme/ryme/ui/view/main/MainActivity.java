@@ -15,8 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import javax.inject.Inject;
+
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.category.CategoriesFragment;
@@ -25,25 +25,20 @@ import primr.apps.eurakacachet.ryme.ryme.ui.view.settings.SettingsActivity;
 
 public class MainActivity extends BaseActivity {
 
-    @Bind(R.id.drawerLayout)
+    @Inject MainPresenter mMainPresenter;
+
     DrawerLayout mDrawerLayout;
-
-
-    @Bind(R.id.shitstuff)
     NavigationView mNavigationView;
-
-    @Bind(R.id.toolbar)
     Toolbar mToolbar;
-
-    private CharSequence mTitle;
+    CharSequence mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivityComponent().inject(this);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
 
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(mTitle);
         setSupportActionBar(mToolbar);
 
@@ -56,6 +51,7 @@ public class MainActivity extends BaseActivity {
                     .commit();
         }
 
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -66,6 +62,7 @@ public class MainActivity extends BaseActivity {
         });
 
 
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(MainActivity.this, mDrawerLayout, mToolbar,
                 R.string.app_name, R.string.app_name);
         mDrawerLayout.setDrawerListener(drawerToggle);

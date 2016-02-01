@@ -22,8 +22,6 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.artist.profile.ArtistProfileActivity;
@@ -36,37 +34,16 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackDisplay
 
     private static final String ARG_TRACK = "track";
 
-    @Bind(R.id.collapsing_toolbar)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
-
-    @Bind(R.id.play_song_fab)
     FloatingActionButton playTrackFab;
-
-    @Bind(R.id.ic_action_track_download)
     ImageView downloadTrackButton;
-
-    @Bind(R.id.info_track_stream_text)
     TextView streamsView;
-
-    @Bind(R.id.info_track_favorite_text)
     TextView likesView;
-
-    @Bind(R.id.info_track_download_text)
     TextView downloadsView;
-
-    @Bind(R.id.info_track_comment_list_text)
     TextView commentsView;
-
-    @Bind(R.id.track_view_toolbar)
     Toolbar toolbar;
 
-//    private CommentListAdapter mCommentListAdapter;
-    private Bitmap mOldBitmap;
-
-    @Bind(R.id.header)
     ImageView mHeader;
-
-    private String mTrackTitle;
     private Track mTrack;
 
 
@@ -99,11 +76,11 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackDisplay
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_track, container, false);
-        ButterKnife.bind(getActivity(), rootView);
 
-        initBlurCollapsingImageHeader();
+        initBlurCollapsingImageHeader(rootView);
         initCollapsingToolbarLayout();
 
+        playTrackFab = (FloatingActionButton) rootView.findViewById(R.id.play_song_fab);
         playTrackFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,6 +89,7 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackDisplay
         });
 //        mHeader.setColorFilter(R.color.imageBlurFilter, PorterDuff.Mode.SRC_OVER);
 
+        toolbar = (Toolbar) rootView.findViewById(R.id.track_view_toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -148,7 +126,7 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackDisplay
         int menuItemId = menuItem.getItemId();
         switch (menuItemId){
             case R.id.view_artist_profile:
-                Intent intent = ArtistProfileActivity.newIntent(getActivity());
+                Intent intent = ArtistProfileActivity.newIntent(getActivity(), mTrack.artistId);
                 startActivity(intent);
                 return true;
             case R.id.favorite_track_action:
@@ -166,10 +144,11 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackDisplay
         mCollapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(android.R.color.transparent));
     }
 
-    private void initBlurCollapsingImageHeader() {
-        mOldBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.stonebwoy1);
+    private void initBlurCollapsingImageHeader(View rootView) {
+        mHeader = (ImageView) rootView.findViewById(R.id.header);
+        Bitmap oldBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.stonebwoy1);
 //        Bitmap blurredBitmap = BlurBuilder.blur(getActivity(), mOldBitmap);
-        mHeader.setImageBitmap(mOldBitmap);
+        mHeader.setImageBitmap(oldBitmap);
     }
 
     @Override

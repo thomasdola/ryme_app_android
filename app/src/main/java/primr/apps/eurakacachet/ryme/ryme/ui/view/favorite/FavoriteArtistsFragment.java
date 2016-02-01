@@ -11,14 +11,18 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import primr.apps.eurakacachet.ryme.ryme.data.model.Artist;
+import javax.inject.Inject;
+
 import primr.apps.eurakacachet.ryme.ryme.R;
-import primr.apps.eurakacachet.ryme.ryme.ui.view.artist.trackDisplay.ArtistListDisplayFragment;
+import primr.apps.eurakacachet.ryme.ryme.data.model.Artist;
+import primr.apps.eurakacachet.ryme.ryme.ui.view.artistListDisplay.ArtistListDisplayFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoriteArtistsFragment extends Fragment {
+public class FavoriteArtistsFragment extends Fragment implements FavoriteMvpView{
+
+    @Inject FavoriteArtistsPresenter mFavoriteArtistsPresenter;
 
     private ArrayList<Artist> mArtistList;
 
@@ -29,7 +33,6 @@ public class FavoriteArtistsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        mArtistList = new ArrayList<>();
     }
 
 
@@ -52,4 +55,13 @@ public class FavoriteArtistsFragment extends Fragment {
     }
 
 
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
 }

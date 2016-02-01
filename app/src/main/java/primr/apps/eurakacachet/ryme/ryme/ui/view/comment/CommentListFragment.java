@@ -16,8 +16,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Comment;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
@@ -31,13 +29,8 @@ public class CommentListFragment extends Fragment implements CommentListMvpView{
 
     private static final String ARG_TRACK = "track";
 
-    @Bind(R.id.comments_list_recycler)
     RecyclerView mRecyclerView;
-
-    @Bind(R.id.comment_edit_text_view)
     EditText commentEdit;
-
-    @Bind(R.id.action_send)
     ImageView addCommentButton;
 
     private Track mTrack;
@@ -73,12 +66,16 @@ public class CommentListFragment extends Fragment implements CommentListMvpView{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_comment_list, container, false);
-        ButterKnife.bind(getActivity(), rootView);
 
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.comments_list_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         List<Comment> commentList = new ArrayList<>();
         mCommentListAdapter = new CommentListAdapter(this, commentList);
         mRecyclerView.setAdapter(mCommentListAdapter);
+
+        commentEdit = (EditText) rootView.findViewById(R.id.comment_edit_text_view);
+        addCommentButton = (ImageView) rootView.findViewById(R.id.action_send);
+
         return rootView;
     }
 

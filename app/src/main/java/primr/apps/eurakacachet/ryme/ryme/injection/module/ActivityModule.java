@@ -3,15 +3,14 @@ package primr.apps.eurakacachet.ryme.ryme.injection.module;
 import android.app.Activity;
 import android.content.Context;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
+import primr.apps.eurakacachet.ryme.ryme.injection.ActivityContext;
 
 @Module
 public class ActivityModule {
 
-    Activity mActivity;
+    private Activity mActivity;
 
     public ActivityModule(Activity activity){
         mActivity = activity;
@@ -22,8 +21,8 @@ public class ActivityModule {
         return mActivity;
     }
 
-    @Singleton
     @Provides
+    @ActivityContext
     Context providesContext(){
         return mActivity;
     }

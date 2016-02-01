@@ -11,7 +11,9 @@ public class DownloadedTrack implements Parcelable {
     public long id;
     public UUID uuid;
     public String title;
+    public String artist;
     public String path;
+    public long duration;
     public String cover;
 
     @Override
@@ -19,13 +21,15 @@ public class DownloadedTrack implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DownloadedTrack that = (DownloadedTrack) o;
+        DownloadedTrack track = (DownloadedTrack) o;
 
-        if (id != that.id) return false;
-        if (uuid != null ? !uuid.equals(that.uuid) : that.uuid != null) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (path != null ? !path.equals(that.path) : that.path != null) return false;
-        return !(cover != null ? !cover.equals(that.cover) : that.cover != null);
+        if (id != track.id) return false;
+        if (duration != track.duration) return false;
+        if (uuid != null ? !uuid.equals(track.uuid) : track.uuid != null) return false;
+        if (title != null ? !title.equals(track.title) : track.title != null) return false;
+        if (artist != null ? !artist.equals(track.artist) : track.artist != null) return false;
+        if (path != null ? !path.equals(track.path) : track.path != null) return false;
+        return !(cover != null ? !cover.equals(track.cover) : track.cover != null);
 
     }
 
@@ -34,11 +38,15 @@ public class DownloadedTrack implements Parcelable {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (artist != null ? artist.hashCode() : 0);
         result = 31 * result + (path != null ? path.hashCode() : 0);
+        result = 31 * result + (int) (duration ^ (duration >>> 32));
         result = 31 * result + (cover != null ? cover.hashCode() : 0);
         return result;
     }
 
+    public DownloadedTrack() {
+    }
 
     @Override
     public int describeContents() {
@@ -50,22 +58,23 @@ public class DownloadedTrack implements Parcelable {
         dest.writeLong(this.id);
         dest.writeSerializable(this.uuid);
         dest.writeString(this.title);
+        dest.writeString(this.artist);
         dest.writeString(this.path);
+        dest.writeLong(this.duration);
         dest.writeString(this.cover);
-    }
-
-    public DownloadedTrack() {
     }
 
     protected DownloadedTrack(Parcel in) {
         this.id = in.readLong();
         this.uuid = (UUID) in.readSerializable();
         this.title = in.readString();
+        this.artist = in.readString();
         this.path = in.readString();
+        this.duration = in.readLong();
         this.cover = in.readString();
     }
 
-    public static final Parcelable.Creator<DownloadedTrack> CREATOR = new Parcelable.Creator<DownloadedTrack>() {
+    public static final Creator<DownloadedTrack> CREATOR = new Creator<DownloadedTrack>() {
         public DownloadedTrack createFromParcel(Parcel source) {
             return new DownloadedTrack(source);
         }

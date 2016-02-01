@@ -11,8 +11,6 @@ import android.view.View;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.category.CategoriesFragment;
@@ -20,23 +18,23 @@ import primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity;
 
 public class FollowCategoryActivity extends BaseActivity {
 
-    @Inject FollowCategoryPresenter mFollowCategoryPresenter;
+    @Inject
+    FollowCategoryPresenter mFollowCategoryPresenter;
 
-    @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
-    @Bind(R.id.start_fab)
     FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_category);
-        ButterKnife.bind(this);
 
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("Music Categories");
         setSupportActionBar(mToolbar);
 
+        fab = (FloatingActionButton) findViewById(R.id.start_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

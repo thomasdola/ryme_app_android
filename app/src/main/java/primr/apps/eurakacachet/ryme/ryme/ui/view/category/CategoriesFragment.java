@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Category;
 
@@ -23,7 +21,6 @@ import primr.apps.eurakacachet.ryme.ryme.data.model.Category;
  */
 public class CategoriesFragment extends Fragment {
 
-    @Bind(R.id.category_card_view)
     RecyclerView mCategoryListRecyclerView;
 
     public CategoriesFragment() {
@@ -36,8 +33,8 @@ public class CategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_sent, container, false);
-        ButterKnife.bind(getActivity(), rootView);
 
+        mCategoryListRecyclerView = (RecyclerView) rootView.findViewById(R.id.category_card_view);
         mCategoryListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         List<Category> categories = new ArrayList<>();

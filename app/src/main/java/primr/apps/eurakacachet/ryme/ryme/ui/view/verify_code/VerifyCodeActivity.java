@@ -8,8 +8,6 @@ import android.widget.EditText;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.followCategory.FollowCategoryActivity;
@@ -18,18 +16,15 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeMvpVie
 
     @Inject VerifyCodePresenter mVerifyCodePresenter;
 
-    @Bind(R.id.code_edit)
     EditText mCodeEdit;
-
-    @Bind(R.id.verifyOpt)
     Button mJoinButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_code);
-        ButterKnife.bind(this);
 
+        mJoinButton = (Button) findViewById(R.id.verifyOpt);
         mJoinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

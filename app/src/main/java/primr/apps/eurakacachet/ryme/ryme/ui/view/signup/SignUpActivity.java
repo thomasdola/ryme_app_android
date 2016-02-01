@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.signin.LoginActivity;
@@ -21,26 +19,17 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView{
 
     @Inject SignUpPresenter mSignUpPresenter;
 
-    @Bind(R.id.sign_up_button)
     Button mRegisterButton;
-
-    @Bind(R.id.sign_in_option_text_view)
     TextView mLoginOption;
-
-    @Bind(R.id.dial_code)
     AutoCompleteTextView mDialCode;
-
-    private static final String[] CODES = new String[] {
-            "+233", "+228", "+1"
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        ButterKnife.bind(this);
 
 
+        mRegisterButton = (Button) findViewById(R.id.sign_up_button);
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +39,7 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView{
         });
 
 
+        mLoginOption = (TextView) findViewById(R.id.sign_in_option_text_view);
         mLoginOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,8 +49,10 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView{
         });
 
 
-        ArrayAdapter<String> codesAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_dropdown_item_1line, CODES);
+        String[] codes = getResources().getStringArray(R.array.CountryCodes);
+        mDialCode = (AutoCompleteTextView) findViewById(R.id.dial_code);
+        ArrayAdapter<String> codesAdapter = new ArrayAdapter<>
+                (this, android.R.layout.simple_dropdown_item_1line, codes);
         mDialCode.setAdapter(codesAdapter);
     }
 

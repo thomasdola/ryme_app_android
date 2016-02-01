@@ -15,8 +15,10 @@ public class PublicTrackListDisplayAdapter extends RecyclerView.Adapter<PublicTr
 
     private PublicTrackListDisplayFragment mPublicTrackListDisplayFragment;
     private List<Track> mTrackList;
+    private Track mTrack;
 
-    public PublicTrackListDisplayAdapter(PublicTrackListDisplayFragment publicTrackListDisplayFragment, List<Track> trackList) {
+    public PublicTrackListDisplayAdapter(PublicTrackListDisplayFragment
+                                                 publicTrackListDisplayFragment, List<Track> trackList) {
         mPublicTrackListDisplayFragment = publicTrackListDisplayFragment;
         mTrackList = trackList;
     }
@@ -26,13 +28,14 @@ public class PublicTrackListDisplayAdapter extends RecyclerView.Adapter<PublicTr
         LayoutInflater layoutInflater = LayoutInflater.from(mPublicTrackListDisplayFragment.getActivity());
         View publicTrackDisplayCardView = layoutInflater.inflate(R.layout.track_card_view,
                 parent, false);
-        return new PublicTrackListDisplayViewHolder(mPublicTrackListDisplayFragment, publicTrackDisplayCardView);
+        return new PublicTrackListDisplayViewHolder(mPublicTrackListDisplayFragment,
+                publicTrackDisplayCardView, mTrack);
     }
 
     @Override
     public void onBindViewHolder(PublicTrackListDisplayViewHolder holder, int position) {
-        Track track = mTrackList.get(position);
-        holder.mTrackTitleTextView.setText(track.title);
+        mTrack = mTrackList.get(position);
+        holder.mTrackTitleTextView.setText(mTrack.title.toUpperCase());
     }
 
     @Override

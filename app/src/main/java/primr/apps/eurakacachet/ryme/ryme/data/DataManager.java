@@ -42,6 +42,15 @@ public class DataManager {
     }
 
 
+    public Observable<UUID> getUserId(){
+        return mPreferencesHelper.getUserId();
+    }
+
+    public void setUserId(UUID userId){
+        mPreferencesHelper.setUserId(userId);
+    }
+
+
     public Observable<DownloadedTrack> loadDownloadedTracks(){
         return mDatabaseHelper.getDownloadedTracks().concatMap(new Func1<List<DownloadedTrack>, Observable<? extends DownloadedTrack>>() {
             @Override

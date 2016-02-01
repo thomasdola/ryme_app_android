@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 public class Track implements Parcelable {
@@ -14,13 +13,11 @@ public class Track implements Parcelable {
     public long downloads;
     public long likes;
     public long streams;
+    public long comments;
     public boolean downloadable;
-    public List<Comment> comments;
-    public Artist artist;
+    public UUID artistId;
     public UUID uuid;
-
-    public Track() {
-    }
+    public String cover;
 
     @Override
     public boolean equals(Object o) {
@@ -32,14 +29,15 @@ public class Track implements Parcelable {
         if (downloads != track.downloads) return false;
         if (likes != track.likes) return false;
         if (streams != track.streams) return false;
+        if (comments != track.comments) return false;
         if (downloadable != track.downloadable) return false;
         if (title != null ? !title.equals(track.title) : track.title != null) return false;
         if (released_date != null ? !released_date.equals(track.released_date) : track.released_date != null)
             return false;
-        if (comments != null ? !comments.equals(track.comments) : track.comments != null)
+        if (artistId != null ? !artistId.equals(track.artistId) : track.artistId != null)
             return false;
-        if (artist != null ? !artist.equals(track.artist) : track.artist != null) return false;
-        return !(uuid != null ? !uuid.equals(track.uuid) : track.uuid != null);
+        if (uuid != null ? !uuid.equals(track.uuid) : track.uuid != null) return false;
+        return !(cover != null ? !cover.equals(track.cover) : track.cover != null);
 
     }
 
@@ -50,11 +48,15 @@ public class Track implements Parcelable {
         result = 31 * result + (int) (downloads ^ (downloads >>> 32));
         result = 31 * result + (int) (likes ^ (likes >>> 32));
         result = 31 * result + (int) (streams ^ (streams >>> 32));
+        result = 31 * result + (int) (comments ^ (comments >>> 32));
         result = 31 * result + (downloadable ? 1 : 0);
-        result = 31 * result + (comments != null ? comments.hashCode() : 0);
-        result = 31 * result + (artist != null ? artist.hashCode() : 0);
+        result = 31 * result + (artistId != null ? artistId.hashCode() : 0);
         result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
+        result = 31 * result + (cover != null ? cover.hashCode() : 0);
         return result;
+    }
+
+    public Track() {
     }
 
     @Override
@@ -69,10 +71,11 @@ public class Track implements Parcelable {
         dest.writeLong(this.downloads);
         dest.writeLong(this.likes);
         dest.writeLong(this.streams);
+        dest.writeLong(this.comments);
         dest.writeByte(downloadable ? (byte) 1 : (byte) 0);
-        dest.writeTypedList(comments);
-        dest.writeParcelable(this.artist, 0);
+        dest.writeSerializable(this.artistId);
         dest.writeSerializable(this.uuid);
+        dest.writeString(this.cover);
     }
 
     protected Track(Parcel in) {
@@ -82,10 +85,11 @@ public class Track implements Parcelable {
         this.downloads = in.readLong();
         this.likes = in.readLong();
         this.streams = in.readLong();
+        this.comments = in.readLong();
         this.downloadable = in.readByte() != 0;
-        this.comments = in.createTypedArrayList(Comment.CREATOR);
-        this.artist = in.readParcelable(Artist.class.getClassLoader());
+        this.artistId = (UUID) in.readSerializable();
         this.uuid = (UUID) in.readSerializable();
+        this.cover = in.readString();
     }
 
     public static final Creator<Track> CREATOR = new Creator<Track>() {

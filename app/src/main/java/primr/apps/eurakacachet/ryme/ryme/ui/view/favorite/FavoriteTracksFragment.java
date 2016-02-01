@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.trackListDisplay.PublicTrackListDisplayFragment;
@@ -18,10 +20,12 @@ import primr.apps.eurakacachet.ryme.ryme.ui.view.trackListDisplay.PublicTrackLis
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoriteTracksFragment extends Fragment {
+public class FavoriteTracksFragment extends Fragment implements FavoriteMvpView{
 
 
-    private ArrayList<Track> mFavoriteTrackList;
+    @Inject FavoriteTracksPresenter mFavoriteTracksPresenter;
+
+    private ArrayList<Track> mTrackList;
 
     public FavoriteTracksFragment() {
         // Required empty public constructor
@@ -31,7 +35,7 @@ public class FavoriteTracksFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        mFavoriteTrackList = new ArrayList<>();
+        mTrackList = new ArrayList<>();
     }
 
 
@@ -47,7 +51,7 @@ public class FavoriteTracksFragment extends Fragment {
                 (R.id.favorite_track_list_display_fragment_container);
         if(favoriteTrackListDisplayFragment == null){
             favoriteTrackListDisplayFragment = PublicTrackListDisplayFragment
-                    .newInstance(mFavoriteTrackList);
+                    .newInstance(mTrackList);
             fragmentTransaction.add(R.id.favorite_track_list_display_fragment_container,
                     favoriteTrackListDisplayFragment).commit();
         }
@@ -56,4 +60,13 @@ public class FavoriteTracksFragment extends Fragment {
     }
 
 
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
 }

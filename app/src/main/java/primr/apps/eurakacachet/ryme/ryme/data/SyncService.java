@@ -11,12 +11,9 @@ import android.support.annotation.Nullable;
 import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.RymeApplication;
-import primr.apps.eurakacachet.ryme.ryme.data.model.Category;
 import primr.apps.eurakacachet.ryme.ryme.utils.AndroidComponentUtil;
 import primr.apps.eurakacachet.ryme.ryme.utils.NetworkUtil;
-import rx.Observer;
 import rx.Subscription;
-import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 
@@ -51,26 +48,26 @@ public class SyncService extends Service{
         }
 
         if( mSubscription != null && mSubscription.isUnsubscribed() ) mSubscription.unsubscribe();
-        mSubscription = mDataManager.syncCategories()
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<Category>() {
-                    @Override
-                    public void onCompleted() {
-                        Timber.i("Synced successfully!");
-                        stopSelf(startId);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Timber.w(e, "Error syncing.");
-                        stopSelf(startId);
-                    }
-
-                    @Override
-                    public void onNext(Category category) {
-
-                    }
-                });
+//        mSubscription = mDataManager.syncCategories()
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(new Observer<Category>() {
+//                    @Override
+//                    public void onCompleted() {
+//                        Timber.i("Synced successfully!");
+//                        stopSelf(startId);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Timber.w(e, "Error syncing.");
+//                        stopSelf(startId);
+//                    }
+//
+//                    @Override
+//                    public void onNext(Category category) {
+//
+//                    }
+//                });
 
 
         return START_STICKY;

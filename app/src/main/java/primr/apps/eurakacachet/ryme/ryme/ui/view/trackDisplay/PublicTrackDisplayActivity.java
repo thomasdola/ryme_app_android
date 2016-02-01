@@ -14,10 +14,7 @@ import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
 
 public class PublicTrackDisplayActivity extends BaseActivity implements PublicTrackDisplayFragmentMvpView {
 
-//    private static final String EXTRA_TRACK_ID = "uuid";
-    private static final String EXTRA_TRACK = "track";
-//    private UUID mTrackId;
-//    private String mTrackTitle;
+    public static final String EXTRA_TRACK = "track";
     private Track mTrack;
 
     @Override
@@ -31,6 +28,12 @@ public class PublicTrackDisplayActivity extends BaseActivity implements PublicTr
 
         setContentView(R.layout.activity_public_track_display);
 
+        init();
+    }
+
+
+
+    private void init() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment trackFragment = fragmentManager.findFragmentById(R.id.public_track_display_container);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -41,9 +44,9 @@ public class PublicTrackDisplayActivity extends BaseActivity implements PublicTr
         }
     }
 
-    public static Intent newIntent(Context packageContext){
+    public static Intent newIntent(Context packageContext, Track track){
         Intent i = new Intent(packageContext, PublicTrackDisplayActivity.class);
-//        i.putExtra(EXTRA_TRACK_TITLE, trackTitle);
+        i.putExtra(EXTRA_TRACK, track);
         return i;
     }
 
