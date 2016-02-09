@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/public_track_list_display_recycler_view">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-</android.support.v7.widget.RecyclerView>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/public_track_list_display_recycler_view">
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/track_list_empty_state"
+        android:text="Empty State"
+        android:visibility="gone"
+        android:gravity="center"/>
+
+</RelativeLayout>

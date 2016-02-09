@@ -5,25 +5,37 @@ import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
+import javax.inject.Inject;
+
+import primr.apps.eurakacachet.ryme.ryme.data.local.PreferencesHelper;
+import primr.apps.eurakacachet.ryme.ryme.data.model.ActionResponse;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Artist;
+import primr.apps.eurakacachet.ryme.ryme.data.model.AuthResponse;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Category;
 import primr.apps.eurakacachet.ryme.ryme.data.model.EventAd;
-import primr.apps.eurakacachet.ryme.ryme.data.model.LoginResponse;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
-import primr.apps.eurakacachet.ryme.ryme.data.model.UserProfile;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
+import retrofit.http.Field;
+import retrofit.http.FieldMap;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Multipart;
 import retrofit.http.POST;
 import retrofit.http.PUT;
+import retrofit.http.Part;
+import retrofit.http.PartMap;
 import retrofit.http.Path;
+import retrofit.http.Query;
+import retrofit.http.QueryMap;
 import rx.Observable;
 
 
@@ -31,89 +43,106 @@ public interface RymeService {
 
     String ENDPOINT = "https://rymeapp.com/api/";
 
+    @FormUrlEncoded
     @POST("register")
-    Observable<LoginResponse> register();
+    Observable<AuthResponse> register(@FieldMap Map<String, String> payload);
 
+    @FormUrlEncoded
     @POST("verify")
-    Observable<LoginResponse> verify();
+    Observable<AuthResponse> verify(@Field("code") String code);
 
+    @FormUrlEncoded
     @POST("login")
-    Observable<LoginResponse> login();
+    Observable<AuthResponse> login(@FieldMap Map<String, String> credentials);
 
     @GET("categories/lists")
     Observable<List<Category>> getCategories();
 
     @POST("categories/{uuid}/follow")
-    Observable<Category> followCategory();
+    Observable<ActionResponse> followCategory(@Path("uuid") String uuid);
 
     @POST("categories/{uuid}/unFollow")
-    Observable<Category> unFollowCategory();
+    Observable<ActionResponse> unFollowCategory(@Path("uuid") String uuid);
 
     @GET("search")
-    Observable<List<Artist>> searchArtist();
+    Observable<List<Artist>> searchArtist(@Query("query") String query);
 
     @GET("tracks/{uuid}")
-    Observable<Track> getTrack(@Path("uuid") UUID uuid);
+    Observable<Track> getTrack(@Path("uuid") String uuid);
 
     @GET("tracks/lists")
-    Observable<List<Track>> getTrendingTracks();
-
-    @GET("tracks/lists")
-    Observable<List<Track>> getNewTracks();
+    Observable<List<Track>> getPublicTracks(@QueryMap Map<String , String> specifications);
 
     @POST("tracks/{uuid}/like")
-    Observable<Track> likeTrack(@Path("uuid") UUID uuid);
+    Observable<ActionResponse> likeTrack(@Path("uuid") String uuid);
 
     @POST("tracks/{uuid}/dislike")
-    Observable<Track> dislikeTrack(@Path("uuid") UUID uuid);
+    Observable<ActionResponse> dislikeTrack(@Path("uuid") String uuid);
 
     @POST("tracks/{uuid}/download")
-    Observable<Track> downloadTrack(@Path("uuid") UUID uuid);
+    Observable<Track> downloadTrack(@Path("uuid") String uuid);
 
     @POST("tracks/{uuid}/view")
-    Observable<Track> viewTrack(@Path("uuid") UUID uuid);
+    Observable<ActionResponse> viewTrack(@Path("uuid") String uuid);
 
+    @FormUrlEncoded
     @POST("tracks/{uuid}/comment")
-    Observable<Track> commentTrack(@Path("uuid") UUID uuid);
+    Observable<ActionResponse> commentTrack(@Path("uuid") String uuid, @FieldMap Map<String, String> commentDetail);
 
     @GET("events/lists")
-    Observable<List<EventAd>> getEventAds();
+    Observable<List<EventAd>> getEventAds(@QueryMap Map<String , String> specifications);
 
     @POST("events/{uuid}/view")
-    Observable<EventAd> viewEventAd(@Path("uuid") UUID uuid);
+    Observable<ActionResponse> viewEventAd(@Path("uuid") String uuid);
 
     @GET("artists/{uuid}")
-    Observable<Artist> getArtist(@Path("uuid") UUID uuid);
+    Observable<Artist> getArtist(@Path("uuid") String uuid);
 
     @POST("artists/{uuid}/follow")
-    Observable<Artist> followArtist(@Path("uuid") UUID uuid);
+    Observable<ActionResponse> followArtist(@Path("uuid") String uuid);
 
     @POST("artists/{uuid}/unFollow")
-    Observable<Artist> unFollowArtist(@Path("uuid") UUID uuid);
+    Observable<ActionResponse> unFollowArtist(@Path("uuid") String uuid);
 
     @GET("artists/{uuid}/tracks")
-    Observable<List<Track>> getArtistTracks(@Path("uuid") UUID uuid);
+    Observable<List<Track>> getArtistTracks(@Path("uuid") String uuid,
+                                            @QueryMap Map<String, String> specifications);
 
     @GET("users/{uuid}/favorites")
-    Observable<List<Artist>> getFavoriteArtists(@Path("uuid") UUID uuid);
+    Observable<List<Artist>> getFavoriteArtists(@Path("uuid") String uuid,
+                                                @Field("type") String typeOfFavorite);
 
     @GET("users/{uuid}/favorites")
-    Observable<List<Track>> getFavoriteTracks(@Path("uuid") UUID uuid);
+    Observable<List<Track>> getFavoriteTracks(@Path("uuid") String uuid,
+                                              @Field("type") String typeOfFavorite);
 
+    @FormUrlEncoded
     @PUT("users/{uuid}/update")
-    Observable<UserProfile> updateUserSomething(@Path("uuid") UUID uuid);
-    //different types of update
+    Observable<ActionResponse> updateUser(@Path("uuid") String uuid,
+                                                @FieldMap Map<String , String> payload);
+
+    @Multipart
+    @PUT("users/{uuid}/photo")
+    Observable<ActionResponse> updateUser(@Path("uuid") String uuid,
+                                          @Part("file\"; filename=\"picture.jpg\" ")RequestBody photo);
+
+    @Multipart
+    @POST("users/uuid/upload")
+    Observable<ActionResponse> uplaodTrack(@Path("uuid") String uuid, @PartMap Map<String , RequestBody> trackPayload);
 
     @POST("vouch")
-    Observable<Void> makeArtistRequest();
+    Observable<ActionResponse> makeRequest();
 
+    @FormUrlEncoded
     @POST("vouch/{uuid}")
-    Observable<Void> respondToVouch(@Path("uuid") UUID uuid);
+    Observable<ActionResponse> respondToVouch(@Path("uuid") String uuid,
+                                              @Field("answer") boolean answer);
 
 
     class Creator {
 
-        public static final String USER_TOKEN = "jkajdkff5aafsfadsdfdfsdd";
+        @Inject
+        public static PreferencesHelper mPref;
 
         public static RymeService newRymeService(){
             Gson gson = new GsonBuilder()
@@ -123,7 +152,7 @@ public interface RymeService {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
                     Request request = chain.request().newBuilder()
-                            .addHeader("Authorization: Bearer ", USER_TOKEN)
+                            .addHeader("Authorization: Bearer ", mPref.apiToken())
                             .build();
                     return chain.proceed(request);
                 }

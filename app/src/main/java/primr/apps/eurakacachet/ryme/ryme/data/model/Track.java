@@ -3,12 +3,15 @@ package primr.apps.eurakacachet.ryme.ryme.data.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.devbrackets.android.exomedia.manager.EMPlaylistManager;
+
 import java.util.Date;
 import java.util.UUID;
 
-public class Track implements Parcelable {
+public class Track implements Parcelable, EMPlaylistManager.PlaylistItem {
 
     public String title;
+    public String artist_name;
     public Date released_date;
     public long downloads;
     public long likes;
@@ -32,6 +35,8 @@ public class Track implements Parcelable {
         if (comments != track.comments) return false;
         if (downloadable != track.downloadable) return false;
         if (title != null ? !title.equals(track.title) : track.title != null) return false;
+        if (artist_name != null ? !artist_name.equals(track.artist_name) : track.artist_name != null)
+            return false;
         if (released_date != null ? !released_date.equals(track.released_date) : track.released_date != null)
             return false;
         if (artistId != null ? !artistId.equals(track.artistId) : track.artistId != null)
@@ -44,6 +49,7 @@ public class Track implements Parcelable {
     @Override
     public int hashCode() {
         int result = title != null ? title.hashCode() : 0;
+        result = 31 * result + (artist_name != null ? artist_name.hashCode() : 0);
         result = 31 * result + (released_date != null ? released_date.hashCode() : 0);
         result = 31 * result + (int) (downloads ^ (downloads >>> 32));
         result = 31 * result + (int) (likes ^ (likes >>> 32));
@@ -67,6 +73,7 @@ public class Track implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.title);
+        dest.writeString(this.artist_name);
         dest.writeLong(released_date != null ? released_date.getTime() : -1);
         dest.writeLong(this.downloads);
         dest.writeLong(this.likes);
@@ -80,6 +87,7 @@ public class Track implements Parcelable {
 
     protected Track(Parcel in) {
         this.title = in.readString();
+        this.artist_name = in.readString();
         long tmpReleased_date = in.readLong();
         this.released_date = tmpReleased_date == -1 ? null : new Date(tmpReleased_date);
         this.downloads = in.readLong();
@@ -101,4 +109,54 @@ public class Track implements Parcelable {
             return new Track[size];
         }
     };
+
+    @Override
+    public long getId() {
+        return 0;
+    }
+
+    @Override
+    public long getPlaylistId() {
+        return 0;
+    }
+
+    @Override
+    public EMPlaylistManager.MediaType getMediaType() {
+        return null;
+    }
+
+    @Override
+    public String getMediaUrl() {
+        return null;
+    }
+
+    @Override
+    public String getDownloadedMediaUri() {
+        return null;
+    }
+
+    @Override
+    public String getThumbnailUrl() {
+        return null;
+    }
+
+    @Override
+    public String getArtworkUrl() {
+        return null;
+    }
+
+    @Override
+    public String getTitle() {
+        return null;
+    }
+
+    @Override
+    public String getAlbum() {
+        return null;
+    }
+
+    @Override
+    public String getArtist() {
+        return null;
+    }
 }

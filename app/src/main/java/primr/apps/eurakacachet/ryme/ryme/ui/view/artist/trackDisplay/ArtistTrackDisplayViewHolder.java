@@ -45,4 +45,9 @@ public class ArtistTrackDisplayViewHolder extends RecyclerView.ViewHolder implem
                 .makeSceneTransitionAnimation(mArtistTrackListDisplayFragment.getActivity(), startView, transitionName);
         ActivityCompat.startActivity(mArtistTrackListDisplayFragment.getActivity(), intent, optionsCompat.toBundle());
     }
+
+    public void bindTrack(Track track) {
+        mTrack = track;
+        mTrackTitleTextView.setText(track.title);
+    }
 }

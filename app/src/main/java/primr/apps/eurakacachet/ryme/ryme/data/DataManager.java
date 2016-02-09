@@ -18,7 +18,10 @@ import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
 import primr.apps.eurakacachet.ryme.ryme.data.remote.RymeService;
 import primr.apps.eurakacachet.ryme.ryme.utils.helpers.event.EventPostHelper;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 
 public class DataManager {
@@ -37,83 +40,77 @@ public class DataManager {
         mEventPoster = eventPosterHelper;
     }
 
+    //Preference Manager
     public PreferencesHelper getPreferencesHelper(){
         return mPreferencesHelper;
     }
 
-
     public Observable<UUID> getUserId(){
-        return mPreferencesHelper.getUserId();
+        return getPreferencesHelper().getUserId();
+    }
+
+    public Observable<String> getAvatar(){
+        return getPreferencesHelper().getAvatar();
+    }
+
+    public Observable<String> getArtistName(){
+        return getPreferencesHelper().getStageName();
+    }
+
+    public Observable<Boolean> isLoggedIn(){
+        return getPreferencesHelper().isLoggedIn();
+    }
+
+    public Observable<Boolean> isArtist(){
+        return getPreferencesHelper().isArtist();
+    }
+
+    public Observable<String> getToken(){
+        return getPreferencesHelper().getAccessToken();
+    }
+
+    public Observable<Boolean> isAllowedToMakeRequest(){
+        return getPreferencesHelper().getIsAllowedToMakeRequest();
     }
 
     public void setUserId(UUID userId){
-        mPreferencesHelper.setUserId(userId);
+         getPreferencesHelper().setUserId(userId);
+    }
+
+    public void setLogIn(boolean isLoggedIn){
+        getPreferencesHelper().setLogin(isLoggedIn);
+    }
+
+    public void setAvatarPath(String path){
+        getPreferencesHelper().setAvatar(path);
+    }
+
+    public void setToken(String token){
+        getPreferencesHelper().setAccessToken(token);
+    }
+
+    public void setIsAllowedToMakeRequest(boolean isHeAllowed){
+        getPreferencesHelper().setIsAllowedToMakeArtistRequest(isHeAllowed);
+    }
+
+    public void setArtistName(String name){
+        getPreferencesHelper().setStageName(name);
     }
 
 
-    public Observable<DownloadedTrack> loadDownloadedTracks(){
-        return mDatabaseHelper.getDownloadedTracks().concatMap(new Func1<List<DownloadedTrack>, Observable<? extends DownloadedTrack>>() {
-            @Override
-            public Observable<? extends DownloadedTrack> call(List<DownloadedTrack> downloadedTracks) {
-                return Observable.from(downloadedTracks);
-            }
-        }).concatMap(new Func1<DownloadedTrack, Observable<? extends DownloadedTrack>>() {
-            @Override
-            public Observable<? extends DownloadedTrack> call(DownloadedTrack track) {
-                return Observable.just(track);
-            }
-        }).distinct();
+    // API Manager
+    public Observable<List<Track>> getLikedTracks(){
+        List<UUID> ids = getLikedTrackIds();
+        return getTracksFromIds(ids).toList();
     }
 
-    public Observable<LikedTrack> loadLikedTracks(){
-        return mDatabaseHelper.getLikedTracks()
-                .concatMap(new Func1<List<LikedTrack>, Observable<? extends LikedTrack>>() {
-                    @Override
-                    public Observable<? extends LikedTrack> call(List<LikedTrack> likedTracks) {
-                        return Observable.from(likedTracks);
-                    }
-                }).concatMap(new Func1<LikedTrack, Observable<? extends LikedTrack>>() {
-                    @Override
-                    public Observable<? extends LikedTrack> call(LikedTrack track) {
-                        return Observable.just(track);
-                    }
-                });
+    public Observable<List<Artist>> loadFollowedArtists(){
+        List<UUID> ids = getFollowedArtistsIds();
+        return getArtistsFromIds(ids).toList();
     }
 
-    public Observable<FollowedArtist> loadFollowedArtist(){
-        return mDatabaseHelper.getFollowedArtists()
-                .concatMap(new Func1<List<FollowedArtist>, Observable<? extends FollowedArtist>>() {
-                    @Override
-                    public Observable<? extends FollowedArtist> call(List<FollowedArtist> followedArtists) {
-                        return Observable.from(followedArtists);
-                    }
-                })
-                .concatMap(new Func1<FollowedArtist, Observable<? extends FollowedArtist>>() {
-                    @Override
-                    public Observable<? extends FollowedArtist> call(FollowedArtist followedArtist) {
-                        return Observable.just(followedArtist);
-                    }
-                });
-    }
-
-    public Observable<FollowedCategory> loadFollowedCategory(){
-        return mDatabaseHelper.getFollowedCategories()
-                .concatMap(new Func1<List<FollowedCategory>, Observable<? extends FollowedCategory>>() {
-                    @Override
-                    public Observable<? extends FollowedCategory> call(List<FollowedCategory> followedCategories) {
-                        return Observable.from(followedCategories);
-                    }
-                })
-                .concatMap(new Func1<FollowedCategory, Observable<? extends FollowedCategory>>() {
-                    @Override
-                    public Observable<? extends FollowedCategory> call(FollowedCategory followedCategory) {
-                        return Observable.just(followedCategory);
-                    }
-                });
-    }
-
-    public Observable<Track> getTracksFromIds(UUID[] ids){
-        List<UUID> trackIds = new ArrayList<>(ids.length);
+    public Observable<Track> getTracksFromIds(List<UUID> ids){
+        List<UUID> trackIds = new ArrayList<>();
         for (UUID id : ids) {
             trackIds.add(id);
         }
@@ -121,13 +118,13 @@ public class DataManager {
                 .concatMap(new Func1<UUID, Observable<? extends Track>>() {
                     @Override
                     public Observable<? extends Track> call(UUID uuid) {
-                        return mRymeService.getTrack(uuid);
+                        return getTrack(uuid);
                     }
                 });
     }
 
-    public Observable<Artist> getArtistsFromIds(UUID[] ids){
-        List<UUID> artistIds = new ArrayList<>(ids.length);
+    public Observable<Artist> getArtistsFromIds(List<UUID> ids){
+        List<UUID> artistIds = new ArrayList<>();
         for(UUID id : ids ) {
             artistIds.add(id);
         }
@@ -140,8 +137,13 @@ public class DataManager {
                 });
     }
 
+    public Observable<? extends Track> getTrack(UUID uuid) {
+
+        return mRymeService.getTrack(String.valueOf(uuid));
+    }
+
     private Observable<? extends Artist> getArtist(UUID uuid) {
-        return mRymeService.getArtist(uuid);
+        return mRymeService.getArtist(String.valueOf(uuid));
     }
 
     public Observable<Category> syncCategories(){
@@ -153,7 +155,6 @@ public class DataManager {
                     }
                 });
     }
-
 
 //    public Observable<Track> getNewTracks(){}
 //
@@ -182,5 +183,80 @@ public class DataManager {
 //    public Observable<Track> streamTrack(UUID trackId){}
 //
 //    public Observable<Track> viewTrack(UUID trackId){}
+
+
+
+    //Database Manager
+    public Observable<List<DownloadedTrack>> loadDownloadedTracks(){
+        return mDatabaseHelper.getDownloadedTracks().distinct();
+    }
+
+    public Observable<DownloadedTrack> saveDownloadedTrack(DownloadedTrack track){
+        return mDatabaseHelper.saveDownloadedTrack(track);
+    }
+
+    public Observable<DownloadedTrack> deleteDownloadedTrack(DownloadedTrack track){
+        return mDatabaseHelper.deleteDownloadedTrack(track);
+    }
+
+    protected List<UUID> getLikedTrackIds(){
+        final List<UUID> ids = new ArrayList<>();
+        mDatabaseHelper.getLikedTracks()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<LikedTrack>>() {
+                    @Override
+                    public void call(List<LikedTrack> likedTracks) {
+                        for (LikedTrack track : likedTracks) {
+                            ids.add(track.uuid);
+                        }
+                    }
+                });
+        return ids;
+    }
+
+    public Observable<LikedTrack> saveLikedTrack(LikedTrack track){
+        return mDatabaseHelper.saveLikedTrack(track);
+    }
+
+    public Observable<LikedTrack> deleteLikedTrack(LikedTrack track){
+        return mDatabaseHelper.deleteLikedTrack(track);
+    }
+
+    protected List<UUID> getFollowedArtistsIds(){
+        final List<UUID> ids = new ArrayList<>();
+        mDatabaseHelper.getFollowedArtists()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<FollowedArtist>>() {
+                    @Override
+                    public void call(List<FollowedArtist> followedArtists) {
+                        for( FollowedArtist artist : followedArtists ){
+                            ids.add(artist.uuid);
+                        }
+                    }
+                });
+        return ids;
+    }
+
+    public Observable<FollowedArtist> saveFollowedArtist(FollowedArtist artist){
+        return mDatabaseHelper.saveFollowedArtist(artist);
+    }
+
+    public Observable<FollowedArtist> deleteFollowedArtist(FollowedArtist artist){
+        return mDatabaseHelper.deleteFollowedArtist(artist);
+    }
+
+    public Observable<List<FollowedCategory>> loadFollowedCategory(){
+        return mDatabaseHelper.getFollowedCategories().distinct();
+    }
+
+    public Observable<FollowedCategory> deleteFollowedCategory(FollowedCategory category){
+        return mDatabaseHelper.deleteFollowedCategory(category);
+    }
+
+    public Observable<FollowedCategory> saveFollowedCategory(FollowedCategory category){
+        return mDatabaseHelper.saveFollowedCategory(category);
+    }
 
 }

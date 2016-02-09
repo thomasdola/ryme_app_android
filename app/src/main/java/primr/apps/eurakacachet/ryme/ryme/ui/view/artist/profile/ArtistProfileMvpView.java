@@ -9,4 +9,8 @@ public interface ArtistProfileMvpView extends MvpView {
 
     void updateFollowers(long followers);
 
+    void enableFollowButton();
+
+    void disableFollowButton();
+
 }

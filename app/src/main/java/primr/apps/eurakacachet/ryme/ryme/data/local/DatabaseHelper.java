@@ -58,7 +58,7 @@ public class DatabaseHelper {
         return Observable.create(new Observable.OnSubscribe<LikedTrack>() {
             @Override
             public void call(Subscriber<? super LikedTrack> subscriber) {
-                mDb.insert(Db.LikedTrackTable.TABLE_NAME, Db.LikedTrackTable.toContentValues(track));
+                getBriteDb().insert(Db.LikedTrackTable.TABLE_NAME, Db.LikedTrackTable.toContentValues(track));
                 subscriber.onNext(track);
                 subscriber.onCompleted();
             }
@@ -69,7 +69,7 @@ public class DatabaseHelper {
         return Observable.create(new Observable.OnSubscribe<LikedTrack>() {
             @Override
             public void call(Subscriber<? super LikedTrack> subscriber) {
-                mDb.delete(Db.LikedTrackTable.TABLE_NAME, "uuid", String.valueOf(track.uuid));
+                getBriteDb().delete(Db.LikedTrackTable.TABLE_NAME, "uuid", String.valueOf(track.uuid));
                 subscriber.onNext(track);
                 subscriber.onCompleted();
             }
@@ -77,7 +77,7 @@ public class DatabaseHelper {
     }
 
     public Observable<List<LikedTrack>> getLikedTracks(){
-        return mDb.createQuery(Db.LikedTrackTable.TABLE_NAME,
+        return getBriteDb().createQuery(Db.LikedTrackTable.TABLE_NAME,
                 "SELECT * FROM " + Db.LikedTrackTable.TABLE_NAME)
                 .map(new Func1<SqlBrite.Query, List<LikedTrack>>() {
                     @Override
@@ -93,62 +93,22 @@ public class DatabaseHelper {
                 });
     }
 
-    public Observable<FollowedCategory> saveFollowingCategory(final FollowedCategory category){
-        return Observable.create(new Observable.OnSubscribe<FollowedCategory>() {
-            @Override
-            public void call(Subscriber<? super FollowedCategory> subscriber) {
-                mDb.insert(Db.FollowingCategoryTable.TABLE_NAME,
-                        Db.FollowingCategoryTable.toContentValues(category));
-                subscriber.onNext(category);
-                subscriber.onCompleted();
-            }
-        });
-    }
-
-    public Observable<FollowedCategory> deleteFollowingCategory(final FollowedCategory category){
-        return Observable.create(new Observable.OnSubscribe<FollowedCategory>() {
-            @Override
-            public void call(Subscriber<? super FollowedCategory> subscriber) {
-                mDb.delete(Db.FollowingCategoryTable.TABLE_NAME, "uuid", String.valueOf(category.id));
-                subscriber.onNext(category);
-                subscriber.onCompleted();
-            }
-        });
-    }
-
-    public Observable<List<FollowedCategory>> getFollowedCategories(){
-        return mDb.createQuery(Db.FollowingCategoryTable.TABLE_NAME,
-                "SELECT * FROM " + Db.FollowingCategoryTable.TABLE_NAME)
-                .map(new Func1<SqlBrite.Query, List<FollowedCategory>>() {
-                    @Override
-                    public List<FollowedCategory> call(SqlBrite.Query query) {
-                        Cursor cursor = query.run();
-                        List<FollowedCategory> result = new ArrayList<>();
-                        while (cursor.moveToNext()){
-                            result.add(Db.FollowingCategoryTable.parseCursor(cursor));
-                        }
-                        cursor.close();
-                        return result;
-                    }
-                });
-    }
-
-    public Observable<FollowedArtist> saveFollowingArtist(final FollowedArtist artist){
+    public Observable<FollowedArtist> saveFollowedArtist(final FollowedArtist artist){
         return Observable.create(new Observable.OnSubscribe<FollowedArtist>() {
             @Override
             public void call(Subscriber<? super FollowedArtist> subscriber) {
-                mDb.insert(Db.FollowingArtistTable.TABLE_NAME, Db.FollowingArtistTable.toContentValues(artist));
+                getBriteDb().insert(Db.FollowedArtistTable.TABLE_NAME, Db.FollowedArtistTable.toContentValues(artist));
                 subscriber.onNext(artist);
                 subscriber.onCompleted();
             }
         });
     }
 
-    public Observable<FollowedArtist> deleteFollowingArtist(final FollowedArtist artist){
+    public Observable<FollowedArtist> deleteFollowedArtist(final FollowedArtist artist){
         return Observable.create(new Observable.OnSubscribe<FollowedArtist>() {
             @Override
             public void call(Subscriber<? super FollowedArtist> subscriber) {
-                mDb.delete(Db.FollowingArtistTable.TABLE_NAME, "uuid", String.valueOf(artist.id));
+                getBriteDb().delete(Db.FollowedArtistTable.TABLE_NAME, "uuid", String.valueOf(artist.uuid));
                 subscriber.onNext(artist);
                 subscriber.onCompleted();
             }
@@ -156,15 +116,15 @@ public class DatabaseHelper {
     }
 
     public Observable<List<FollowedArtist>> getFollowedArtists(){
-        return mDb.createQuery(Db.FollowingArtistTable.TABLE_NAME,
-                "SELECT * FROM " + Db.FollowingArtistTable.TABLE_NAME)
+        return getBriteDb().createQuery(Db.FollowedArtistTable.TABLE_NAME,
+                "SELECT * FROM " + Db.FollowedArtistTable.TABLE_NAME)
                 .map(new Func1<SqlBrite.Query, List<FollowedArtist>>() {
                     @Override
                     public List<FollowedArtist> call(SqlBrite.Query query) {
                         Cursor cursor = query.run();
                         List<FollowedArtist> result = new ArrayList<>();
-                        while (cursor.moveToNext()){
-                            result.add(Db.FollowingArtistTable.parseCursor(cursor));
+                        while (cursor.moveToNext()) {
+                            result.add(Db.FollowedArtistTable.parseCursor(cursor));
                         }
                         cursor.close();
                         return result;
@@ -176,7 +136,7 @@ public class DatabaseHelper {
         return Observable.create(new Observable.OnSubscribe<DownloadedTrack>() {
             @Override
             public void call(Subscriber<? super DownloadedTrack> subscriber) {
-                mDb.insert(Db.DownloadedTrackTable.TABLE_NAME, Db.DownloadedTrackTable.toContentValues(track));
+                getBriteDb().insert(Db.DownloadedTrackTable.TABLE_NAME, Db.DownloadedTrackTable.toContentValues(track));
                 subscriber.onNext(track);
                 subscriber.onCompleted();
             }
@@ -187,7 +147,7 @@ public class DatabaseHelper {
         return Observable.create(new Observable.OnSubscribe<DownloadedTrack>() {
             @Override
             public void call(Subscriber<? super DownloadedTrack> subscriber) {
-                mDb.delete(Db.DownloadedTrackTable.TABLE_NAME, "uuid", String.valueOf(track.id));
+                getBriteDb().delete(Db.DownloadedTrackTable.TABLE_NAME, "uuid", String.valueOf(track.uuid));
                 subscriber.onNext(track);
                 subscriber.onCompleted();
             }
@@ -195,15 +155,55 @@ public class DatabaseHelper {
     }
 
     public Observable<List<DownloadedTrack>> getDownloadedTracks(){
-        return mDb.createQuery(Db.DownloadedTrackTable.TABLE_NAME,
+        return getBriteDb().createQuery(Db.DownloadedTrackTable.TABLE_NAME,
                 "SELECT * FROM " + Db.DownloadedTrackTable.TABLE_NAME)
                 .map(new Func1<SqlBrite.Query, List<DownloadedTrack>>() {
                     @Override
                     public List<DownloadedTrack> call(SqlBrite.Query query) {
                         Cursor cursor = query.run();
                         List<DownloadedTrack> result = new ArrayList<>();
-                        while (cursor.moveToNext()){
+                        while (cursor.moveToNext()) {
                             result.add(Db.DownloadedTrackTable.parseCursor(cursor));
+                        }
+                        cursor.close();
+                        return result;
+                    }
+                });
+    }
+
+    public Observable<FollowedCategory> saveFollowedCategory(final FollowedCategory category){
+        return Observable.create(new Observable.OnSubscribe<FollowedCategory>() {
+            @Override
+            public void call(Subscriber<? super FollowedCategory> subscriber) {
+                getBriteDb().insert(Db.FollowedCategoryTable.TABLE_NAME,
+                        Db.FollowedCategoryTable.toContentValues(category));
+                subscriber.onNext(category);
+                subscriber.onCompleted();
+            }
+        });
+    }
+
+    public Observable<FollowedCategory> deleteFollowedCategory(final FollowedCategory category){
+        return Observable.create(new Observable.OnSubscribe<FollowedCategory>() {
+            @Override
+            public void call(Subscriber<? super FollowedCategory> subscriber) {
+                getBriteDb().delete(Db.FollowedCategoryTable.TABLE_NAME, "uuid", String.valueOf(category.id));
+                subscriber.onNext(category);
+                subscriber.onCompleted();
+            }
+        });
+    }
+
+    public Observable<List<FollowedCategory>> getFollowedCategories(){
+        return getBriteDb().createQuery(Db.FollowedCategoryTable.TABLE_NAME,
+                "SELECT * FROM " + Db.FollowedCategoryTable.TABLE_NAME)
+                .map(new Func1<SqlBrite.Query, List<FollowedCategory>>() {
+                    @Override
+                    public List<FollowedCategory> call(SqlBrite.Query query) {
+                        Cursor cursor = query.run();
+                        List<FollowedCategory> result = new ArrayList<>();
+                        while (cursor.moveToNext()){
+                            result.add(Db.FollowedCategoryTable.parseCursor(cursor));
                         }
                         cursor.close();
                         return result;
@@ -215,11 +215,11 @@ public class DatabaseHelper {
         return Observable.create(new Observable.OnSubscribe<Category>() {
             @Override
             public void call(Subscriber<? super Category> subscriber) {
-                BriteDatabase.Transaction transaction = mDb.newTransaction();
+                BriteDatabase.Transaction transaction = getBriteDb().newTransaction();
                 try{
-                    mDb.delete(Db.CategoryTable.TABLE_NAME, null);
+                    getBriteDb().delete(Db.CategoryTable.TABLE_NAME, null);
                     for (Category category: categories) {
-                        mDb.insert(Db.CategoryTable.TABLE_NAME, Db.CategoryTable.toContentValues(category));
+                        getBriteDb().insert(Db.CategoryTable.TABLE_NAME, Db.CategoryTable.toContentValues(category));
                         subscriber.onNext(category);
                     }
                     transaction.markSuccessful();
@@ -232,7 +232,7 @@ public class DatabaseHelper {
     }
 
     public Observable<List<Category>> getCategories(){
-        return mDb.createQuery(Db.CategoryTable.TABLE_NAME,
+        return getBriteDb().createQuery(Db.CategoryTable.TABLE_NAME,
                 "SELECT * FROM " + Db.CategoryTable.TABLE_NAME)
                 .map(new Func1<SqlBrite.Query, List<Category>>() {
                     @Override

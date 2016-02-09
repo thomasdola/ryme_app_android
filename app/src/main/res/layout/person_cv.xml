@@ -55,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="3d ago"
-                        android:id="@+id/textView20"
+                        android:id="@+id/track_release_date_text_view"
                         android:gravity="end"/>
 
                 </LinearLayout>

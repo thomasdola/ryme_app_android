@@ -27,6 +27,14 @@ public class FavoritesFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static FavoritesFragment newInstance() {
+        Bundle args = new Bundle();
+        FavoritesFragment fragment = new FavoritesFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,9 +85,9 @@ public class FavoritesFragment extends Fragment {
         public CharSequence getPageTitle(int position){
             switch (position){
                 case 0:
-                    return "Favorite Tracks";
+                    return "Tracks";
                 case 1:
-                    return "Favorite Artists";
+                    return "Artists";
             }
             return null;
         }

@@ -19,17 +19,24 @@ public class DownloadsViewHolder extends RecyclerView.ViewHolder implements View
     TextView mTrackArtist;
     TextView mTrackDuration;
     ImageView mTrackCover;
-    DownloadedTrack mTrack;
+    private DownloadedTrack mTrack;
     DownloadsFragment mDownloadsFragment;
 
-    public DownloadsViewHolder(DownloadsFragment downloadsFragment, View itemView, DownloadedTrack track) {
+    public DownloadsViewHolder(DownloadsFragment downloadsFragment, View itemView) {
         super(itemView);
         mDownloadsFragment = downloadsFragment;
-        mTrack = track;
         mTrackCover = (ImageView) itemView.findViewById(R.id.download_track_cover);
         mTrackArtist = (TextView) itemView.findViewById(R.id.download_track_artist_text_view);
         mTrackTitle = (TextView) itemView.findViewById(R.id.download_track_title_text_view);
         mTrackDuration = (TextView) itemView.findViewById(R.id.download_track_duration_text_view);
+    }
+
+    public void bindTrack(DownloadedTrack track){
+        mTrack = track;
+//        mTrackCover.setImageResource();
+        mTrackArtist.setText(track.artist.toUpperCase());
+        mTrackDuration.setText((int) track.duration);
+        mTrackTitle.setText(track.title.toUpperCase());
     }
 
     @Override

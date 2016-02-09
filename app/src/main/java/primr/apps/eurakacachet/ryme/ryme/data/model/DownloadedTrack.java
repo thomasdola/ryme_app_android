@@ -8,7 +8,6 @@ import java.util.UUID;
 
 public class DownloadedTrack implements Parcelable {
 
-    public long id;
     public UUID uuid;
     public String title;
     public String artist;
@@ -23,7 +22,6 @@ public class DownloadedTrack implements Parcelable {
 
         DownloadedTrack track = (DownloadedTrack) o;
 
-        if (id != track.id) return false;
         if (duration != track.duration) return false;
         if (uuid != null ? !uuid.equals(track.uuid) : track.uuid != null) return false;
         if (title != null ? !title.equals(track.title) : track.title != null) return false;
@@ -35,8 +33,7 @@ public class DownloadedTrack implements Parcelable {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
+        int result = uuid != null ? uuid.hashCode() : 0;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (artist != null ? artist.hashCode() : 0);
         result = 31 * result + (path != null ? path.hashCode() : 0);
@@ -55,7 +52,6 @@ public class DownloadedTrack implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.id);
         dest.writeSerializable(this.uuid);
         dest.writeString(this.title);
         dest.writeString(this.artist);
@@ -65,7 +61,6 @@ public class DownloadedTrack implements Parcelable {
     }
 
     protected DownloadedTrack(Parcel in) {
-        this.id = in.readLong();
         this.uuid = (UUID) in.readSerializable();
         this.title = in.readString();
         this.artist = in.readString();

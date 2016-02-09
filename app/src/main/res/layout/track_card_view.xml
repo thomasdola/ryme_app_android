@@ -13,23 +13,23 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="75dp"
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:scaleType="fitCenter"
-            android:id="@+id/person_photo"
+            android:id="@+id/track_cover_avatar"
             android:contentDescription="@null"
             android:src="@drawable/stonebwoy1"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:padding="16dp"
+            android:layout_height="75dp"
+            android:padding="8dp"
             >
 
             <LinearLayout
@@ -56,7 +56,7 @@
                             android:layout_weight="7"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="Stone Boy - Pull Up ft Patoranky"
+                            android:text="@string/artist_track_title_view_test"
                             android:id="@+id/track_title_text_view"
                             android:textColor="@color/textColorPrimary"/>
 
@@ -67,9 +67,9 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/colorSecondary"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="3d"
+                            android:text="@string/release_date_test"
                             android:textSize="12sp"
-                            android:id="@+id/textView20"
+                            android:id="@+id/track_release_date_text_view"
                             android:gravity="end"/>
 
                     </LinearLayout>
@@ -89,14 +89,15 @@
                         android:id="@+id/info_track_stream"
                         android:src="@drawable/ic_info_stream"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentStart="true" />
+                        android:layout_alignParentStart="true"
+                        android:contentDescription="@null"/>
 
                     <TextView
                         android:textSize="12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="2k"
+                        android:text="@string/streams_view_test"
                         android:id="@+id/info_track_stream_text"
                         android:layout_alignBottom="@+id/info_track_stream"
                         android:layout_toEndOf="@+id/info_track_stream" />
@@ -108,14 +109,15 @@
                         android:src="@drawable/ic_info_favorite"
                         android:layout_marginStart="16dp"
                         android:layout_alignBottom="@+id/info_track_stream"
-                        android:layout_toEndOf="@+id/info_track_stream_text" />
+                        android:layout_toEndOf="@+id/info_track_stream_text"
+                        android:contentDescription="@null"/>
 
                     <TextView
                         android:textSize="12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="2k"
+                        android:text="@string/likes_view_test"
                         android:id="@+id/info_track_favorite_text"
                         android:layout_alignBottom="@+id/info_track_stream_text"
                         android:layout_toEndOf="@+id/info_track_favorite" />
@@ -127,14 +129,15 @@
                         android:layout_alignBottom="@+id/info_track_stream"
                         android:layout_toEndOf="@+id/info_track_favorite_text"
                         android:layout_marginStart="16dp"
-                        android:src="@drawable/ic_info_download"/>
+                        android:src="@drawable/ic_info_download"
+                        android:contentDescription="@null"/>
 
                     <TextView
                         android:textSize="12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="3k"
+                        android:text="@string/downloads_view_test"
                         android:id="@+id/info_track_download_text"
                         android:layout_alignTop="@+id/info_track_favorite_text"
                         android:layout_toEndOf="@+id/info_track_download" />

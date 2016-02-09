@@ -31,8 +31,8 @@ public class ArtistTrackListDisplayAdapter extends RecyclerView.Adapter<ArtistTr
 
     @Override
     public void onBindViewHolder(ArtistTrackDisplayViewHolder holder, int position) {
-        holder.mTrackTitleTextView.setText(mTracksList.get(position).title);
-
+        Track track = mTracksList.get(position);
+        holder.bindTrack(track);
     }
 
     @Override

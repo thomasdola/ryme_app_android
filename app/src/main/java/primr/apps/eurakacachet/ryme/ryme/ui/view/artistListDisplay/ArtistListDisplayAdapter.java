@@ -26,12 +26,13 @@ public class ArtistListDisplayAdapter extends RecyclerView.Adapter<ArtistDisplay
         LayoutInflater layoutInflater = LayoutInflater.from(mArtistListDisplayFragment.getActivity());
         View view = layoutInflater.inflate(R.layout.artist_card_view, parent, false);
 
-        return new ArtistDisplayViewHolder(view);
+        return new ArtistDisplayViewHolder(mArtistListDisplayFragment, view);
     }
 
     @Override
     public void onBindViewHolder(ArtistDisplayViewHolder holder, int position) {
-//            holder.mArtistNameTextView.setText(mArtistList.get(position).getName());
+        Artist artist = mArtistList.get(position);
+        holder.bindArtist(artist);
     }
 
     @Override

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <PreferenceScreen
+        android:title="Help"
+        android:icon="@drawable/ic_comment_list_grey">
+        <Preference
+            android:title="About"
+            android:icon="@drawable/ic_comment_list_grey">
+        </Preference>
+        <Preference
+            android:title="FAQ"
+            android:icon="@drawable/ic_comment_list_grey">
+            <intent android:action="android.intent.action.VIEW"
+                    android:data="http://google.com/" />
+        </Preference>
+        <Preference
+            android:title="@string/title_intent_preference"
+            android:icon="@drawable/ic_comment_list_grey">
+            <intent android:action="android.intent.action.VIEW"
+                    android:data="http://google.com/" />
+        </Preference>
+    </PreferenceScreen>
+
+    <PreferenceScreen
+        android:title="Profile"
+        android:icon="@drawable/ic_info_download">
+        <EditTextPreference
+            android:key="edit_username_preference"
+            android:title="Change Username"
+            android:dialogTitle="Change Username" />
+        <EditTextPreference
+            android:key="edit_stage_name_preference"
+            android:title="Change Stage Name"
+            android:dialogTitle="Change Stage Name" />
+        <Preference
+            android:title="photo"
+            android:layout="@layout/profile_preference">
+
+        </Preference>
+    </PreferenceScreen>
+
+    <PreferenceScreen
+        android:title="Account"
+        android:icon="@drawable/ic_info_download">
+        <PreferenceScreen
+            android:key="edit_username_preference"
+            android:title="Change Phone Number"
+            android:dialogTitle="Change Phone Number">
+
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:key="edit_stage_name_preference"
+            android:title="Change Stage Name"
+            android:dialogTitle="Change Stage Name">
+
+        </PreferenceScreen>
+    </PreferenceScreen>
+
+    <PreferenceScreen
+        android:title="Notification"
+        android:icon="@drawable/ic_action_bell_notification">
+        <EditTextPreference
+            android:key="edit_username_preference"
+            android:title="Change Username"
+            android:dialogTitle="Change Username" />
+        <EditTextPreference
+            android:key="edit_stage_name_preference"
+            android:title="Change Stage Name"
+            android:dialogTitle="Change Stage Name" />
+    </PreferenceScreen>
+
+</PreferenceScreen>

@@ -6,20 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
-import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
+import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
 
 import java.util.List;
 
-import primr.apps.eurakacachet.ryme.ryme.data.model.EventAd;
 import primr.apps.eurakacachet.ryme.ryme.R;
+import primr.apps.eurakacachet.ryme.ryme.data.model.EventAd;
 
 
 public class EventExpandableAdapter extends ExpandableRecyclerAdapter<EventParentViewHolder, EventChildViewHolder> {
 
-    private LayoutInflater mViewInflater = LayoutInflater.from(mContext);
+    private LayoutInflater mViewInflater;
 
-    public EventExpandableAdapter(Context context, List<ParentObject> parentItemList) {
-        super(context, parentItemList);
+    public EventExpandableAdapter(Context context, List<? extends ParentListItem> parentItemList) {
+        super(parentItemList);
+        mViewInflater  = LayoutInflater.from(context);
     }
 
     @Override
@@ -35,16 +36,16 @@ public class EventExpandableAdapter extends ExpandableRecyclerAdapter<EventParen
     }
 
     @Override
-    public void onBindParentViewHolder(EventParentViewHolder eventParentViewHolder, int i,
-                                       Object o) {
-        EventAd event = (EventAd) o;
-        eventParentViewHolder.mEventFareView.setText((int) event.fare);
-        eventParentViewHolder.mEventViewsView.setText("20");
+    public void onBindParentViewHolder(EventParentViewHolder parentViewHolder, int position,
+                                       ParentListItem parentListItem) {
+        EventAd event = (EventAd) parentListItem;
+        parentViewHolder.bindEventHead(event);
     }
 
     @Override
-    public void onBindChildViewHolder(EventChildViewHolder eventChildViewHolder, int i, Object o) {
-        EventChild eventChild = (EventChild) o;
-        eventChildViewHolder.mEventDescription.setText(eventChild.mEventDescription);
+    public void onBindChildViewHolder(EventChildViewHolder adDetailViewHolder, int position,
+                                      Object childListItem) {
+        EventAdDetail eventChild = (EventAdDetail) childListItem;
+        adDetailViewHolder.mEventDescription.setText(eventChild.mEventDescription);
     }
 }

@@ -37,8 +37,4 @@ public class EventAdsPresenter extends BasePresenter<EventAdsMvpView> {
         return null;
     }
 
-    public void viewEventAd(EventAd event){
-        checkViewAttached();
-    }
-
 }

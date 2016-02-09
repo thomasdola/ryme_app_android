@@ -34,6 +34,13 @@ public class HomeTabFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static HomeTabFragment newInstance() {
+        Bundle args = new Bundle();
+        HomeTabFragment fragment = new HomeTabFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Nullable
     @Override

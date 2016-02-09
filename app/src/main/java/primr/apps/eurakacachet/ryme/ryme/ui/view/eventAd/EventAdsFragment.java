@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
+import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +20,13 @@ import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.EventAd;
 
 
-public class EventAdsFragment extends Fragment {
+public class EventAdsFragment extends Fragment{
 
     @Inject EventAdsPresenter mEventAdsPresenter;
+
+    List<EventAd> mAds;
+
+    EventExpandableAdapter mAdapter;
 
     public EventAdsFragment() {
         // Required empty public constructor
@@ -32,31 +36,35 @@ public class EventAdsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        if( savedInstanceState != null ){
+            mAdapter.onRestoreInstanceState(savedInstanceState);
+        }
+
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_events, container, false);
 
         RecyclerView eventRecyclerView = (RecyclerView) rootView.findViewById(R.id.event_recycler_view);
+        EventExpandableAdapter mAdapter = new EventExpandableAdapter(getActivity(), prepareAds());
+        eventRecyclerView.setAdapter(mAdapter);
         eventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        EventExpandableAdapter eventExpandableAdapter = new EventExpandableAdapter(getActivity(), generateEvents());
-        eventExpandableAdapter.setCustomParentAnimationViewId(R.id.event_expand_button);
-        eventExpandableAdapter.setParentClickableViewAnimationDefaultDuration();
-        eventExpandableAdapter.setParentAndIconExpandOnClick(true);
-        eventRecyclerView.setAdapter(eventExpandableAdapter);
         return rootView;
     }
 
-    private List<ParentObject> generateEvents() {
-        List<EventAd> eventList = new ArrayList<>();//get From DataManager Class
-        List<ParentObject> parentObjects = new ArrayList<>();
-        for(EventAd event: eventList){
-            List<Object> eventChildList = new ArrayList<>();
-            eventChildList.add(new EventChild(event.description));
-            event.setChildObjectList(eventChildList);
+    private List<ParentListItem> prepareAds() {
+        List<EventAd> adList = loadAds();
+        List<ParentListItem> parentObjects = new ArrayList<>();
+        for(EventAd event: adList){
+            List<EventAdDetail> eventChildList = new ArrayList<>();
+            eventChildList.add(new EventAdDetail(event.description));
+            event.setChildItemList(eventChildList);
             parentObjects.add(event);
         }
         return parentObjects;
     }
 
+    private List<EventAd> loadAds() {
+        return new ArrayList<>();
+    }
 
 }

@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import primr.apps.eurakacachet.ryme.ryme.injection.ApplicationContext;
 import rx.Observable;
 import rx.Subscriber;
-import timber.log.Timber;
 
 
 public class PreferencesHelper {
@@ -19,7 +18,10 @@ public class PreferencesHelper {
     public static final String KEY_IS_LOGIN = "isLoggedIn";
     public static final String KEY_IS_ARTIST = "isArtist";
     public static final String KEY_ACCESS_TOKEN = "password";
-    public static final String KEY_USER_ID = "userId";
+    public static final String KEY_USER_UUID = "userUuid";
+    public static final String KEY_USER_AVATAR = "avatar";
+    public static final String KEY_USER_STAGE_NAME= "stageName";
+    public static final String KEY_IS_ALLOWED_TO_MAKE_ARTIST_REQUEST = "is_allowed";
 
     private final SharedPreferences mPref;
 
@@ -28,13 +30,44 @@ public class PreferencesHelper {
         mPref = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
     }
 
+    public String apiToken(){
+        return mPref.getString(KEY_ACCESS_TOKEN, null);
+    }
+
+    public void setAvatar(String avatar){
+        mPref.edit().putString(KEY_USER_AVATAR, avatar)
+                .apply();
+    }
+
+    public Observable<String> getAvatar(){
+        return Observable.just(
+                mPref.getString(KEY_USER_AVATAR, "")
+        );
+    }
+
+    public void setStageName(String stageName){
+        mPref.edit().putString(KEY_USER_STAGE_NAME, stageName)
+                .apply();
+    }
+
+    public Observable<String> getStageName(){
+        return Observable.just(
+                mPref.getString(KEY_USER_STAGE_NAME, "")
+        );
+    }
+
     public void setLogin(boolean isLoggedIn){
         mPref.edit().putBoolean(KEY_IS_LOGIN, isLoggedIn)
                 .apply();
-        Timber.i("User login Session changed to " + isLoggedIn);
     }
 
-    public void setIsArtist(boolean isHe){
+    public Observable<Boolean> isLoggedIn(){
+        return Observable.just(
+                mPref.getBoolean(KEY_IS_LOGIN, false)
+        );
+    }
+
+    public void setArtist(boolean isHe){
         mPref.edit().putBoolean(KEY_IS_ARTIST, isHe)
                 .apply();
     }
@@ -46,23 +79,14 @@ public class PreferencesHelper {
     }
 
     public void setUserId(UUID userId){
-        mPref.edit().putString(KEY_USER_ID, String.valueOf(userId))
+        mPref.edit().putString(KEY_USER_UUID, String.valueOf(userId))
                 .apply();
     }
 
     public Observable<UUID> getUserId(){
         return Observable.just(
-                UUID.fromString(mPref.getString(KEY_USER_ID, ""))
+                UUID.fromString(mPref.getString(KEY_USER_UUID, ""))
         );
-    }
-
-    public Observable<Boolean> isLoggedIn(){
-        return Observable.create(new Observable.OnSubscribe<Boolean>() {
-            @Override
-            public void call(Subscriber<? super Boolean> subscriber) {
-                mPref.getBoolean(KEY_IS_LOGIN, false);
-            }
-        });
     }
 
     public void setAccessToken(String accessToken){
@@ -77,6 +101,16 @@ public class PreferencesHelper {
                 mPref.getString(KEY_ACCESS_TOKEN, null);
             }
         });
+    }
+
+    public void setIsAllowedToMakeArtistRequest(boolean isHeAllowed){
+        mPref.edit().putBoolean(KEY_IS_ALLOWED_TO_MAKE_ARTIST_REQUEST, isHeAllowed);
+    }
+
+    public Observable<Boolean> getIsAllowedToMakeRequest(){
+        return Observable.just(
+                mPref.getBoolean(KEY_IS_ALLOWED_TO_MAKE_ARTIST_REQUEST, false)
+        );
     }
 
     public void clear() {

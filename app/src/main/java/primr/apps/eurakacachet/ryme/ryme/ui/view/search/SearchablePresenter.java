@@ -9,9 +9,7 @@ import primr.apps.eurakacachet.ryme.ryme.data.model.Searchable;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BasePresenter;
 import rx.Subscription;
 
-/**
- * Created by GURU on 2/1/2016.
- */
+
 public class SearchablePresenter extends BasePresenter<SearchableMvpView> {
 
     private final DataManager mDataManager;

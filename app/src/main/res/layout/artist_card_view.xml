@@ -18,7 +18,7 @@
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:scaleType="centerCrop"
-            android:id="@+id/artist_photo"
+            android:id="@+id/artist_avatar"
             android:contentDescription="@null"
             android:src="@drawable/stonebwoy1"
             />

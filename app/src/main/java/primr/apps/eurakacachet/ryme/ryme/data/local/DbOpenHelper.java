@@ -28,8 +28,8 @@ public class DbOpenHelper extends SQLiteOpenHelper{
             db.execSQL(Db.CategoryTable.CREATE);
             db.execSQL(Db.DownloadedTrackTable.CREATE);
             db.execSQL(Db.LikedTrackTable.CREATE);
-            db.execSQL(Db.FollowingArtistTable.CREATE);
-            db.execSQL(Db.FollowingCategoryTable.CREATE);
+            db.execSQL(Db.FollowedArtistTable.CREATE);
+            db.execSQL(Db.FollowedCategoryTable.CREATE);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();

@@ -46,15 +46,8 @@
                 android:value=".ui.view.artist.profile.ArtistProfileActivity" />
         </activity>
         <activity
-            android:name=".ui.view.settings.SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".ui.view.main.MainActivity"
-            android:theme="@style/AppTheme" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.view.main.MainActivity" />
-        </activity>
-        <activity android:name=".ui.view.search.SearchableActivity" >
+            android:name=".ui.view.search.SearchableActivity"
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -107,6 +100,24 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".ui.view.settings.NewSettingsActivity"
+            android:label="@string/title_activity_new_settings"
+            android:parentActivityName=".ui.view.main.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.view.settings.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".ui.view.main.MainActivity"
+            android:theme="@style/AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

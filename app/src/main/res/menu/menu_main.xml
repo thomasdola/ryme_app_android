@@ -5,15 +5,15 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/action_notification"
-        android:title="notification"
+        android:id="@+id/menu_settings"
+        android:title="settings"
         android:orderInCategory="2"
         android:icon="@drawable/ic_action_bell_notification"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/search"
-        android:title="search"
+        android:title="@string/menu_search"
         android:orderInCategory="1"
         android:icon="@drawable/ic_action_search_white"
         app:showAsAction="collapseActionView|ifRoom"

@@ -1,39 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <PreferenceCategory
-        android:title="@string/title_first_section">
-
-        <CheckBoxPreference
-            android:key="checkbox_preference"
-            android:title="@string/title_checkbox_preference"
-            android:defaultValue="@string/default_checkbox_preference"/>
-
-        <EditTextPreference
-            android:key="edittext_preference"
-            android:title="@string/title_edittext_preference"
-            android:summary="@string/summary_edittext_preference"
-            android:dialogTitle="@string/dialog_title_edittext_preference"
-            android:dependency="checkbox_preference" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/title_second_section">
-
-        <ListPreference
-            android:key="list_preference"
-            android:title="@string/title_list_preference"
-            android:dialogTitle="@string/dialog_title_list_preference"
-            android:entries="@array/entries_list_preference"
-            android:entryValues="@array/entryvalues_list_preference" />
-
-        <Preference
-            android:title="@string/title_intent_preference">
-            <intent android:action="android.intent.action.VIEW"
-                android:data="http://codepath.com/" />
-        </Preference>
-
-    </PreferenceCategory>
-
-</PreferenceScreen>
+    <android.support.v7.preference.PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/pref_category_reading">
+        <android.support.v7.preference.ListPreference
+            android:key="@string/pref_theme"
+            android:title="@string/pref_theme_title"
+            android:entries="@array/pref_theme_options"
+            android:entryValues="@array/pref_theme_values"
+            android:defaultValue="@string/pref_theme_value_light" />
+        <android.support.v7.preference.ListPreference
+            android:key="@string/pref_text_size"
+            android:entries="@array/text_size_options"
+            android:entryValues="@array/pref_text_size_values"
+            android:defaultValue="0"
+            android:title="@string/pref_text_size_title" />
+        <android.support.v7.preference.ListPreference
+            android:key="@string/pref_story_display"
+            android:title="@string/pref_story_display_title"
+            android:entries="@array/pref_story_display_options"
+            android:entryValues="@array/pref_story_display_values"
+            android:defaultValue="@string/pref_story_display_value_article" />
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="@string/pref_highlight_updated"
+            android:title="@string/pref_highlight_updated_title"
+            android:summary="@string/pref_highlight_updated_summary"
+            android:defaultValue="true" />
+        <!--<io.github.hidroh.materialistic.preference.PreferenceHelp-->
+            <!--android:key="@string/pref_highlight_updated_help"-->
+            <!--android:title="@string/whats_this"-->
+            <!--app:dialogTitle="@string/pref_highlight_updated_title"-->
+            <!--app:dialogLayout="@layout/help_list_view" />-->
+        <android.support.v7.preference.ListPreference
+            android:key="@string/pref_comment_display"
+            android:title="@string/pref_comment_display_title"
+            android:entries="@array/pref_comment_display_options"
+            android:entryValues="@array/pref_comment_display_values"
+            android:defaultValue="@string/pref_comment_display_value_collapsed" />
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="@string/pref_color_code"
+            android:title="@string/pref_color_code_title"
+            android:summary="@string/pref_color_code_summary"
+            android:defaultValue="true" />
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="@string/pref_external"
+            android:title="@string/pref_external_title"
+            android:enabled="@bool/pref_external_enabled"
+            android:summary="@string/pref_external_summary"
+            android:defaultValue="false" />
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="@string/pref_custom_tab"
+            android:title="@string/pref_custom_tab_title"
+            android:summary="@string/pref_custom_tab_summary"
+            android:defaultValue="true" />
+    </android.support.v7.preference.PreferenceCategory>
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/pref_category_search">
+        <android.support.v7.preference.ListPreference
+            android:key="@string/pref_search_sort"
+            android:title="@string/pref_search_sort_title"
+            android:entries="@array/pref_search_sort_options"
+            android:entryValues="@array/pref_search_sort_values"
+            android:defaultValue="@string/pref_search_sort_value_recent" />
+    </android.support.v7.preference.PreferenceCategory>
+</android.support.v7.preference.PreferenceScreen>

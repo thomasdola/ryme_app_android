@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Collections;
 import java.util.List;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
@@ -15,7 +16,6 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsViewHolder> 
 
     DownloadsFragment mDownloadsFragment;
     List<DownloadedTrack> mTracks;
-    DownloadedTrack mTrack;
 
     public DownloadsAdapter(DownloadsFragment downloadsFragment, List<DownloadedTrack> tracks){
         mDownloadsFragment = downloadsFragment;
@@ -28,20 +28,27 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsViewHolder> 
         View downloadTrackView = layoutInflater.inflate(R.layout.download_track_card,
                 parent, false);
 
-        return new DownloadsViewHolder(mDownloadsFragment, downloadTrackView, mTrack);
+        return new DownloadsViewHolder(mDownloadsFragment, downloadTrackView);
     }
 
     @Override
     public void onBindViewHolder(DownloadsViewHolder holder, int position) {
-        mTrack = mTracks.get(position);
-//        holder.mTrackCover.setImageResource();
-        holder.mTrackArtist.setText(mTrack.artist.toUpperCase());
-        holder.mTrackDuration.setText((int) mTrack.duration);
-        holder.mTrackTitle.setText(mTrack.title.toUpperCase());
+        DownloadedTrack track = mTracks.get(position);
+        holder.bindTrack(track);
     }
 
     @Override
     public int getItemCount() {
         return mTracks.size();
+    }
+
+    public void swap(int firstPosition, int secondPosition) {
+        Collections.swap(mTracks, firstPosition, secondPosition);
+        notifyItemMoved(firstPosition, secondPosition);
+    }
+
+    public void remove(int position) {
+        mTracks.remove(position);
+        notifyItemRemoved(position);
     }
 }

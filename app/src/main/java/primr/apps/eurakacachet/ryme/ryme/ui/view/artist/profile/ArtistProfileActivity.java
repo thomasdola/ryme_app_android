@@ -125,6 +125,16 @@ public class ArtistProfileActivity extends AppCompatActivity implements ArtistPr
         followersView.setText((int) followers);
     }
 
+    @Override
+    public void enableFollowButton() {
+
+    }
+
+    @Override
+    public void disableFollowButton() {
+
+    }
+
 
     class ArtistProfilePageAdapter extends FragmentPagerAdapter {
 

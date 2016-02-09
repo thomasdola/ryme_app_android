@@ -7,12 +7,12 @@
         android:icon="@drawable/ic_favorite_track_star_outline"
         android:id="@+id/favorite_track_action"
         android:orderInCategory="1"
-        android:title="Profile"
+        android:title="@string/menu_like"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/view_artist_profile"
         android:orderInCategory="1"
-        android:title="Profile"
+        android:title="@string/menu_profile"
         app:showAsAction="never"/>
 </menu>

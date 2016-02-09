@@ -10,10 +10,11 @@ public class UserProfile implements Parcelable {
 
     public UUID uuid;
     public String username;
-    public String stage_name;
     public String phone_number;
     public String avatar;
-    public String stage_picture;
+    public boolean is_artist;
+    public String stage_name;
+    public String background_picture;
 
     @Override
     public boolean equals(Object o) {
@@ -22,15 +23,16 @@ public class UserProfile implements Parcelable {
 
         UserProfile that = (UserProfile) o;
 
+        if (is_artist != that.is_artist) return false;
         if (uuid != null ? !uuid.equals(that.uuid) : that.uuid != null) return false;
         if (username != null ? !username.equals(that.username) : that.username != null)
-            return false;
-        if (stage_name != null ? !stage_name.equals(that.stage_name) : that.stage_name != null)
             return false;
         if (phone_number != null ? !phone_number.equals(that.phone_number) : that.phone_number != null)
             return false;
         if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
-        return !(stage_picture != null ? !stage_picture.equals(that.stage_picture) : that.stage_picture != null);
+        if (stage_name != null ? !stage_name.equals(that.stage_name) : that.stage_name != null)
+            return false;
+        return !(background_picture != null ? !background_picture.equals(that.background_picture) : that.background_picture != null);
 
     }
 
@@ -38,13 +40,16 @@ public class UserProfile implements Parcelable {
     public int hashCode() {
         int result = uuid != null ? uuid.hashCode() : 0;
         result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (stage_name != null ? stage_name.hashCode() : 0);
         result = 31 * result + (phone_number != null ? phone_number.hashCode() : 0);
         result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
-        result = 31 * result + (stage_picture != null ? stage_picture.hashCode() : 0);
+        result = 31 * result + (is_artist ? 1 : 0);
+        result = 31 * result + (stage_name != null ? stage_name.hashCode() : 0);
+        result = 31 * result + (background_picture != null ? background_picture.hashCode() : 0);
         return result;
     }
 
+    public UserProfile() {
+    }
 
     @Override
     public int describeContents() {
@@ -55,25 +60,24 @@ public class UserProfile implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeSerializable(this.uuid);
         dest.writeString(this.username);
-        dest.writeString(this.stage_name);
         dest.writeString(this.phone_number);
         dest.writeString(this.avatar);
-        dest.writeString(this.stage_picture);
-    }
-
-    public UserProfile() {
+        dest.writeByte(is_artist ? (byte) 1 : (byte) 0);
+        dest.writeString(this.stage_name);
+        dest.writeString(this.background_picture);
     }
 
     protected UserProfile(Parcel in) {
         this.uuid = (UUID) in.readSerializable();
         this.username = in.readString();
-        this.stage_name = in.readString();
         this.phone_number = in.readString();
         this.avatar = in.readString();
-        this.stage_picture = in.readString();
+        this.is_artist = in.readByte() != 0;
+        this.stage_name = in.readString();
+        this.background_picture = in.readString();
     }
 
-    public static final Parcelable.Creator<UserProfile> CREATOR = new Parcelable.Creator<UserProfile>() {
+    public static final Creator<UserProfile> CREATOR = new Creator<UserProfile>() {
         public UserProfile createFromParcel(Parcel source) {
             return new UserProfile(source);
         }

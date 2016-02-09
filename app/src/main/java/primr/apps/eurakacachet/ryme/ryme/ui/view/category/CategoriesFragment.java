@@ -27,6 +27,13 @@ public class CategoriesFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static CategoriesFragment newInstance() {
+        Bundle args = new Bundle();
+        CategoriesFragment fragment = new CategoriesFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,11 +44,15 @@ public class CategoriesFragment extends Fragment {
         mCategoryListRecyclerView = (RecyclerView) rootView.findViewById(R.id.category_card_view);
         mCategoryListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        List<Category> categories = new ArrayList<>();
+        List<Category> categories = loadCategories();
         CategoryListAdapter categoryListAdapter = new CategoryListAdapter(this, categories);
         mCategoryListRecyclerView.setAdapter(categoryListAdapter);
 
         return rootView;
+    }
+
+    private List<Category> loadCategories() {
+        return new ArrayList<>();
     }
 
 }

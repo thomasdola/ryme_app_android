@@ -3,16 +3,18 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="primr.apps.eurakacachet.ryme.ryme.ui.view.settings.SettingsActivity$GeneralPreferenceFragment"
-        android:title="@string/pref_header_general" android:icon="@drawable/ic_info_black_24dp" />
+        android:fragment="primr.apps.eurakacachet.ryme.ryme.ui.view.settings.NewSettingsActivity$GeneralPreferenceFragment"
+        android:title="@string/pref_header_general"
+        android:icon="@drawable/ic_info_black_24dp"/>
 
     <header
-        android:fragment="primr.apps.eurakacachet.ryme.ryme.ui.view.settings.SettingsActivity$NotificationPreferenceFragment"
+        android:fragment="primr.apps.eurakacachet.ryme.ryme.ui.view.settings.NewSettingsActivity$NotificationPreferenceFragment"
         android:title="@string/pref_header_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp" />
+        android:icon="@drawable/ic_notifications_black_24dp"/>
 
     <header
-        android:fragment="primr.apps.eurakacachet.ryme.ryme.ui.view.settings.SettingsActivity$DataSyncPreferenceFragment"
-        android:title="@string/pref_header_data_sync" android:icon="@drawable/ic_sync_black_24dp" />
+        android:fragment="primr.apps.eurakacachet.ryme.ryme.ui.view.settings.NewSettingsActivity$DataSyncPreferenceFragment"
+        android:title="@string/pref_header_data_sync"
+        android:icon="@drawable/ic_sync_black_24dp"/>
 
 </preference-headers>

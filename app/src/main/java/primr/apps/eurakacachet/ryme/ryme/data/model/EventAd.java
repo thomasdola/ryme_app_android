@@ -3,14 +3,17 @@ package primr.apps.eurakacachet.ryme.ryme.data.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
+
+import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
 
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import primr.apps.eurakacachet.ryme.ryme.ui.view.eventAd.EventAdDetail;
 
-public class EventAd implements Parcelable, ParentObject {
+
+public class EventAd implements Parcelable, ParentListItem {
 
     public String title;
     public Date date;
@@ -19,7 +22,7 @@ public class EventAd implements Parcelable, ParentObject {
     public float fare;
     public long views;
     public UUID uuid;
-    private List<Object> mChildrenList;
+    private List<EventAdDetail> mChildItemList;
 
     @Override
     public boolean equals(Object o) {
@@ -94,12 +97,16 @@ public class EventAd implements Parcelable, ParentObject {
     };
 
     @Override
-    public List<Object> getChildObjectList() {
-        return mChildrenList;
+    public List<?> getChildItemList() {
+        return mChildItemList;
+    }
+
+    public void setChildItemList(List<EventAdDetail> details){
+        mChildItemList = details;
     }
 
     @Override
-    public void setChildObjectList(List<Object> list) {
-        mChildrenList = list;
+    public boolean isInitiallyExpanded() {
+        return false;
     }
 }

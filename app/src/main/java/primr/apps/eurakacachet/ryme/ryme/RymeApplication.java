@@ -8,7 +8,7 @@ import primr.apps.eurakacachet.ryme.ryme.injection.component.DaggerApplicationCo
 import primr.apps.eurakacachet.ryme.ryme.injection.module.ApplicationModule;
 
 
-public class RymeApplication extends Application {
+public class RymeApplication extends Application{
 
     ApplicationComponent mApplicationComponent;
 

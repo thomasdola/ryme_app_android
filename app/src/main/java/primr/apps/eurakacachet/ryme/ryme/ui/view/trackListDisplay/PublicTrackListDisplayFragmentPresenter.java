@@ -1,5 +1,7 @@
 package primr.apps.eurakacachet.ryme.ryme.ui.view.trackListDisplay;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.data.DataManager;
@@ -29,8 +31,9 @@ public class PublicTrackListDisplayFragmentPresenter extends BasePresenter<Publi
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void viewTrack(Track track){
+    public List<Track> refreshTrackStore(){
         checkViewAttached();
+        return null;
     }
 
 }

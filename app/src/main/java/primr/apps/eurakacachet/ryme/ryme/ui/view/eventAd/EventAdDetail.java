@@ -1,11 +1,11 @@
 package primr.apps.eurakacachet.ryme.ryme.ui.view.eventAd;
 
 
-public class EventChild {
+public class EventAdDetail {
 
     public String mEventDescription;
 
-    public EventChild(String eventDescription){
+    public EventAdDetail(String eventDescription){
         mEventDescription = eventDescription;
     }
 }
