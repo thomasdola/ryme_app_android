@@ -6,9 +6,11 @@ import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.data.DataManager;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Comment;
-import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BasePresenter;
+import rx.Subscriber;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 public class CommentListPresenter extends BasePresenter<CommentListMvpView> {
@@ -32,13 +34,35 @@ public class CommentListPresenter extends BasePresenter<CommentListMvpView> {
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void comment(Track track, Comment comment){
+    public void loadComments(String trackId){
         checkViewAttached();
-    }
+        getMvpView().showLoading();
+        mDataManager.getTrackComments(trackId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<Comment>>() {
+                    @Override
+                    public void onCompleted() {
 
-    public List<Comment> loadComments(Track track){
-        checkViewAttached();
-        return null;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        getMvpView().hideLoading();
+                        getMvpView().showError();
+                    }
+
+                    @Override
+                    public void onNext(List<Comment> comments) {
+                        getMvpView().hideLoading();
+                        if(comments.isEmpty()){
+                            getMvpView().showNoCommentsYet();
+                        }else {
+                            getMvpView().setCommentList(comments);
+                        }
+                    }
+                });
     }
 
 }

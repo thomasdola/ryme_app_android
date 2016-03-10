@@ -5,25 +5,27 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
-import primr.apps.eurakacachet.ryme.ryme.data.model.DownloadedTrack;
+import primr.apps.eurakacachet.ryme.ryme.data.local.storio.models.SavedTrack;
+import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
 
 
 public class DownloadsFragment extends Fragment implements DownloadsMvpView{
 
-    @Inject DownloadsPresenter mDownloadsPresenter;
+    @Inject DownloadsPresenter mPresenter;
+    @Inject DownloadsAdapter mAdapter;
 
-    public List<DownloadedTrack> mTracks;
-    public List<DownloadedTrack> tracksToDelete;
+    public List<SavedTrack> tracksToDelete;
+    private RecyclerView mRecyclerView;
 
     public DownloadsFragment(){}
 
@@ -44,9 +46,13 @@ public class DownloadsFragment extends Fragment implements DownloadsMvpView{
         return rootView;
     }
 
-    private List<DownloadedTrack> loadTracks(){
-        List<DownloadedTrack> tracks = new ArrayList<>();
-        return tracks;
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ((BaseActivity)getActivity()).getActivityComponent().inject(this);
+        mPresenter.attachView(this);
+        mPresenter.loadTracks();
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -61,19 +67,29 @@ public class DownloadsFragment extends Fragment implements DownloadsMvpView{
     }
 
     private void initRecyclerView(View rootView) {
-        RecyclerView recyclerView = (RecyclerView) rootView
+        mRecyclerView = (RecyclerView) rootView
                 .findViewById(R.id.download_track_list_display_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mTracks = loadTracks();
-        DownloadsAdapter adapter = new DownloadsAdapter(this, mTracks);
-        recyclerView.setAdapter(adapter);
-        ItemTouchHelper.Callback callback = new TrackTouchHelper(adapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ItemTouchHelper.Callback callback = new TrackTouchHelper(mAdapter);
         ItemTouchHelper helper = new ItemTouchHelper(callback);
-        helper.attachToRecyclerView(recyclerView);
+        helper.attachToRecyclerView(mRecyclerView);
     }
 
     @Override
     public void showFeedback(String trackTitle) {
 
+    }
+
+    @Override
+    public void setTracks(List<SavedTrack> savedTracks) {
+        if(savedTracks.isEmpty()){
+            showEmptyState();
+        }
+        mAdapter.setTracks(this, savedTracks);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void showEmptyState() {
+        Log.d("downloads", "showing empty state");
     }
 }

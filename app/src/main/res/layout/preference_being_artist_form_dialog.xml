@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_margin="16dp"
+        android:layout_width="match_parent"
+        android:text="@string/terms_of_being_artist"
+        android:layout_height="wrap_content"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/usernameEditText"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+        <EditText
+            android:id="@+id/stage_name_pref"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:imeOptions="actionDone"
+            android:hint="@string/stage_name_text_hint"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/artist_category_layout"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+        <primr.apps.eurakacachet.ryme.ryme.utils.helpers.layout.CustomAutoCompleteTextView
+            android:id="@+id/artist_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="@string/category_text_hint"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <Button
+            android:text="@string/later_text"
+            android:textColor="@color/white_ash"
+            android:background="@color/lightBlueBlack"
+            android:id="@+id/later_button"
+            android:layout_marginEnd="5dp"
+            android:textAllCaps="false"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="30dp"/>
+        <Button
+            android:background="@drawable/native_button_state"
+            android:id="@+id/submit_button"
+            android:textColor="@color/white_ash"
+            android:text="@string/submit_text"
+            android:textAllCaps="false"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="30dp"/>
+    </LinearLayout>
+</LinearLayout>

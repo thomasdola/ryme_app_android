@@ -18,18 +18,14 @@ public class Category implements Parcelable {
 
         Category category = (Category) o;
 
-        if (name != null ? !name.equals(category.name) : category.name != null) return false;
-        return !(uuid != null ? !uuid.equals(category.uuid) : category.uuid != null);
+        return name.equals(category.name);
 
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
-        return result;
+        return name.hashCode();
     }
-
 
     @Override
     public int describeContents() {
@@ -42,8 +38,7 @@ public class Category implements Parcelable {
         dest.writeSerializable(this.uuid);
     }
 
-    public Category() {
-    }
+    public Category() {}
 
     protected Category(Parcel in) {
         this.name = in.readString();

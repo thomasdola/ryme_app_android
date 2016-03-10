@@ -4,27 +4,25 @@ package primr.apps.eurakacachet.ryme.ryme.data.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.UUID;
-
 public class FollowedArtist implements Parcelable {
-
-    public UUID uuid;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FollowedArtist that = (FollowedArtist) o;
+        FollowedArtist artist = (FollowedArtist) o;
 
-        return !(uuid != null ? !uuid.equals(that.uuid) : that.uuid != null);
+        return uuid.equals(artist.uuid);
 
     }
 
     @Override
     public int hashCode() {
-        return uuid != null ? uuid.hashCode() : 0;
+        return uuid.hashCode();
     }
+
+    public String uuid;
 
     public FollowedArtist() {
     }
@@ -36,11 +34,11 @@ public class FollowedArtist implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeSerializable(this.uuid);
+        dest.writeString(this.uuid);
     }
 
     protected FollowedArtist(Parcel in) {
-        this.uuid = (UUID) in.readSerializable();
+        this.uuid = in.readString();
     }
 
     public static final Creator<FollowedArtist> CREATOR = new Creator<FollowedArtist>() {

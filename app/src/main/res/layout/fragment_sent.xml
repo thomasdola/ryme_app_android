@@ -1,15 +1,37 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="primr.apps.eurakacachet.ryme.ryme.ui.view.category.CategoriesFragment">
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/follow_category_layout"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fitsSystemWindows="true"
+tools:context="primr.apps.eurakacachet.ryme.ryme.ui.view.category.category.CategoriesFragment">
 
+<ProgressBar
+    android:visibility="invisible"
+    android:id="@+id/loading_view"
+    android:layout_width="match_parent"
+    android:layout_height="5dp"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/category_card_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<android.support.v7.widget.RecyclerView
+    android:background="@color/blueBlack"
+    android:id="@+id/category_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+</android.support.v7.widget.RecyclerView>
 
+<android.support.design.widget.FloatingActionButton
+    android:id="@+id/start_fab"
+    app:rippleColor="@color/blueBlack"
+    app:backgroundTint="@color/white_ash"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+    android:layout_margin="@dimen/fab_margin"
+    android:src="@drawable/ic_action_start_blueblack"/>
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
+

@@ -2,53 +2,70 @@ package primr.apps.eurakacachet.ryme.ryme.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.UUID;
+import android.support.annotation.Nullable;
 
 
 public class UserProfile implements Parcelable {
 
-    public UUID uuid;
+    public String uuid;
     public String username;
     public String phone_number;
+    @Nullable
     public String avatar;
     public boolean is_artist;
+    public boolean is_request_on;
+    @Nullable
     public String stage_name;
+    @Nullable
     public String background_picture;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public String uuid() {
+        return uuid;
+    }
 
-        UserProfile that = (UserProfile) o;
+    public String username() {
+        return username;
+    }
 
-        if (is_artist != that.is_artist) return false;
-        if (uuid != null ? !uuid.equals(that.uuid) : that.uuid != null) return false;
-        if (username != null ? !username.equals(that.username) : that.username != null)
-            return false;
-        if (phone_number != null ? !phone_number.equals(that.phone_number) : that.phone_number != null)
-            return false;
-        if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
-        if (stage_name != null ? !stage_name.equals(that.stage_name) : that.stage_name != null)
-            return false;
-        return !(background_picture != null ? !background_picture.equals(that.background_picture) : that.background_picture != null);
+    public String phone_number() {
+        return phone_number;
+    }
 
+    @Nullable
+    public String avatar() {
+        return avatar;
+    }
+
+    public boolean is_artist() {
+        return is_artist;
+    }
+
+    @Nullable
+    public String stage_name() {
+        return stage_name;
+    }
+
+    @Nullable
+    public String background_picture() {
+        return background_picture;
+    }
+
+    public boolean is_request_on() {
+        return is_request_on;
     }
 
     @Override
-    public int hashCode() {
-        int result = uuid != null ? uuid.hashCode() : 0;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (phone_number != null ? phone_number.hashCode() : 0);
-        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
-        result = 31 * result + (is_artist ? 1 : 0);
-        result = 31 * result + (stage_name != null ? stage_name.hashCode() : 0);
-        result = 31 * result + (background_picture != null ? background_picture.hashCode() : 0);
-        return result;
-    }
-
-    public UserProfile() {
+    public String toString() {
+        return "UserProfile{" +
+                "uuid='" + uuid + '\'' +
+                ", username='" + username + '\'' +
+                ", phone_number='" + phone_number + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", is_artist=" + is_artist +
+                ", is_request_on=" + is_request_on +
+                ", stage_name='" + stage_name + '\'' +
+                ", background_picture='" + background_picture + '\'' +
+                '}';
     }
 
     @Override
@@ -58,7 +75,7 @@ public class UserProfile implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeSerializable(this.uuid);
+        dest.writeString(this.uuid);
         dest.writeString(this.username);
         dest.writeString(this.phone_number);
         dest.writeString(this.avatar);
@@ -67,8 +84,11 @@ public class UserProfile implements Parcelable {
         dest.writeString(this.background_picture);
     }
 
+    public UserProfile() {
+    }
+
     protected UserProfile(Parcel in) {
-        this.uuid = (UUID) in.readSerializable();
+        this.uuid = in.readString();
         this.username = in.readString();
         this.phone_number = in.readString();
         this.avatar = in.readString();
@@ -86,4 +106,5 @@ public class UserProfile implements Parcelable {
             return new UserProfile[size];
         }
     };
+
 }

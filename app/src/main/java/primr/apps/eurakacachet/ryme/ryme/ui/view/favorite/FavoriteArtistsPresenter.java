@@ -9,9 +9,7 @@ import primr.apps.eurakacachet.ryme.ryme.data.model.Artist;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BasePresenter;
 import rx.Subscription;
 
-/**
- * Created by GURU on 2/1/2016.
- */
+
 public class FavoriteArtistsPresenter extends BasePresenter<FavoriteMvpView> {
 
     private final DataManager mDataManager;

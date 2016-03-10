@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
     android:transitionName="@string/track_transition_string"
     app:cardCornerRadius="2dp"
     app:cardElevation="1dp"
+    app:contentPadding="2dp"
     android:id="@+id/artist_track_cv"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -17,10 +18,17 @@
         android:layout_height="60dp"
         android:orientation="horizontal">
 
+        <ImageView
+            android:id="@+id/track_cover_image_view"
+            android:layout_width="60dp"
+            android:scaleType="centerCrop"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="4dp"
             >
 
             <LinearLayout
@@ -28,9 +36,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_alignParentTop="true"
-                android:id="@+id/linearLayout"
-                android:divider="?android:dividerVertical"
-                android:showDividers="middle">
+                android:id="@+id/linearLayout">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -43,19 +49,24 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:singleLine="true"
+                            android:ellipsize="end"
                             android:layout_width="0dp"
-                            android:layout_weight="5"
+                            android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="Stone Boy - Pull Up ft Patoranky"
                             android:id="@+id/artist_track_title_text_view"
-                            android:textColor="@color/textColorPrimary"/>
+                            android:textColor="@color/blueBlack"/>
 
-                        <ImageView
+                        <com.github.curioustechizen.ago.RelativeTimeTextView
+                            android:singleLine="true"
+                            android:ellipsize="start"
+                            android:textColor="@color/lighterBlueBlack"
+                            android:gravity="end"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/play_track_button"
-                            android:src="@drawable/ic_track_stream_selected"
+                            android:id="@+id/artist_track_released_date"
                             android:layout_weight="1" />
 
 
@@ -66,28 +77,20 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="2"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="3d"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:layout_marginEnd="20dp"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"
-                        android:id="@+id/artist_track_released_date" />
+                    android:layout_weight="3"
+                    android:gravity="start">
 
                     <ImageView
+                        android:contentDescription="@null"
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:id="@+id/info_track_stream"
-                        android:src="@drawable/ic_info_stream"
+                        android:src="@drawable/ic_action_play_info_blueblack"
                         android:layout_centerVertical="true"
                         android:layout_alignParentStart="true" />
 
                     <TextView
+                        android:textColor="@color/lighterBlueBlack"
                         android:textSize="12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -98,15 +101,17 @@
                         android:layout_toEndOf="@+id/info_track_stream" />
 
                     <ImageView
+                        android:contentDescription="@null"
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:id="@+id/info_track_favorite"
-                        android:src="@drawable/ic_info_favorite"
-                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_action_like_fill_blueblack"
+                        android:layout_marginStart="32dp"
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/artist_track_stream_text" />
 
                     <TextView
+                        android:textColor="@color/lighterBlueBlack"
                         android:textSize="12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -117,23 +122,41 @@
                         android:layout_toEndOf="@+id/info_track_favorite" />
 
                     <ImageView
+                        android:contentDescription="@null"
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:id="@+id/info_track_download"
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/artist_track_favorite_text"
-                        android:layout_marginStart="16dp"
-                        android:src="@drawable/ic_info_download"/>
+                        android:layout_marginStart="32dp"
+                        android:src="@drawable/ic_action_downloads_blueblack"/>
 
                     <TextView
+                        android:textColor="@color/lighterBlueBlack"
                         android:textSize="12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="3k"
                         android:id="@+id/artist_track_download_text"
+                        android:layout_marginEnd="32dp"
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/info_track_download" />
+
+                    <ImageView
+                        android:visibility="invisible"
+                        android:id="@+id/popup_menu_track_card"
+                        android:src="@drawable/ic_action_menu_track_card_blueblack"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:visibility="invisible"
+                        android:id="@+id/downloadable"
+                        android:layout_toStartOf="@id/popup_menu_track_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                 </RelativeLayout>
 

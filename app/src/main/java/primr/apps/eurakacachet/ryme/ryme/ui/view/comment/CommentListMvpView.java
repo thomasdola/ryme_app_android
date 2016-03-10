@@ -1,5 +1,8 @@
 package primr.apps.eurakacachet.ryme.ryme.ui.view.comment;
 
+import java.util.List;
+
+import primr.apps.eurakacachet.ryme.ryme.data.model.Comment;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.MvpView;
 
 
@@ -9,8 +12,9 @@ public interface CommentListMvpView extends MvpView {
 
     void hideLoading();
 
-    void disableSendCommentButton();
+    void setCommentList(List<Comment> commentList);
 
-    void enableSendCommentButton();
+    void showNoCommentsYet();
 
+    void showError();
 }

@@ -9,12 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
-import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.trackListDisplay.PublicTrackListDisplayFragment;
 
 /**
@@ -25,7 +22,13 @@ public class FavoriteTracksFragment extends Fragment implements FavoriteMvpView{
 
     @Inject FavoriteTracksPresenter mFavoriteTracksPresenter;
 
-    private ArrayList<Track> mTrackList;
+
+    public static FavoriteTracksFragment newInstance() {
+        Bundle args = new Bundle();
+        FavoriteTracksFragment fragment = new FavoriteTracksFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public FavoriteTracksFragment() {
         // Required empty public constructor
@@ -34,8 +37,6 @@ public class FavoriteTracksFragment extends Fragment implements FavoriteMvpView{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-        mTrackList = new ArrayList<>();
     }
 
 
@@ -51,7 +52,7 @@ public class FavoriteTracksFragment extends Fragment implements FavoriteMvpView{
                 (R.id.favorite_track_list_display_fragment_container);
         if(favoriteTrackListDisplayFragment == null){
             favoriteTrackListDisplayFragment = PublicTrackListDisplayFragment
-                    .newInstance(mTrackList);
+                    .newInstance(PublicTrackListDisplayFragment.FAVORITE);
             fragmentTransaction.add(R.id.favorite_track_list_display_fragment_container,
                     favoriteTrackListDisplayFragment).commit();
         }

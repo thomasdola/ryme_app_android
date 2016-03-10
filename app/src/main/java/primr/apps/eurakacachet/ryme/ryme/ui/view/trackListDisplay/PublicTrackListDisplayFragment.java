@@ -10,35 +10,41 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
+import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
 import primr.apps.eurakacachet.ryme.ryme.utils.helpers.layout.EndlessRecyclerViewScrollListener;
 
-public class PublicTrackListDisplayFragment extends Fragment implements PublicTrackListDisplayFragmentMvpView{
+public class PublicTrackListDisplayFragment extends Fragment implements PublicTrackListFragmentMvpView {
 
-    @Inject PublicTrackListDisplayFragmentPresenter mPresenter;
+    @Inject PublicTrackListFragmentPresenter mPresenter;
+    @Inject PublicTrackListDisplayAdapter mDisplayAdapter;
 
-    private static final String ARG_TRACKS = "tracks";
+    public static final String ARG_TRACK_TYPE = "type";
+    public static final int NEW_RELEASE = 1;
+    public static final int FAVORITE = 2;
+    public static final int TRENDING = 3;
 
-    private List<Track> mTracks;
-    private PublicTrackListDisplayAdapter mAdapter;
     private SwipeRefreshLayout mSwipeContainer;
+    private TextView mEmptyState;
+    private RecyclerView mRecyclerView;
+    int mType;
+    private List<Track> mTracks;
+    private LinearLayoutManager mLayoutManager;
 
-//    private OnFragmentInteractionListener mListener;
-
-
-    public static PublicTrackListDisplayFragment newInstance(ArrayList<Track> trackList) {
+    public static PublicTrackListDisplayFragment newInstance(int type) {
         PublicTrackListDisplayFragment fragment = new PublicTrackListDisplayFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_TRACKS, trackList);
+        args.putInt(ARG_TRACK_TYPE, type);
         fragment.setArguments(args);
         return fragment;
     }
+
 
     public PublicTrackListDisplayFragment() {
         // Required empty public constructor
@@ -47,8 +53,9 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        Icepick.restoreInstanceState(this, savedInstanceState);
         if (getArguments() != null) {
-            mTracks = getArguments().getParcelableArrayList(ARG_TRACKS);
+            mType = getArguments().getInt(ARG_TRACK_TYPE);
         }
     }
 
@@ -57,63 +64,111 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_public_track_list_display, container, false);
+        initViews(rootView);
 
-        TextView emptyState = (TextView) rootView.findViewById(R.id.track_list_empty_state);
-        mSwipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+//        Icepick.saveInstanceState(this, outState);
+    }
+
+    public void initListeners() {
         mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refresh();
             }
         });
+        mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                mPresenter.loadMore(page);
+            }
+        });
+    }
+
+    public void initViews(View rootView) {
+        mEmptyState = (TextView) rootView.findViewById(R.id.track_list_empty_state);
+        mSwipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
         mSwipeContainer.setColorSchemeColors(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
-        RecyclerView recyclerView = (RecyclerView) rootView.
+        mRecyclerView = (RecyclerView) rootView.
                 findViewById(R.id.public_track_list_display_recycler_view);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(layoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                loadMoreTracks(page);
-            }
-        });
+    }
 
-        mTracks = new ArrayList<>();
-        mAdapter = new PublicTrackListDisplayAdapter(this, mTracks);
-        recyclerView.setAdapter(mAdapter);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ((BaseActivity)getActivity()).getActivityComponent().inject(this);
+        mPresenter.attachView(this);
+        mPresenter.downloadTracks(mType);
+        mRecyclerView.setAdapter(mDisplayAdapter);
+        initListeners();
+    }
 
-        if( mTracks.isEmpty() ){
-            recyclerView.setVisibility(View.GONE);
-            emptyState.setVisibility(View.VISIBLE);
-        }else {
-            recyclerView.setVisibility(View.VISIBLE);
-            emptyState.setVisibility(View.GONE);
-        }
+    public void showFullState() {
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mEmptyState.setVisibility(View.GONE);
+    }
 
-        return rootView;
+    public void showEmpty() {
+        mRecyclerView.setVisibility(View.GONE);
+        mEmptyState.setVisibility(View.VISIBLE);
     }
 
     private void refresh() {
-        List<Track> tracks = mPresenter.refreshTrackStore();
-        mAdapter.clear();
-        mAdapter.addAll(tracks);
-        mSwipeContainer.setRefreshing(false);
+        mPresenter.refreshTrackStore(mType);
     }
 
-    // Append more data into the adapter
-    // This method probably sends out a network request and appends new data items to your adapter.
+    // Append more user into the adapter
+    // This method probably sends out a network request and appends new user items to your adapter.
     private void loadMoreTracks(int page) {
-        // Send an API request to retrieve appropriate data using the offset value as a parameter.
+        // Send an API request to retrieve appropriate user using the offset value as a parameter.
         // Deserialize API response and then construct new objects to append to the adapter
-        // Add the new objects to the data source for the adapter
+        // Add the new objects to the user source for the adapter
 //        items.addAll(moreItems);
         // For efficiency purposes, notify the adapter of only the elements that got changed
         // curSize will equal to the index of the first element inserted because the list is 0-indexed
-        int curSize = mAdapter.getItemCount();
-        mAdapter.notifyItemRangeInserted(curSize, mTracks.size() - 1);
+        int curSize = mDisplayAdapter.getItemCount();
+        mDisplayAdapter.notifyItemRangeInserted(curSize, mTracks.size() - 1);
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void setTrackListAdapter(List<Track> tracks) {
+        mTracks = tracks;
+        mDisplayAdapter.setTracks(tracks, this);
+        mDisplayAdapter.notifyDataSetChanged();
+        showFullState();
+    }
+
+    @Override
+    public void showEmptyState() {
+        mDisplayAdapter.setTracks(Collections.<Track>emptyList(), this);
+        mDisplayAdapter.notifyDataSetChanged();
+        showEmpty();
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void setMoreTracks(List<Track> moreTracks) {
+        mDisplayAdapter.addAll(moreTracks);
+        int curSize = mDisplayAdapter.getItemCount();
+        mDisplayAdapter.notifyItemRangeInserted(curSize, moreTracks.size() - 1);
     }
 }

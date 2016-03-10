@@ -5,7 +5,7 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
-import primr.apps.eurakacachet.ryme.ryme.injection.ActivityContext;
+import primr.apps.eurakacachet.ryme.ryme.injection.context.ActivityContext;
 
 @Module
 public class ActivityModule {

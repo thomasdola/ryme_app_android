@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
 
 import java.util.ArrayList;
@@ -18,15 +20,16 @@ import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.EventAd;
+import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
 
 
-public class EventAdsFragment extends Fragment{
+public class EventAdsFragment extends Fragment implements EventAdsMvpView{
 
     @Inject EventAdsPresenter mEventAdsPresenter;
 
     List<EventAd> mAds;
-
-    EventExpandableAdapter mAdapter;
+    private EventExpandableAdapter mAdapter;
+    private RecyclerView mEventRecyclerView;
 
     public EventAdsFragment() {
         // Required empty public constructor
@@ -36,35 +39,70 @@ public class EventAdsFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        if( savedInstanceState != null ){
-            mAdapter.onRestoreInstanceState(savedInstanceState);
-        }
-
-        // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_events, container, false);
 
-        RecyclerView eventRecyclerView = (RecyclerView) rootView.findViewById(R.id.event_recycler_view);
-        EventExpandableAdapter mAdapter = new EventExpandableAdapter(getActivity(), prepareAds());
-        eventRecyclerView.setAdapter(mAdapter);
-        eventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mEventRecyclerView = (RecyclerView) rootView.findViewById(R.id.event_recycler_view);
+        mEventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return rootView;
     }
 
-    private List<ParentListItem> prepareAds() {
-        List<EventAd> adList = loadAds();
+    private void initListeners(){
+        mAdapter.setExpandCollapseListener(new ExpandableRecyclerAdapter.ExpandCollapseListener() {
+            @Override
+            public void onListItemExpanded(int position) {
+                EventAd ad = mAds.get(position);
+                Log.d("event", "event -> " + ad.toString() + " is opened");
+            }
+
+            @Override
+            public void onListItemCollapsed(int position) {
+                EventAd ad = mAds.get(position);
+                Log.d("event", "event -> " + ad.toString() + " is opened");
+            }
+        });
+    }
+
+    private List<ParentListItem> prepareAds(List<EventAd> ads) {
         List<ParentListItem> parentObjects = new ArrayList<>();
-        for(EventAd event: adList){
-            List<EventAdDetail> eventChildList = new ArrayList<>();
-            eventChildList.add(new EventAdDetail(event.description));
-            event.setChildItemList(eventChildList);
-            parentObjects.add(event);
+        if(ads != null){
+            for(EventAd event: ads){
+                List<EventAdDetail> eventChildList = new ArrayList<>();
+                eventChildList.add(new EventAdDetail(event.getDescription()));
+                event.setChildItemList(eventChildList);
+                parentObjects.add(event);
+            }
         }
         return parentObjects;
     }
 
-    private List<EventAd> loadAds() {
-        return new ArrayList<>();
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ((BaseActivity)getActivity()).getActivityComponent().inject(this);
+        mEventAdsPresenter.attachView(this);
+        mEventAdsPresenter.loadEventAds();
+        initListeners();
     }
 
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void setEventAds(List<EventAd> ads) {
+        mAds = ads;
+        mAdapter = new EventExpandableAdapter(getActivity(), prepareAds(ads));
+        mEventRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
 }

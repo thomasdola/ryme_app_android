@@ -11,8 +11,15 @@ public interface SignUpMvpView extends MvpView{
 
     void enableSignUpButton();
 
-    void showSignUpFail();
+    void showSignUpFail(String message);
 
     void showSignUpSuccessful();
 
+    void launchVerifyCodeActivity();
+
+    void stopLoading();
+
+    void disableFields();
+
+    void enableFields();
 }

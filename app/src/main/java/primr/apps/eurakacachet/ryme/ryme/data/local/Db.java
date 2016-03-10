@@ -8,7 +8,6 @@ import java.util.UUID;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Category;
 import primr.apps.eurakacachet.ryme.ryme.data.model.DownloadedTrack;
 import primr.apps.eurakacachet.ryme.ryme.data.model.FollowedArtist;
-import primr.apps.eurakacachet.ryme.ryme.data.model.FollowedCategory;
 import primr.apps.eurakacachet.ryme.ryme.data.model.LikedTrack;
 import primr.apps.eurakacachet.ryme.ryme.data.model.UserProfile;
 
@@ -35,8 +34,8 @@ public class Db {
                         COLUMN_STAGE_NAME + " TEXT NULL, " +
                         COLUMN_PHONE_NUMBER + " TEXT NOT NULL, " +
                         COLUMN_AVATAR + " TEXT NULL, " +
-                        COLUMN_BACKGROUND_PICTURE + " TEXT NULL, " +
-                " ); ";
+                        COLUMN_BACKGROUND_PICTURE + " TEXT NULL" +
+                ");";
 
         public static ContentValues toContentValues(UserProfile userProfile){
             ContentValues contentValues = new ContentValues();
@@ -54,7 +53,7 @@ public class Db {
 
         public static UserProfile parseCursor(Cursor cursor){
             UserProfile userProfile = new UserProfile();
-            userProfile.uuid = UUID.fromString(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ID)));
+            userProfile.uuid = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ID));
             userProfile.username = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERNAME));
             userProfile.is_artist = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IS_ARTIST)));
             userProfile.stage_name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STAGE_NAME));
@@ -76,8 +75,8 @@ public class Db {
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                         COLUMN_UUID + " TEXT NOT NULL," +
-                        COLUMN_NAME + " TEXT NOT NULL," +
-                        " ); ";
+                        COLUMN_NAME + " TEXT NOT NULL" +
+                        ");";
 
         public static ContentValues toContentValues(Category category){
             ContentValues values = new ContentValues();
@@ -97,7 +96,7 @@ public class Db {
     public abstract static class FollowedCategoryTable {
         public static final String TABLE_NAME = "followed_categories";
 
-        public static final String COLUMN_ID = "uuid";
+        public static final String COLUMN_ID = "id";
         public static final String COLUMN_UUID = "uuid";
         public static final String COLUMN_NAME = "name";
 
@@ -105,19 +104,19 @@ public class Db {
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                         COLUMN_UUID + " TEXT NOT NULL," +
-                        COLUMN_NAME + " TEXT NOT NULL," +
-                        " ); ";
+                        COLUMN_NAME + " TEXT NOT NULL" +
+                        ");";
 
-        public static ContentValues toContentValues(FollowedCategory category){
+        public static ContentValues toContentValues(Category category){
             ContentValues values = new ContentValues();
-            values.put(COLUMN_UUID, String.valueOf(category.id));
+            values.put(COLUMN_UUID, String.valueOf(category.uuid));
             values.put(COLUMN_NAME, category.name);
             return values;
         }
 
-        public static FollowedCategory parseCursor(Cursor cursor){
-            FollowedCategory category = new FollowedCategory();
-            category.id = UUID.fromString(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UUID)));
+        public static Category parseCursor(Cursor cursor){
+            Category category = new Category();
+            category.uuid = UUID.fromString(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UUID)));
             category.name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME));
             return category;
         }
@@ -126,14 +125,14 @@ public class Db {
     public abstract static class FollowedArtistTable {
         public static final String TABLE_NAME = "followed_artists";
 
-        public static final String COLUMN_ID = "uuid";
+        public static final String COLUMN_ID = "id";
         public static final String COLUMN_UUID = "uuid";
 
         public static final String CREATE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
-                        COLUMN_ID + " INTEGER PRIMARY AUTOINCREMENT KEY NOT NULL," +
-                        COLUMN_UUID + " TEXT NOT NULL," +
-                        " ); ";
+                        COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                        COLUMN_UUID + " TEXT NOT NULL" +
+                        ");";
 
         public static ContentValues toContentValues(FollowedArtist artist){
             ContentValues values = new ContentValues();
@@ -143,7 +142,7 @@ public class Db {
 
         public static FollowedArtist parseCursor(Cursor cursor){
             FollowedArtist artist = new FollowedArtist();
-            artist.uuid = UUID.fromString(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UUID)));
+            artist.uuid = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_UUID));
             return artist;
         }
     }
@@ -156,9 +155,9 @@ public class Db {
 
         public static final String CREATE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
-                        COLUMN_ID + " INTEGER PRIMARY AUTOINCREMENT KEY NOT NULL," +
-                        COLUMN_UUID + " TEXT NOT NULL," +
-                        " ); ";
+                        COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                        COLUMN_UUID + " TEXT NOT NULL" +
+                        ");";
 
         public static ContentValues toContentValues(LikedTrack track){
             ContentValues values = new ContentValues();
@@ -192,8 +191,8 @@ public class Db {
                         COLUMN_DURATION + " INTEGER NOT NULL," +
                         COLUMN_ARTIST + " TEXT NOT NULL," +
                         COLUMN_COVER + " TEXT NOT NULL," +
-                        COLUMN_PATH + " TEXT NOT NULL," +
-                        " ); ";
+                        COLUMN_PATH + " TEXT NOT NULL" +
+                        ");";
 
         public static ContentValues toContentValues(DownloadedTrack track){
             ContentValues values = new ContentValues();

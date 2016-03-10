@@ -8,8 +8,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+
 import primr.apps.eurakacachet.ryme.ryme.R;
-import primr.apps.eurakacachet.ryme.ryme.data.model.DownloadedTrack;
+import primr.apps.eurakacachet.ryme.ryme.data.local.storio.models.SavedTrack;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.offline.trackDisplay.TrackDisplayActivity;
 
 
@@ -19,11 +23,15 @@ public class DownloadsViewHolder extends RecyclerView.ViewHolder implements View
     TextView mTrackArtist;
     TextView mTrackDuration;
     ImageView mTrackCover;
-    private DownloadedTrack mTrack;
+    private SavedTrack mTrack;
     DownloadsFragment mDownloadsFragment;
+    Picasso mPicasso;
+    private int mTrackPosition;
 
     public DownloadsViewHolder(DownloadsFragment downloadsFragment, View itemView) {
         super(itemView);
+        itemView.setOnClickListener(this);
+        mPicasso = Picasso.with(downloadsFragment.getContext());
         mDownloadsFragment = downloadsFragment;
         mTrackCover = (ImageView) itemView.findViewById(R.id.download_track_cover);
         mTrackArtist = (TextView) itemView.findViewById(R.id.download_track_artist_text_view);
@@ -31,17 +39,21 @@ public class DownloadsViewHolder extends RecyclerView.ViewHolder implements View
         mTrackDuration = (TextView) itemView.findViewById(R.id.download_track_duration_text_view);
     }
 
-    public void bindTrack(DownloadedTrack track){
+    public void bindTrack(SavedTrack track, int position){
         mTrack = track;
-//        mTrackCover.setImageResource();
-        mTrackArtist.setText(track.artist.toUpperCase());
-        mTrackDuration.setText((int) track.duration);
-        mTrackTitle.setText(track.title.toUpperCase());
+        mTrackPosition = position;
+        File coverPath = new File(track.cover());
+        mPicasso.load(coverPath).into(mTrackCover);
+        mTrackArtist.setText(track.artist().toUpperCase());
+        if(track.duration() != null){
+            mTrackDuration.setText(Long.toString(track.duration()));
+        }
+        mTrackTitle.setText(track.title().toUpperCase());
     }
 
     @Override
     public void onClick(View v) {
-        Intent intent = TrackDisplayActivity.newIntent(mDownloadsFragment.getActivity(), mTrack);
+        Intent intent = TrackDisplayActivity.newIntent(mDownloadsFragment.getActivity(), mTrack, mTrackPosition);
         String transitionName = mDownloadsFragment.getString(R.string.track_transition_string);
         View startView = mDownloadsFragment.getActivity().findViewById(R.id.download_track_card);
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat

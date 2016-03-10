@@ -4,79 +4,113 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/login_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="primr.apps.eurakacachet.ryme.ryme.ui.view.signin.LoginActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:id="@+id/textLogoImageView"
-        android:src="@drawable/ryme_text"
-        android:layout_marginTop="45dp"
-        android:layout_marginBottom="45dp"
-        android:layout_centerHorizontal="true"/>
-
-    <android.support.design.widget.TextInputLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textLogoImageView"
-        android:id="@+id/usernameEditText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
-        <EditText
-            android:id="@+id/username_edit"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="@string/username_text_string"
-            android:layout_above="@+id/passwordEditText"/>
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="match_parent"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:id="@+id/passwordEditText"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/usernameEditText"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="35dp"
-        android:layout_centerHorizontal="true">
-        <EditText
-            android:id="@+id/password_edit"
+        <View
+            android:background="@color/blueBlack"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/password_hint_text"
-            android:inputType="textPassword"
-            android:layout_above="@+id/phone_number_layout"/>
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="match_parent"/>
 
-    <Button
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:textAllCaps="false"
-        android:background="@drawable/register_next_button_shape"
-        android:textColor="@color/white"
-        android:textSize="@dimen/button_text_size"
-        android:text="@string/signInButton"
-        android:id="@+id/login_button"
-        android:layout_marginBottom="10dp"
-        android:layout_below="@+id/passwordEditText"
-        android:layout_centerHorizontal="true"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/forgot_password_option"
-        android:id="@+id/textView"
-        android:textColor="@color/colorAccent"
-        android:layout_marginBottom="25dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+            <ProgressBar
+                android:visibility="invisible"
+                android:id="@+id/loading_view"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:id="@+id/textLogoImageView"
+                android:src="@drawable/new_logo"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="45dp"
+                android:layout_centerHorizontal="true"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:textColorHint="@color/white_ash"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textLogoImageView"
+                android:id="@+id/usernameEditText"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp">
+                <EditText
+                    android:id="@+id/username_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white_ash"
+                    android:inputType="textPersonName"
+                    android:hint="@string/username_text_string"
+                    android:layout_above="@+id/passwordEditText"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:textColorHint="@color/white_ash"
+                android:layout_width="match_parent"
+                android:id="@+id/passwordEditText"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/usernameEditText"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="35dp"
+                android:layout_centerHorizontal="true">
+                <EditText
+                    android:id="@+id/password_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white_ash"
+                    android:hint="@string/password_hint_text"
+                    android:inputType="textPassword"
+                    android:layout_above="@+id/phone_number_layout"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:textAllCaps="false"
+                android:background="@drawable/register_button_state"
+                android:textColor="@color/white"
+                android:textSize="@dimen/button_text_size"
+                android:text="@string/signInButton"
+                android:id="@+id/login_button"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/passwordEditText"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/signup_option"
+                android:id="@+id/sign_up_option_view"
+                android:textColor="@color/white_ash"
+                android:layout_marginBottom="25dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+
+    </FrameLayout>
 
 </RelativeLayout>

@@ -7,7 +7,7 @@ public interface LoginMvpView extends MvpView {
 
     void showLoginSuccessful();
 
-    void showLoginFail();
+    void showLoginFail(String message);
 
     void showLoading();
 
@@ -15,4 +15,9 @@ public interface LoginMvpView extends MvpView {
 
     void enableLoginButton();
 
+    void disableFields();
+
+    void enableFields();
+
+    void launchMainActivity();
 }

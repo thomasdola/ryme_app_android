@@ -9,24 +9,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Artist;
+import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
 import primr.apps.eurakacachet.ryme.ryme.utils.helpers.layout.MarginDecoration;
 
 
-public class ArtistListDisplayFragment extends Fragment {
+public class ArtistListDisplayFragment extends Fragment implements ArtistListDisplayMvpView{
 
-    private static final String ARG_ARTIST_LIST = "artist_list";
+    @Inject ArtistListDisplayAdapter mAdapter;
+    @Inject ArtistListDisplayPresenter mPresenter;
+    private RecyclerView mArtistListDisplayRecyclerView;
 
-    private ArrayList<Artist> mArtistList;
 
-
-    public static ArtistListDisplayFragment newInstance(ArrayList<Artist> artistList) {
+    public static ArtistListDisplayFragment newInstance() {
         ArtistListDisplayFragment fragment = new ArtistListDisplayFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList("artists", artistList);
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,9 +40,6 @@ public class ArtistListDisplayFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mArtistList = getArguments().getParcelableArrayList(ARG_ARTIST_LIST);
-        }
     }
 
     @Override
@@ -50,14 +49,39 @@ public class ArtistListDisplayFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_artist_list_display, container, false);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
-        RecyclerView artistListDisplayRecyclerView = (RecyclerView) rootView.findViewById(R.id.artist_list_display_recycler_view);
-        artistListDisplayRecyclerView.addItemDecoration(new MarginDecoration(getActivity()));
-        artistListDisplayRecyclerView.setHasFixedSize(true);
-        artistListDisplayRecyclerView.setLayoutManager(layoutManager);
-
-        ArtistListDisplayAdapter artistListDisplayAdapter = new ArtistListDisplayAdapter(this, mArtistList);
-        artistListDisplayRecyclerView.setAdapter(artistListDisplayAdapter);
+        mArtistListDisplayRecyclerView = (RecyclerView) rootView.findViewById(R.id.artist_list_display_recycler_view);
+        mArtistListDisplayRecyclerView.addItemDecoration(new MarginDecoration(getActivity()));
+        mArtistListDisplayRecyclerView.setHasFixedSize(true);
+        mArtistListDisplayRecyclerView.setLayoutManager(layoutManager);
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ((BaseActivity)getActivity()).getActivityComponent().inject(this);
+        mPresenter.attachView(this);
+        mPresenter.loadArtists();
+        mArtistListDisplayRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void setArtists(List<Artist> artists) {
+        mAdapter.seArtistList(this, artists);
+    }
+
+    @Override
+    public void showEmptyState() {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
 }

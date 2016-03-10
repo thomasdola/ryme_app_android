@@ -8,6 +8,4 @@ public interface DownloadTrackDisplayMvpView extends MvpView {
     void showLoading();
 
     void hideLoading();
-
-    void togglePlayPauseButton();
 }

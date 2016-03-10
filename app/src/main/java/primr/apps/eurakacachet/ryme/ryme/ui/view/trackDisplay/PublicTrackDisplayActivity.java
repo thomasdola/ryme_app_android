@@ -7,27 +7,30 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+
+import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
 
-public class PublicTrackDisplayActivity extends BaseActivity implements PublicTrackDisplayFragmentMvpView {
+public class PublicTrackDisplayActivity extends BaseActivity implements PublicTrackDisplayActivityMvpView{
 
+    @Inject PublicTrackDisplayActivityPresenter mPresenter;
     public static final String EXTRA_TRACK = "track";
     private Track mTrack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getActivityComponent().inject(this);
+        mPresenter.attachView(this);
         Intent intent = getIntent();
         if(intent != null){
             mTrack = intent.getParcelableExtra(EXTRA_TRACK);
         }
-
         setContentView(R.layout.activity_public_track_display);
-
         init();
     }
 
@@ -50,34 +53,9 @@ public class PublicTrackDisplayActivity extends BaseActivity implements PublicTr
         return i;
     }
 
-
     @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void togglePayButton() {
-
-    }
-
-    @Override
-    public void toggleLikeButton() {
-
-    }
-
-    @Override
-    public void disableDownloadButton() {
-
-    }
-
-    @Override
-    public void enableDownloadButton() {
-
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
 }

@@ -1,14 +1,16 @@
-<!--<?xml version="1.0" encoding="utf-8"?>-->
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/public_track_display_coordinator_layout"
     android:transitionName="@string/track_transition_string"
-tools:context="primr.apps.eurakacachet.ryme.ryme.TrackActivityFragment">
+    tools:context="primr.apps.eurakacachet.ryme.ryme.TrackActivityFragment">
 
-<android.support.design.widget.AppBarLayout
+    <android.support.design.widget.AppBarLayout
     android:id="@+id/track_view_appbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -17,13 +19,12 @@ tools:context="primr.apps.eurakacachet.ryme.ryme.TrackActivityFragment">
     <android.support.design.widget.CollapsingToolbarLayout
         android:id="@+id/collapsing_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        app:contentScrim="?attr/colorPrimary"
+        android:layout_height="340dp"
         app:expandedTitleGravity="center_vertical|center_horizontal"
         app:expandedTitleMarginBottom="40dp"
         app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Medium"
         app:titleEnabled="true"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+        app:layout_scrollFlags="scroll|snap|enterAlwaysCollapsed">
 
         <ImageView
             android:id="@+id/header"
@@ -37,165 +38,236 @@ tools:context="primr.apps.eurakacachet.ryme.ryme.TrackActivityFragment">
             android:id="@+id/track_view_toolbar"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:minHeight="?attr/actionBarSize"
             app:titleMarginBottom="100dp"
             android:gravity="top"
             app:layout_collapseMode="pin"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_gravity="bottom"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/colorPrimaryLight"
-            android:baselineAligned="false">
+            android:orientation="vertical"
+            android:layout_gravity="bottom"
+            android:layout_height="44dp">
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
+            <co.mobiwise.library.ProgressLayout
+                android:id="@+id/progressLayout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:maxProgress="100"
+                app:autoProgress="true"
+                android:layout_alignParentBottom="true"
+                app:loadedColor="@color/lighterBlueBlack"
+                app:emptyColor="@color/blueBlack"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_gravity="bottom"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp">
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:baselineAligned="false">
 
-                <!--<ImageView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:uuid="@+uuid/ic_action_track_stream"-->
-                    <!--android:src="@drawable/ic_action_favorite_star_white"-->
-                    <!--android:layout_alignParentTop="true"-->
-                    <!--android:layout_alignParentStart="true"/>-->
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:gravity="center_vertical"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:id="@+id/ic_action_track_download"
+                        android:src="@drawable/ic_action_downloads_whiteash"
+                        android:background="@drawable/donload_button_state"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"
+                        android:contentDescription="@null"/>
 
 
+                </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:id="@+id/ic_action_track_download"
-                    android:src="@drawable/ic_action_track_download"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
-                    android:contentDescription="@null"/>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:gravity="end"
+                    android:paddingEnd="16dp"
+                    android:layout_height="match_parent">
 
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:id="@+id/info_track_stream"
+                        android:src="@drawable/ic_action_new_play"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@null"/>
 
-            </RelativeLayout>
+                    <TextView
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white_ash"
+                        android:id="@+id/info_track_stream_text"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/info_track_stream" />
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:gravity="end"
-                android:paddingEnd="16dp"
-                android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:id="@+id/info_track_favorite"
+                        android:src="@drawable/ic_action_favorite_heart"
+                        android:layout_marginStart="32dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/info_track_stream_text"
+                        android:contentDescription="@null"/>
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:id="@+id/info_track_stream"
-                    android:src="@drawable/ic_info_stream"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@null"/>
+                    <TextView
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/info_track_favorite_text"
+                        android:textColor="@color/white_ash"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/info_track_favorite" />
 
-                <TextView
-                    android:textSize="16sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="2k"
-                    android:textColor="@color/colorSecondary"
-                    android:id="@+id/info_track_stream_text"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/info_track_stream" />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:id="@+id/info_track_download"
+                        android:src="@drawable/ic_action_downloads_whiteash"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/info_track_favorite_text"
+                        android:layout_marginStart="32dp"
+                        android:contentDescription="@null"/>
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:id="@+id/info_track_favorite"
-                    android:src="@drawable/ic_info_favorite"
-                    android:layout_marginStart="16dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/info_track_stream_text"
-                    android:contentDescription="@null"/>
+                    <TextView
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/info_track_download_text"
+                        android:textColor="@color/white_ash"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/info_track_download" />
 
-                <TextView
-                    android:textSize="16sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="2k"
-                    android:id="@+id/info_track_favorite_text"
-                    android:textColor="@color/colorSecondary"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/info_track_favorite" />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:id="@+id/info_track_comment_list"
+                        android:src="@drawable/ic_action_comment_list_whiteash"
+                        android:layout_marginStart="32dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/info_track_download_text"
+                        android:contentDescription="@null"/>
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:id="@+id/info_track_download"
-                    android:src="@drawable/ic_info_cloud_download"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/info_track_favorite_text"
-                    android:layout_marginStart="16dp"
-                    android:contentDescription="@null"/>
+                    <TextView
+                        android:layout_marginEnd="12dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/info_track_comment_list_text"
+                        android:textColor="@color/white_ash"
+                        android:textSize="16sp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/info_track_comment_list" />
+                </RelativeLayout>
 
-                <TextView
-                    android:textSize="16sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="3k"
-                    android:id="@+id/info_track_download_text"
-                    android:textColor="@color/colorSecondary"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/info_track_download" />
+            </LinearLayout>
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:id="@+id/info_track_comment_list"
-                    android:src="@drawable/ic_comment_list_grey"
-                    android:layout_marginStart="16dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/info_track_download_text"
-                    android:contentDescription="@null"/>
+            <ProgressBar
+                android:id="@+id/downloading_progressbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_gravity="top"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="2k"
-                    android:id="@+id/info_track_comment_list_text"
-                    android:textColor="@color/colorSecondary"
-                    android:textSize="16sp"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/info_track_comment_list" />
-            </RelativeLayout>
-
-        </LinearLayout>
+        </RelativeLayout>
 
     </android.support.design.widget.CollapsingToolbarLayout>
 
 </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout android:orientation="vertical"
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent"
-                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                 android:id="@+id/track_comments_fragment_container">
+    <FrameLayout
+        android:id="@+id/comment_list_container"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     </FrameLayout>
 
-<android.support.design.widget.FloatingActionButton
-    android:layout_width="wrap_content"
-    android:id="@+id/play_song_fab"
-    app:fabSize="normal"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/fab_margin"
-    android:clickable="true"
-    app:layout_anchor="@+id/track_view_appbar"
-    app:layout_anchorGravity="center_vertical|center_horizontal"
-    android:src="@drawable/ic_action_play"/>
+    <com.github.jorgecastilloprz.FABProgressCircle
+        android:id="@+id/track_loading_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:arcColor="@color/blueBlack"
+        app:layout_anchor="@id/track_view_appbar"
+        app:layout_anchorGravity="center_vertical|center_horizontal">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:id="@+id/play_song_fab"
+            app:fabSize="normal"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:clickable="true"
+            app:rippleColor="@color/blueBlack"
+            app:layout_anchor="@+id/track_view_appbar"
+            app:layout_anchorGravity="center_vertical|center_horizontal"
+            android:src="@drawable/ic_action_new_play"/>
+
+    </com.github.jorgecastilloprz.FABProgressCircle>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:layout_gravity="bottom|end"
+        android:layout_width="wrap_content"
+        android:id="@+id/track_menu_fab"
+        android:layout_height="wrap_content"
+        fab:fab_addButtonColorNormal="@color/blueBlack"
+        fab:fab_addButtonColorPressed="@color/lightBlueBlack"
+        fab:fab_addButtonPlusIconColor="@color/white_ash"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        fab:fab_addButtonSize="mini"
+        fab:fab_expandDirection="up"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/view_artist_profile_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_action_artist_profile_white_ash"
+            fab:fab_colorNormal="@color/lightBlueBlack"
+            fab:fab_size="mini"
+            fab:fab_title="@string/view_artist_profile_text"
+            fab:fab_colorPressed="@color/blueBlack"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/share_track_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_action_share_whiteash"
+            fab:fab_colorNormal="@color/lightBlueBlack"
+            fab:fab_title="@string/share_text"
+            fab:fab_size="mini"
+            fab:fab_colorPressed="@color/blueBlack"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/comment_track_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_action_comment_white_ash"
+            fab:fab_colorNormal="@color/lightBlueBlack"
+            fab:fab_title="@string/comment_text"
+            fab:fab_size="mini"
+            fab:fab_colorPressed="@color/blueBlack"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 </android.support.design.widget.CoordinatorLayout>
 

@@ -4,15 +4,16 @@
     tools:context="primr.apps.eurakacachet.ryme.ryme.TrackActivity">
 
     <item
-        android:icon="@drawable/ic_favorite_track_star_outline"
+        android:icon="@drawable/ic_action_like_blueblack"
         android:id="@+id/favorite_track_action"
         android:orderInCategory="1"
         android:title="@string/menu_like"
         app:showAsAction="ifRoom"/>
 
-    <item
-        android:id="@+id/view_artist_profile"
-        android:orderInCategory="1"
-        android:title="@string/menu_profile"
-        app:showAsAction="never"/>
+    <!--<item-->
+        <!--android:id="@+id/view_artist_profile"-->
+        <!--android:icon="@drawable/ic_action_view_artist_blueblack"-->
+        <!--android:orderInCategory="1"-->
+        <!--android:title="@string/menu_profile"-->
+        <!--app:showAsAction="ifRoom"/>-->
 </menu>

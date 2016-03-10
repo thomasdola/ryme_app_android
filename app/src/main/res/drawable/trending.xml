@@ -3,7 +3,7 @@
 
     <item
         android:state_selected="true"
-        android:drawable="@drawable/ic_tab_trending_selecteed" />
+        android:drawable="@drawable/ic_action_trending_pinkred" />
 
     <item
         android:state_selected="false"

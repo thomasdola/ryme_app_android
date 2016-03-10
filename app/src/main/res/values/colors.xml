@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="orange">#FA0</color>
     <color name="colorPrimary">#607d8b</color>
+    <!--<color name="colorPrimary">#FA0</color>-->
     <color name="colorPrimaryDark">#455a64</color>
     <color name="colorAccent">#00bcd4</color>
     <color name="textColorPrimary">#212121</color>
@@ -10,8 +12,13 @@
     <color name="imageBlurFilter">#000000</color>
     <color name="colorPrimaryLight">#cfd8dc</color>
 
-    <color name="black">#a8000000</color>
-    <color name="orange">#FA0</color>
+    <color name="redPink">#f0314a</color>
+    <color name="blueBlack">#021f2d</color>
+    <color name="blueBlackTransp">#b2021f2d</color>
+    <color name="lightBlueBlack">#17303c</color>
+    <color name="lighterBlueBlack">#41545d</color>
+    <color name="white_ash">#d4d6d7</color>
+
     <color name="white">#FFF</color>
     <color name="roange">#FDC749</color>
     <color name="secondaryColor">#c743f6</color>
@@ -298,5 +305,53 @@
 
     <color name="md_black">#ff000000</color>
     <color name="md_white">#ffffffff</color>
+
+
+    <array name="progress_colors_light">
+        <item>#FF03A9F4</item>
+        <item>#FFD8433C</item>
+        <item>#FFF2AF3A</item>
+        <item>#FF279B5E</item>
+    </array>
+
+    <array name="progress_colors_dark">
+        <item>#FF00E5FF</item>
+        <item>#ffd81d5a</item>
+        <item>#fff27512</item>
+        <item>#ff63bc34</item>
+    </array>
+
+    <array name="in_colors_light">
+        <item>#4B03A9F4</item>
+        <item>#3303A9F4</item>
+        <item>#1903A9F4</item>
+    </array>
+
+    <array name="in_colors_dark">
+        <item>#4B00E5FF</item>
+        <item>#3300E5FF</item>
+        <item>#1900E5FF</item>
+    </array>
+
+
+    <color name="colorPrimaryQuarter">#3303A9F4</color>
+    <color name="colorPrimaryHalf">#9003A9F4</color>
+    <color name="colorControlNormalHalf">#9078909C</color>
+    <color name="colorControlActivatedHalf">#9003A9F4</color>
+    <color name="colorAccentQuarter">#3300E5FF</color>
+    <color name="colorAccentHalf">#9000E5FF</color>
+
+
+    <color name="gplus_color_1">#3e802f</color>
+    <color name="gplus_color_2">#f4b400</color>
+    <color name="gplus_color_3">#427fed</color>
+    <color name="gplus_color_4">#b23424</color>
+
+    <integer-array name="gplus_colors">
+        <item>@color/gplus_color_1</item>
+        <item>@color/gplus_color_2</item>
+        <item>@color/gplus_color_3</item>
+        <item>@color/gplus_color_4</item>
+    </integer-array>
 
 </resources>

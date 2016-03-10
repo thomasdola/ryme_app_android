@@ -11,4 +11,25 @@ public interface VerifyCodeMvpView extends MvpView{
 
     void disableVerifyButton();
 
+    void enableField();
+
+    void disableField();
+
+    void updateTimerView(long remaining);
+
+    void stopLoading();
+
+    void launchFollowCategoryActivity();
+
+    void showError(String message);
+
+    void initSmsService();
+
+    void stopSmsService();
+
+    void updateVerificationState(int state);
+
+    void showInstruction();
+
+    void hideTimer();
 }

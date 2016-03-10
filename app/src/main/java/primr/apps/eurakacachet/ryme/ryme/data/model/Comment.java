@@ -3,14 +3,49 @@ package primr.apps.eurakacachet.ryme.ryme.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.Date;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 public class Comment implements Parcelable {
 
-    public String username;
-    public String body;
-    public Date time;
+    @NonNull String username;
+    @NonNull String message;
+    @NonNull long time;
+    @Nullable String userAvatar;
+
+    public static Comment newComment(@NonNull String username, @NonNull long time,
+                                     @NonNull String message, @NonNull String userAvatar){
+        Comment comment = new Comment();
+        comment.username = username;
+        comment.time = time;
+        comment.message = message;
+        comment.userAvatar = userAvatar;
+        return comment;
+    }
+
+    @NonNull
+    public String username() {
+        return username;
+    }
+
+    @NonNull
+    public String message() {
+        return message;
+    }
+
+    @NonNull
+    public long time() {
+        return time;
+    }
+
+    @Nullable
+    public String userAvatar() {
+        return userAvatar;
+    }
+
+
+    public Comment() {
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -19,21 +54,31 @@ public class Comment implements Parcelable {
 
         Comment comment = (Comment) o;
 
-        if (username != null ? !username.equals(comment.username) : comment.username != null)
-            return false;
-        if (body != null ? !body.equals(comment.body) : comment.body != null) return false;
-        return !(time != null ? !time.equals(comment.time) : comment.time != null);
+        if (time != comment.time) return false;
+        if (!username.equals(comment.username)) return false;
+        if (!message.equals(comment.message)) return false;
+        return !(userAvatar != null ? !userAvatar.equals(comment.userAvatar) : comment.userAvatar != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = username != null ? username.hashCode() : 0;
-        result = 31 * result + (body != null ? body.hashCode() : 0);
-        result = 31 * result + (time != null ? time.hashCode() : 0);
+        int result = username.hashCode();
+        result = 31 * result + message.hashCode();
+        result = 31 * result + (int) (time ^ (time >>> 32));
+        result = 31 * result + (userAvatar != null ? userAvatar.hashCode() : 0);
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "username='" + username + '\'' +
+                ", message='" + message + '\'' +
+                ", time=" + time +
+                ", userAvatar='" + userAvatar + '\'' +
+                '}';
+    }
 
     @Override
     public int describeContents() {
@@ -43,21 +88,19 @@ public class Comment implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.username);
-        dest.writeString(this.body);
-        dest.writeLong(time != null ? time.getTime() : -1);
-    }
-
-    public Comment() {
+        dest.writeString(this.message);
+        dest.writeLong(this.time);
+        dest.writeString(this.userAvatar);
     }
 
     protected Comment(Parcel in) {
         this.username = in.readString();
-        this.body = in.readString();
-        long tmpTime = in.readLong();
-        this.time = tmpTime == -1 ? null : new Date(tmpTime);
+        this.message = in.readString();
+        this.time = in.readLong();
+        this.userAvatar = in.readString();
     }
 
-    public static final Parcelable.Creator<Comment> CREATOR = new Parcelable.Creator<Comment>() {
+    public static final Creator<Comment> CREATOR = new Creator<Comment>() {
         public Comment createFromParcel(Parcel source) {
             return new Comment(source);
         }

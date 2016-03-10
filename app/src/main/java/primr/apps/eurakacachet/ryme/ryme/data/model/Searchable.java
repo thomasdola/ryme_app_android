@@ -5,9 +5,7 @@ import android.os.Parcelable;
 
 import java.util.UUID;
 
-/**
- * Created by GURU on 2/1/2016.
- */
+
 public class Searchable implements Parcelable {
 
     public UUID id;

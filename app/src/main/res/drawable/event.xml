@@ -3,10 +3,10 @@
 
     <item
         android:state_selected="true"
-        android:drawable="@drawable/ic_tab_event_selected" />
+        android:drawable="@drawable/ic_action_event_pinkred" />
 
     <item
         android:state_selected="false"
-        android:drawable="@drawable/ic_tab_event_normal" />
+        android:drawable="@drawable/ic_action_event_whiteash" />
 
 </selector>

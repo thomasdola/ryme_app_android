@@ -16,17 +16,19 @@ import primr.apps.eurakacachet.ryme.ryme.data.model.EventAd;
 
 public class EventExpandableAdapter extends ExpandableRecyclerAdapter<EventParentViewHolder, EventChildViewHolder> {
 
+    private final Context mContext;
     private LayoutInflater mViewInflater;
 
     public EventExpandableAdapter(Context context, List<? extends ParentListItem> parentItemList) {
         super(parentItemList);
+        mContext = context;
         mViewInflater  = LayoutInflater.from(context);
     }
 
     @Override
     public EventParentViewHolder onCreateParentViewHolder(ViewGroup viewGroup) {
         View view = mViewInflater.inflate(R.layout.event_main_card_view, viewGroup, false);
-        return new EventParentViewHolder(view);
+        return new EventParentViewHolder(view, mContext);
     }
 
     @Override

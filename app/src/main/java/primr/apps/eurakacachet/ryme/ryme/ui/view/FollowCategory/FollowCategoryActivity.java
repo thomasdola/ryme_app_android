@@ -1,60 +1,72 @@
 package primr.apps.eurakacachet.ryme.ryme.ui.view.followCategory;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.category.CategoriesFragment;
-import primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity;
 
-public class FollowCategoryActivity extends BaseActivity {
+public class FollowCategoryActivity extends BaseActivity implements FollowCategoryMvpView{
 
     @Inject
-    FollowCategoryPresenter mFollowCategoryPresenter;
+    FollowCategoryPresenter mPresenter;
 
     Toolbar mToolbar;
-
-    FloatingActionButton fab;
+    CoordinatorLayout mCoordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivityComponent().inject(this);
         setContentView(R.layout.activity_follow_category);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        initViews();
+
+        mPresenter.attachView(this);
+
         mToolbar.setTitle("Music Categories");
         setSupportActionBar(mToolbar);
+        initFragment();
+    }
 
-        fab = (FloatingActionButton) findViewById(R.id.start_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                Intent intent = new Intent(FollowCategoryActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
+
+    private void initFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         Fragment fragment = fragmentManager.
                 findFragmentById(R.id.music_category_display_fragment_container);
         if(fragment == null){
-            fragment = new CategoriesFragment();
+            fragment = CategoriesFragment.newInstance();
             fragmentTransaction.add(R.id.music_category_display_fragment_container,
                     fragment).commit();
         }
     }
 
+    private void initViews() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.follow_category_layout);
+    }
+
+    public static Intent newIntent(Context context){
+        return new Intent(context, FollowCategoryActivity.class);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Snackbar.make(mCoordinatorLayout,
+                R.string.moveForward, Snackbar.LENGTH_LONG)
+                .show();
+    }
 }

@@ -9,12 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
-import primr.apps.eurakacachet.ryme.ryme.data.model.Artist;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.artistListDisplay.ArtistListDisplayFragment;
 
 /**
@@ -24,7 +21,13 @@ public class FavoriteArtistsFragment extends Fragment implements FavoriteMvpView
 
     @Inject FavoriteArtistsPresenter mFavoriteArtistsPresenter;
 
-    private ArrayList<Artist> mArtistList;
+
+    public static FavoriteArtistsFragment newInstance() {
+        Bundle args = new Bundle();
+        FavoriteArtistsFragment fragment = new FavoriteArtistsFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public FavoriteArtistsFragment() {
         // Required empty public constructor
@@ -47,7 +50,7 @@ public class FavoriteArtistsFragment extends Fragment implements FavoriteMvpView
         Fragment artistListDisplayFragment = fragmentManager.findFragmentById
                 (R.id.favorite_artist_list_display_fragment_container);
         if(artistListDisplayFragment == null){
-            artistListDisplayFragment = ArtistListDisplayFragment.newInstance(mArtistList);
+            artistListDisplayFragment = ArtistListDisplayFragment.newInstance();
             fragmentTransaction.add(R.id.favorite_artist_list_display_fragment_container,
                     artistListDisplayFragment).commit();
         }

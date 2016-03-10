@@ -2,8 +2,11 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:fitsSystemWindows="true"
+    android:id="@+id/artist_profile_coordinator_layout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="primr.apps.eurakacachet.ryme.ryme.ui.view.artist.profile.ArtistProfileActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -38,13 +41,13 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
             <TextView
+                android:id="@+id/artist_profile_name_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/white"
                 android:layout_marginTop="170dp"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/artistNameTest"/>
+                android:layout_gravity="center_horizontal"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -53,64 +56,54 @@
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/followers_text_view"
+                    android:id="@+id/followers_count_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:textColor="#96ffffff"
-                    android:layout_marginEnd="4dp"
-                    android:text="@string/followersTest"/>
+                    android:textColor="@color/blueBlack"
+                    android:layout_marginEnd="4dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:textAllCaps="true"
-                    android:textColor="#96ffffff"
+                    android:textColor="@color/lightBlueBlack"
                     android:text="@string/followers"/>
             </LinearLayout>
 
-            <FrameLayout
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="80dp"
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/image_view_frame">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="2dp"
-                    android:src="@drawable/shattawale"
-                    android:id="@+id/artist_photo_view" />
-
-                <ImageView
-                    android:src="@drawable/radius_display"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </FrameLayout>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="28dp"
                 android:textAllCaps="false"
-                android:text="follow"
+                android:text="@string/followText"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:textColor="@color/white"
                 android:layout_gravity="center_horizontal"
-                android:id="@+id/follow_category_button"
+                android:id="@+id/follow_artist_button"
                 android:background="@drawable/rouded_shape"
                 android:layout_marginTop="220dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true" />
 
+            <net.grobas.view.PolygonImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="80dp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/artist_profile_photo_view"
+                app:poly_border="true"
+                app:poly_border_color="@android:color/white"
+                app:poly_border_width="2dp"
+                app:poly_shadow="true"
+                app:poly_vertices="0" />
+
             <android.support.design.widget.TabLayout
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="bottom"
-                app:tabIndicatorColor="@color/colorAccent"
-                app:tabSelectedTextColor="@color/colorAccent"
-                android:background="@color/colorPrimary"
+                style="@style/TabLayoutStyle"
                 app:tabGravity="fill"
                 android:id="@+id/artist_profile_tab_layout">
 
@@ -119,63 +112,17 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <!--<include layout="@layout/content_artist_profile" />-->
-
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:uuid="@+uuid/artist_profile_fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--app:fabSize="mini"-->
-        <!--app:layout_anchor="@uuid/artist_profile_app_bar_layout"-->
-        <!--app:layout_anchorGravity="center_vertical|end"-->
-        <!--android:src="@drawable/ic_follow_artist" />-->
-
-    <!--<Button-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="28dp"-->
-        <!--android:textAllCaps="false"-->
-        <!--android:text="follow"-->
-        <!--style="@style/Widget.AppCompat.Button.Borderless"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:uuid="@+uuid/follow_category_button"-->
-        <!--android:background="@drawable/rouded_shape"-->
-        <!--app:layout_anchor="@uuid/artist_profile_app_bar_layout"-->
-        <!--app:layout_anchorGravity="center_horizontal"-->
-        <!--android:layout_marginTop="150dp"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_alignParentEnd="true" />-->
-
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
-        <!--android:textColor="@color/white"-->
-        <!--app:layout_anchor="@uuid/artist_profile_fab"-->
-        <!--app:layout_anchorGravity="bottom|center"-->
-        <!--android:text="2k followers"/>-->
-
-    <!--<FrameLayout-->
-        <!--android:layout_width="60dp"-->
-        <!--android:layout_height="60dp"-->
-        <!--android:layout_marginTop="50dp"-->
-        <!--app:layout_anchor="@uuid/artist_profile_app_bar_layout"-->
-        <!--app:layout_anchorGravity="center_horizontal"-->
-        <!--android:uuid="@+uuid/image_view_frame">-->
-
-        <!--<ImageView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:padding="2dp"-->
-            <!--android:src="@drawable/shattawale"-->
-            <!--android:uuid="@+uuid/artist_photo_view" />-->
-
-        <!--<ImageView-->
-            <!--android:src="@drawable/radius_display"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent" />-->
-
-    <!--</FrameLayout>-->
+    <android.support.design.widget.FloatingActionButton
+        android:visibility="invisible"
+        android:id="@+id/upload_track_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:fabSize="mini"
+        app:rippleColor="@color/white"
+        app:layout_anchor="@id/artist_profile_tab_layout"
+        app:layout_anchorGravity="top|end"
+        android:src="@drawable/ic_cloud_upload" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/artist_profile_view_pager"

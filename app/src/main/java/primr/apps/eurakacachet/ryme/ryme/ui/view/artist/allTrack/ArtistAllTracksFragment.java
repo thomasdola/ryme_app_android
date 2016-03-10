@@ -9,12 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
-import javax.inject.Inject;
-
 import primr.apps.eurakacachet.ryme.ryme.R;
-import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.artist.trackDisplay.ArtistTrackListDisplayFragment;
 
 /**
@@ -22,9 +17,19 @@ import primr.apps.eurakacachet.ryme.ryme.ui.view.artist.trackDisplay.ArtistTrack
  */
 public class ArtistAllTracksFragment extends Fragment {
 
-    @Inject ArtistAllTracksPresenter mArtistAllTracksPresenter;
+    public static final String ARG_ARTIST_ID = "artist_id";
+    private static final String ARG_IS_USER_ACCOUNT = "is_user_account";
+    private String mArtistId;
+    private boolean mIsUserAccount;
 
-    private ArrayList<Track> mTrackList;
+    public static ArtistAllTracksFragment newInstance(String artistId, boolean isUserAccount) {
+        ArtistAllTracksFragment fragment = new ArtistAllTracksFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_ARTIST_ID, artistId);
+        args.putBoolean(ARG_IS_USER_ACCOUNT, isUserAccount);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public ArtistAllTracksFragment() {
         // Required empty public constructor
@@ -33,8 +38,10 @@ public class ArtistAllTracksFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-        mTrackList = new ArrayList<>();
+        if(getArguments() != null){
+            mArtistId = getArguments().getString(ARG_ARTIST_ID);
+            mIsUserAccount = getArguments().getBoolean(ARG_IS_USER_ACCOUNT);
+        }
     }
 
 
@@ -48,7 +55,8 @@ public class ArtistAllTracksFragment extends Fragment {
 
         Fragment fragment = fragmentManager.findFragmentById(R.id.artist_all_tracks_display_container);
         if(fragment == null){
-            fragment = ArtistTrackListDisplayFragment.newInstance(mTrackList);
+            fragment = ArtistTrackListDisplayFragment.newInstance(mArtistId,
+                    ArtistTrackListDisplayFragment.ALL_TRACK, mIsUserAccount);
             fragmentTransaction.add(R.id.artist_all_tracks_display_container, fragment)
                     .commit();
         }

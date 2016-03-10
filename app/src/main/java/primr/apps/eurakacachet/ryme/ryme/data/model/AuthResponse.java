@@ -3,35 +3,38 @@ package primr.apps.eurakacachet.ryme.ryme.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 public class AuthResponse implements Parcelable {
 
     public String status;
     public String message;
     public int code;
-    public UserProfile data;
+    @Nullable
+    public ApiData user;
+    @Nullable
+    public String token;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        AuthResponse that = (AuthResponse) o;
-
-        if (code != that.code) return false;
-        if (status != null ? !status.equals(that.status) : that.status != null) return false;
-        if (message != null ? !message.equals(that.message) : that.message != null) return false;
-        return !(data != null ? !data.equals(that.data) : that.data != null);
-
+    public String status() {
+        return status;
     }
 
-    @Override
-    public int hashCode() {
-        int result = status != null ? status.hashCode() : 0;
-        result = 31 * result + (message != null ? message.hashCode() : 0);
-        result = 31 * result + code;
-        result = 31 * result + (data != null ? data.hashCode() : 0);
-        return result;
+    public String message() {
+        return message;
+    }
+
+    public int code() {
+        return code;
+    }
+
+    @Nullable
+    public ApiData data() {
+        return user;
+    }
+
+    @Nullable
+    public String token() {
+        return token;
     }
 
 
@@ -45,7 +48,8 @@ public class AuthResponse implements Parcelable {
         dest.writeString(this.status);
         dest.writeString(this.message);
         dest.writeInt(this.code);
-        dest.writeParcelable(this.data, 0);
+        dest.writeParcelable(this.user, 0);
+        dest.writeString(this.token);
     }
 
     public AuthResponse() {
@@ -55,7 +59,8 @@ public class AuthResponse implements Parcelable {
         this.status = in.readString();
         this.message = in.readString();
         this.code = in.readInt();
-        this.data = in.readParcelable(UserProfile.class.getClassLoader());
+        this.user = in.readParcelable(ApiData.class.getClassLoader());
+        this.token = in.readString();
     }
 
     public static final Parcelable.Creator<AuthResponse> CREATOR = new Parcelable.Creator<AuthResponse>() {
@@ -67,4 +72,15 @@ public class AuthResponse implements Parcelable {
             return new AuthResponse[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "AuthResponse{" +
+                "message='" + message + '\'' +
+                ", code=" + code +
+                ", user=" + user +
+                ", token='" + token + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

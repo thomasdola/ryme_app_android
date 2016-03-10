@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Ryme</string>
+    <string name="facebook_app_id">955097217910752</string>
+    <string name="google_app_id">261016450965</string>
+
+
     <string name="menu_inbox">Home</string>
     <string name="menu_favorites">Favorites</string>
     <string name="menu_categories">Categories</string>
@@ -112,14 +116,14 @@
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="welcome_next_button">Sign Up</string>
     <string name="purpose_text">Sign up to access unlimited musics.</string>
-    <string name="sign_in_option">Already have an Account?</string>
+    <string name="sign_in_option">SIGN IN</string>
     <string name="join_button">Join</string>
     <string name="agreement_text">By Sign up, you agree to our Terms and Privacy Policy.</string>
     <string name="password_hint">Password</string>
     <string name="username_hint">Username</string>
     <string name="verification_code">Verification Code</string>
     <string name="sign_in_button">Sign in</string>
-    <string name="forgot_password_option">Forgot password?</string>
+    <string name="signup_option">SIGN UP</string>
     <string name="title_activity_follow_category">FollowCategoryActivity</string>
     <string name="PhoneEditTextHint">Phone Number</string>
     <string name="dial_code_edit_text_hint">Dial Code</string>
@@ -128,7 +132,7 @@
     <string name="signInButton">Sign In</string>
     <string name="otpCode">Enter Code</string>
     <string name="verify">Verify</string>
-    <string name="phonePurpose">You\'ll receive an SMS to verify your identity.</string>
+    <string name="phonePurpose">You\'ll receive an SMS to verify your Phone Number.</string>
     <string name="notice_fail">(Enter the Verfication Code below in case we fail to detect the SMS automatically)</string>
     <string name="notice_success">Sit back and Relax! While we verify your phone number</string>
     <string name="title_activity_main2">Main2Activity</string>
@@ -536,5 +540,72 @@
     <string name="search_sort_popularity">Popularity</string>
     <string name="story_display_readability">Readability</string>
     <string name="title_activity_new_settings">Settings</string>
+
+
+    <string-array name="colors">
+        <item name="blueBlack">#021f2d</item>
+        <item name="lightBlueBlack">#17303c</item>
+        <item name="lighterBlueBlack">#41545d</item>
+    </string-array>
+
+    <string name="title_activity_crop_image">CropImageActivity</string>
+    <string name="profile">Profile</string>
+    <string name="upload_menu_title">Uploads</string>
+    <string name="settings_menu_title">Settings</string>
+    <string name="title_activity_just_layout">Register</string>
+    <string name="moveForward">Let\'s Move Forward, The world is awaiting...</string>
+    <string name="unfollowText">unfollow</string>
+    <string name="followText">follow</string>
+    <string name="profileText">" Profile"</string>
+    <string name="errorWhileLoadingTheTrackMessage">"Network error, Please check your internet connection."</string>
+    <string name="pin_changepin_title">beign artist</string>
+    <string name="terms_of_being_artist">
+        "Component elevations.\n\n"
+
+        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
+        "does not vary from 6dp in one app to 16dp in another app).\n"
+        "Components may have different resting elevations across platforms, depending on the depth "
+        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
+    </string>
+    <string name="artist_request_form_title">Artist Request</string>
+    <string name="uploading_track_text">Uploading...</string>
+    <string name="enter_code_instruction">Kindly Enter Code.</string>
+    <string name="category_text_hint">Category</string>
+    <string name="stage_name_text_hint">Stage Name</string>
+    <string name="date_picker_title">Pick Date</string>
+    <string name="no_text">No</string>
+    <string name="yes_text">Yes</string>
+    <string name="as_an_artist_text">as an Artist?</string>
+    <string name="do_you_know_text">Do you know</string>
+    <string name="later_text">later</string>
+    <string name="search_text">Search</string>
+    <string name="close_text">close</string>
+    <string name="ending_text">Ending : </string>
+    <string name="started_text">Started : </string>
+    <string name="comment_text">Comment</string>
+    <string name="share_text">Share</string>
+    <string name="view_artist_profile_text">View Artist Profile</string>
+    <string name="post_text">post</string>
+    <string name="cancel_text">cancel</string>
+    <string name="please_wait_text">Please Wait...</string>
+    <string name="upload_text">Upload</string>
+    <string name="track_title_text">Track Title</string>
+    <string name="category_text">Category</string>
+    <string name="any_featurings_text">Any Featuring(s) on this Track?</string>
+    <string name="artists_names_text">Artists Names...</string>
+    <string name="track_cover_text">Track Cover</string>
+    <string name="released_date_text">Released Date :</string>
+    <string name="pick_date_text">Pick Date</string>
+    <string name="could_download_text">Could Your Fans Download this Track?</string>
+    <string name="select_track_text">Select the track</string>
+    <string name="submit_text">Submit</string>
+    <string name="please_try_again_text">Network error. please check your internet and try again.</string>
+
+    <array name="loading_colors">
+        <item>#ffdd2c00</item>
+        <item name="md_light_green_A700">#ff64dd17</item>
+        <item name="md_pink_A400">#fff50057</item>
+        <item name="md_cyan_A700">#ff00b8d4</item>
+    </array>
 
 </resources>

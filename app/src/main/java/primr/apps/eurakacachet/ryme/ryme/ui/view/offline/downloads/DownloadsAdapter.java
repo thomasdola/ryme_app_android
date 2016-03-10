@@ -6,18 +6,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import primr.apps.eurakacachet.ryme.ryme.R;
-import primr.apps.eurakacachet.ryme.ryme.data.model.DownloadedTrack;
+import primr.apps.eurakacachet.ryme.ryme.data.local.storio.models.SavedTrack;
 
 public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsViewHolder> {
 
     DownloadsFragment mDownloadsFragment;
-    List<DownloadedTrack> mTracks;
+    List<SavedTrack> mTracks;
 
-    public DownloadsAdapter(DownloadsFragment downloadsFragment, List<DownloadedTrack> tracks){
+    @Inject
+    public DownloadsAdapter(){
+        mTracks = new ArrayList<>();
+    }
+
+    public void setTracks(DownloadsFragment downloadsFragment, List<SavedTrack> tracks){
         mDownloadsFragment = downloadsFragment;
         mTracks = tracks;
     }
@@ -33,8 +41,8 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsViewHolder> 
 
     @Override
     public void onBindViewHolder(DownloadsViewHolder holder, int position) {
-        DownloadedTrack track = mTracks.get(position);
-        holder.bindTrack(track);
+        SavedTrack track = mTracks.get(position);
+        holder.bindTrack(track, position);
     }
 
     @Override

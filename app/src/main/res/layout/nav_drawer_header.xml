@@ -1,31 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:orientation="vertical"
-    android:gravity="bottom">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/colorPrimary"
+              android:theme="@style/ThemeOverlay.AppCompat.Dark"
+              android:orientation="vertical"
+              android:gravity="bottom">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@android:drawable/sym_def_app_icon"
-        android:id="@+id/avatar_view"
-        android:contentDescription="@null"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
 
-    <TextView android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-              android:gravity="center_horizontal"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="thomas.dola"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/artist_back_image_view"
+            android:scaleType="centerCrop"
+            android:src="@drawable/wallpaper"
+            android:contentDescription="@null"/>
+
+        <primr.apps.eurakacachet.ryme.ryme.utils.helpers.image_effect.LetterImageView
+            android:id="@+id/letter_avatar_view"
+            android:layout_gravity="center"
+            android:layout_width="64dp"
+            android:layout_height="64dp"/>
+
+        <net.grobas.view.PolygonImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:id="@+id/photo_avatar_view"
+            app:poly_border="true"
+            app:poly_border_color="@color/blueBlack"
+            app:poly_border_width="2dp"
+            app:poly_shadow="true"
+            app:poly_vertices="0" />
+
+        <TextView android:layout_width="match_parent"
+                  android:background="@color/white_ash"
+                  android:textColor="@color/blueBlack"
+                  android:layout_height="wrap_content"
+                  android:gravity="center"
+                  android:layout_gravity="bottom"
+                  android:id="@+id/username_view"
+                  android:paddingTop="4dp"
+                  android:text="thomas.dola"
+                  android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    </FrameLayout>
+
 
     <!--<TextView android:layout_width="wrap_content" -->
         <!--android:layout_height="wrap_content"-->

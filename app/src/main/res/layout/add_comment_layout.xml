@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <EditText
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:textColor="@color/blueBlack"
+        android:layout_width="match_parent"
+        android:id="@+id/comment_edit_text_view"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:textSize="14sp"
+        android:inputType="textAutoComplete|textMultiLine|textLongMessage"
+        android:hint="@string/commentHint"/>
+
+    <LinearLayout
+        android:layout_below="@id/comment_edit_text_view"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <Button
+            android:text="@string/cancel_text"
+            android:textColor="@color/white_ash"
+            android:background="@color/lightBlueBlack"
+            android:id="@+id/close_dialog_button"
+            android:textAllCaps="false"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:layout_height="30dp"/>
+        <Button
+            android:background="@drawable/native_button_state"
+            android:id="@+id/post_comment_button"
+            android:textColor="@color/white_ash"
+            android:text="@string/post_text"
+            android:textAllCaps="false"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="30dp"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

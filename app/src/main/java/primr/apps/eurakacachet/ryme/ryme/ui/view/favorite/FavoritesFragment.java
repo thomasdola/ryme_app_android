@@ -69,9 +69,9 @@ public class FavoritesFragment extends Fragment {
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return new FavoriteTracksFragment();
+                    return FavoriteTracksFragment.newInstance();
                 case 1:
-                    return new FavoriteArtistsFragment();
+                    return FavoriteArtistsFragment.newInstance();
             }
             return null;
         }

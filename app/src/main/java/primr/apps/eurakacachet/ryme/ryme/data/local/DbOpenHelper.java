@@ -3,10 +3,16 @@ package primr.apps.eurakacachet.ryme.ryme.data.local;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import javax.inject.Inject;
 
-import primr.apps.eurakacachet.ryme.ryme.injection.ApplicationContext;
+import primr.apps.eurakacachet.ryme.ryme.data.local.storio.tables.CategoriesTable;
+import primr.apps.eurakacachet.ryme.ryme.data.local.storio.tables.DownloadedTracksTable;
+import primr.apps.eurakacachet.ryme.ryme.data.local.storio.tables.FollowedArtistsTable;
+import primr.apps.eurakacachet.ryme.ryme.data.local.storio.tables.FollowedCategoriesTable;
+import primr.apps.eurakacachet.ryme.ryme.data.local.storio.tables.LikedTracksTable;
+import primr.apps.eurakacachet.ryme.ryme.injection.context.ApplicationContext;
 
 
 public class DbOpenHelper extends SQLiteOpenHelper{
@@ -23,14 +29,14 @@ public class DbOpenHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.beginTransaction();
         try {
-            db.execSQL(Db.UserProfileTable.CREATE);
-            //Add other tables here
-            db.execSQL(Db.CategoryTable.CREATE);
-            db.execSQL(Db.DownloadedTrackTable.CREATE);
-            db.execSQL(Db.LikedTrackTable.CREATE);
-            db.execSQL(Db.FollowedArtistTable.CREATE);
-            db.execSQL(Db.FollowedCategoryTable.CREATE);
+            Log.d("adapter", "DB Creating Called");
+            db.execSQL(DownloadedTracksTable.getCreateTableQuery());
+            db.execSQL(FollowedCategoriesTable.getCreateTableQuery());
+            db.execSQL(FollowedArtistsTable.getCreateTableQuery());
+            db.execSQL(CategoriesTable.getCreateTableQuery());
+            db.execSQL(LikedTracksTable.getCreateTableQuery());
             db.setTransactionSuccessful();
+            Log.d("adapter", "DB Created Called");
         } finally {
             db.endTransaction();
         }

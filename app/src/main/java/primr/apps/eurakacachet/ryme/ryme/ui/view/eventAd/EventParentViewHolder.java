@@ -1,21 +1,20 @@
 package primr.apps.eurakacachet.ryme.ryme.ui.view.eventAd;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
-
-import javax.inject.Inject;
+import com.squareup.picasso.Picasso;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.EventAd;
 
 
-public class EventParentViewHolder extends ParentViewHolder implements EventAdViewHolderMvpView{
+public class EventParentViewHolder extends ParentViewHolder{
 
-    @Inject EventAdViewHolderPresenter mEventAdViewHolderPresenter;
-
+    Picasso mPicasso;
     ImageView mEventImageView;
     public TextView mEventDateTimeView;
     public TextView mEventFareView;
@@ -23,8 +22,9 @@ public class EventParentViewHolder extends ParentViewHolder implements EventAdVi
     public ImageView mEventExpandViewButton;
     private EventAd mEventAd;
 
-    public EventParentViewHolder(View itemView) {
+    public EventParentViewHolder(View itemView, Context context) {
         super(itemView);
+        mPicasso = Picasso.with(context);
         mEventImageView = (ImageView) itemView.findViewById(R.id.event_photo_image_view);
         mEventViewsView = (TextView) itemView.findViewById(R.id.event_views_text_view);
         mEventDateTimeView = (TextView) itemView.findViewById(R.id.event_date_time_text_view);
@@ -37,31 +37,19 @@ public class EventParentViewHolder extends ParentViewHolder implements EventAdVi
                     collapseView();
                 } else {
                     expandView();
-                    mEventAdViewHolderPresenter.view(mEventAd);
                 }
             }
         });
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void updateViews(long views) {
-        mEventViewsView.setText((int) views);
-    }
-
     public void bindEventHead(EventAd event) {
         mEventAd = event;
-        mEventFareView.setText((int) event.fare);
-        mEventViewsView.setText((int) event.views);
+        mPicasso.load(event.getCover())
+                .placeholder(R.drawable.wallpaper)
+                .error(R.drawable.wallpaper)
+                .into(mEventImageView);
+        mEventFareView.setText((int) event.getFare());
+        mEventViewsView.setText((int) event.getViews());
     }
 
     @Override

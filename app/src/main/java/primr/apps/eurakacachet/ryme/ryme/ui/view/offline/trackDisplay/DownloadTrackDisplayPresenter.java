@@ -1,8 +1,11 @@
 package primr.apps.eurakacachet.ryme.ryme.ui.view.offline.trackDisplay;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.data.DataManager;
+import primr.apps.eurakacachet.ryme.ryme.data.local.storio.models.SavedTrack;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BasePresenter;
 import rx.Subscription;
 
@@ -28,7 +31,8 @@ public class DownloadTrackDisplayPresenter extends BasePresenter<DownloadTrackDi
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void play(){}
-
-    public void pause(){}
+    public List<SavedTrack> loadTracks(){
+        checkViewAttached();
+        return mDataManager.syncLoadDownloadedTracks();
+    }
 }

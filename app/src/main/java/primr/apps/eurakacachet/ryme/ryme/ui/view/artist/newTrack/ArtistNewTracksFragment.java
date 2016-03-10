@@ -8,28 +8,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
-import javax.inject.Inject;
-
 import primr.apps.eurakacachet.ryme.ryme.R;
-import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.artist.trackDisplay.ArtistTrackListDisplayFragment;
 
 
 public class ArtistNewTracksFragment extends Fragment {
 
-    @Inject ArtistNewTracksPresenter mArtistNewTracksPresenter;
-
-    private ArrayList<Track> mTrackList;
+    public static final String ARG_ARTIST_ID = "artist_id";
+    private static final String ARG_USER_ACCOUNT = "is_user_account";
+    private String mArtistId;
+    private boolean mIsUserAccount;
 
     public ArtistNewTracksFragment(){}
+
+    public static ArtistNewTracksFragment newInstance(String artistId, boolean isUserAccount) {
+        Bundle args = new Bundle();
+        args.putString(ARG_ARTIST_ID, artistId);
+        args.putBoolean(ARG_USER_ACCOUNT, isUserAccount);
+        ArtistNewTracksFragment fragment = new ArtistNewTracksFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-        mTrackList = new ArrayList<>();
+        if(getArguments() != null){
+            mArtistId = getArguments().getString(ARG_ARTIST_ID);
+            mIsUserAccount= getArguments().getBoolean(ARG_USER_ACCOUNT);
+        }
     }
 
     @Override
@@ -41,7 +49,8 @@ public class ArtistNewTracksFragment extends Fragment {
 
         Fragment fragment = fragmentManager.findFragmentById(R.id.artist_new_tracks_display_container);
         if(fragment == null){
-            fragment = ArtistTrackListDisplayFragment.newInstance(mTrackList);
+            fragment = ArtistTrackListDisplayFragment.newInstance(mArtistId, ArtistTrackListDisplayFragment
+                    .NEW_RELEASE_TRACK, mIsUserAccount);
             fragmentTransaction.add(R.id.artist_new_tracks_display_container, fragment)
                     .commit();
         }

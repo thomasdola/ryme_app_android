@@ -5,7 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
@@ -14,16 +17,20 @@ import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
 public class PublicTrackListDisplayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     // Two view types which will be used to determine whether a row should be displaying
-    // data or a Progressbar
+    // user or a Progressbar
     private static final int VIEW_TYPE_LOADING = 0;
     private static final int VIEW_TYPE_TRACK = 1;
     private PublicTrackListDisplayFragment mPublicTrackListDisplayFragment;
     private List<Track> mTrackList;
 
-    public PublicTrackListDisplayAdapter(PublicTrackListDisplayFragment
-                                                 publicTrackListDisplayFragment, List<Track> trackList) {
-        mPublicTrackListDisplayFragment = publicTrackListDisplayFragment;
-        mTrackList = trackList;
+    @Inject
+    public PublicTrackListDisplayAdapter() {
+        mTrackList = new ArrayList<>();
+    }
+
+    public void setTracks(List<Track> tracks, PublicTrackListDisplayFragment fragment){
+        mTrackList = tracks;
+        mPublicTrackListDisplayFragment = fragment;
     }
 
     @Override

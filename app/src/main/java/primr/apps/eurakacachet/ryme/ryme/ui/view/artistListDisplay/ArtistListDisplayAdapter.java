@@ -5,7 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Artist;
@@ -16,16 +19,21 @@ public class ArtistListDisplayAdapter extends RecyclerView.Adapter<ArtistDisplay
     private ArtistListDisplayFragment mArtistListDisplayFragment;
     private List<Artist> mArtistList;
 
-    public ArtistListDisplayAdapter(ArtistListDisplayFragment artistListDisplayFragment, List<Artist> artistArrayList) {
+    @Inject
+    public ArtistListDisplayAdapter(){
+        mArtistList = new ArrayList<>();
+    }
+
+    public void seArtistList(ArtistListDisplayFragment artistListDisplayFragment, List<Artist> artistArrayList) {
         mArtistListDisplayFragment = artistListDisplayFragment;
         mArtistList = artistArrayList;
+        notifyDataSetChanged();
     }
 
     @Override
     public ArtistDisplayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(mArtistListDisplayFragment.getActivity());
         View view = layoutInflater.inflate(R.layout.artist_card_view, parent, false);
-
         return new ArtistDisplayViewHolder(mArtistListDisplayFragment, view);
     }
 

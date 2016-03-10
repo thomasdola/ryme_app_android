@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<primr.apps.eurakacachet.ryme.ryme.utils.helpers.layout.AutoFitRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<primr.apps.eurakacachet.ryme.ryme.utils.helpers.layout.AutoFitRecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blueBlack"
     android:id="@+id/artist_list_display_recycler_view">
 
 </primr.apps.eurakacachet.ryme.ryme.utils.helpers.layout.AutoFitRecyclerView>

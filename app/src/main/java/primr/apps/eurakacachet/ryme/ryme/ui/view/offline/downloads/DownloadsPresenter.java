@@ -1,14 +1,17 @@
 package primr.apps.eurakacachet.ryme.ryme.ui.view.offline.downloads;
 
+import android.util.Log;
+
 import java.util.List;
-import java.util.UUID;
 
 import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.data.DataManager;
-import primr.apps.eurakacachet.ryme.ryme.data.model.DownloadedTrack;
+import primr.apps.eurakacachet.ryme.ryme.data.local.storio.models.SavedTrack;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BasePresenter;
+import rx.Subscriber;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 
 
 public class DownloadsPresenter extends BasePresenter<DownloadsMvpView>{
@@ -32,13 +35,31 @@ public class DownloadsPresenter extends BasePresenter<DownloadsMvpView>{
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public List<DownloadedTrack> loadTracks(){
+    public void loadTracks(){
         checkViewAttached();
         getMvpView().showLoading();
-        return null;
+        mDataManager.loadDownloadedTracks()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<SavedTrack>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(List<SavedTrack> savedTracks) {
+                        Log.d("offline", savedTracks.toString());
+                        getMvpView().setTracks(savedTracks);
+                    }
+                });
     }
 
-    public void deleteTrack(UUID trackId){
+    public void deleteTrack(){
         checkViewAttached();
 //        mDataManager.deleteDownloadedTrack(trackId);
         String trackTitle = "";

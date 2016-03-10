@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
+import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.trackListDisplay.PublicTrackListDisplayFragment;
 
 public class TrendingTracksFragment extends Fragment implements TrendingTracksMvpView {
@@ -39,6 +40,7 @@ public class TrendingTracksFragment extends Fragment implements TrendingTracksMv
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        ((BaseActivity)getActivity()).getActivityComponent().inject(this);
         View rootView = inflater.inflate(R.layout.fragment_trending_tracks, container, false);
 
         FragmentManager fragmentManager = getChildFragmentManager();
@@ -46,7 +48,8 @@ public class TrendingTracksFragment extends Fragment implements TrendingTracksMv
         Fragment publicTrackListDisplayFragment = fragmentManager
                 .findFragmentById(R.id.trending_tracks_fragment_container);
         if(publicTrackListDisplayFragment == null){
-            publicTrackListDisplayFragment = PublicTrackListDisplayFragment.newInstance(mTrackList);
+            publicTrackListDisplayFragment = PublicTrackListDisplayFragment
+                    .newInstance(PublicTrackListDisplayFragment.TRENDING);
             fragmentTransaction.add(R.id.trending_tracks_fragment_container,
                     publicTrackListDisplayFragment).commit();
         }

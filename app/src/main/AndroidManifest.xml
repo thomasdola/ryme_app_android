@@ -3,6 +3,7 @@
     package="primr.apps.eurakacachet.ryme.ryme" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,110 +15,180 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".ui.view.main.MainActivity" >
+        android:largeHeap="true"
+        android:theme="@style/AppTheme">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+        <activity
+            android:name=".ui.view.main.MainActivity"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ui.view.trackDisplay.PublicTrackDisplayActivity"
-            android:parentActivityName=".ui.view.main.MainActivity" >
+            android:parentActivityName=".ui.view.main.MainActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.view.main.MainActivity" />
         </activity>
         <activity
             android:name=".ui.view.artist.profile.ArtistProfileActivity"
-            android:parentActivityName=".ui.view.main.MainActivity" >
+            android:parentActivityName=".ui.view.main.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.view.main.MainActivity" />
         </activity>
         <activity
             android:name=".ui.view.artist.trackDisplay.ArtistTrackDisplayActivity"
-            android:parentActivityName=".ui.view.artist.profile.ArtistProfileActivity" >
+            android:parentActivityName=".ui.view.artist.profile.ArtistProfileActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.view.artist.profile.ArtistProfileActivity" />
         </activity>
         <activity
             android:name=".ui.view.search.SearchableActivity"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop"
+            android:parentActivityName=".ui.view.main.MainActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-        </activity>
-        <activity android:name=".ui.view.signup.SignUpActivity" >
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity android:name=".ui.view.verify_code.VerifyCodeActivity" >
-        </activity>
-        <activity android:name=".ui.view.signin.LoginActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.view.main.MainActivity" />
         </activity>
         <activity
+            android:theme="@style/WelcomeTheme"
+            android:noHistory="true"
+            android:name=".ui.view.signup.SignUpActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:theme="@style/WelcomeTheme"
+            android:noHistory="true"
+            android:name=".ui.view.verify_code.VerifyCodeActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:noHistory="true"
+            android:theme="@style/WelcomeTheme"
+            android:name=".ui.view.signin.LoginActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:noHistory="true"
             android:name=".ui.view.followCategory.FollowCategoryActivity"
             android:label="@string/title_activity_follow_category"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
         </activity>
-
-        <!-- SMS Receiver -->
-        <receiver android:name=".utils.receivers.SmsReceiver" >
-            <intent-filter android:priority="99999" >
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
-
         <activity
             android:name=".ui.view.splash.SplashActivity"
+            android:noHistory="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <service
-            android:name=".utils.services.OtpSenderService"
-            android:exported="false" >
-        </service>
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <activity
-            android:name=".ui.view.settings.NewSettingsActivity"
-            android:label="@string/title_activity_new_settings"
-            android:parentActivityName=".ui.view.main.MainActivity" >
+            <intent-filter>
+                <data android:scheme="ryme" android:host="open"/>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity" />
+                android:name="io.branch.sdk.auto_link_keys"
+                android:value="track_id" />
         </activity>
         <activity
             android:name=".ui.view.settings.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".ui.view.main.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity" />
         </activity>
+        <activity
+            android:name=".ui.view.crop.CropImageActivity"
+            android:noHistory="true"
+            android:label="@string/title_activity_crop_image"
+            android:parentActivityName=".ui.view.main.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.view.offline.trackDisplay.TrackDisplayActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:noHistory="true"
+            android:name=".ui.view.splash.WelcomeActivity">
+        </activity>
+
+        <service
+            android:name="org.vaslabs.smsradar.SmsRadarService"
+            android:exported="false"
+            android:label="@string/app_name" />
+        <service
+            android:name=".utils.player.service.OnlineAudioPlayerService"
+            android:enabled="true"
+            android:exported="false"
+            android:label="@string/app_name" />
+        <service
+            android:name=".utils.player.service.OfflineAudioPlayerService"
+            android:enabled="true"
+            android:exported="false"
+            android:label="@string/app_name" />
+
+        <service
+            android:name=".utils.player.service.PCOfflineAudioPlayerService"
+            android:enabled="true"
+            android:exported="false"
+            android:label="@string/app_name"/>
+
+        <service
+            android:name=".utils.player.service.PCOnlineAudioPlayerService"
+            android:enabled="true"
+            android:exported="false"
+            android:label="@string/app_name"/>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value="primr.apps.eurakacachet.ryme.ryme.ui.view.search.SearchableActivity"/>
+        <!--<meta-data-->
+            <!--android:name="io.branch.sdk.TestMode"-->
+            <!--android:value="true" />-->
+        <!--<meta-data-->
+            <!--android:name="io.branch.sdk.BranchKey"-->
+            <!--android:value="key_live_ncnZj133Tqyj9j64Sp2VGfpbEumAhNpv" />-->
+        <meta-data
+            android:name="io.branch.sdk.BranchKey"
+            android:value="key_test_onl7d3Z8TDrlWg26UfZ2gfmnDClxhJjK" />
+
+
+        <receiver android:name="io.branch.referral.InstallListener" android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

@@ -5,5 +5,135 @@
              tools:context="primr.apps.eurakacachet.ryme.ryme.ui.view.offline.trackDisplay.DownloadTrackDisplayFragment">
 
 
+    <ImageView
+        android:id="@+id/track_cover_view"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/track_info_view"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/track_title_view"
+            android:text="Track Title"
+            android:gravity="center"
+            style="@android:style/TextAppearance.DeviceDefault.Large"
+            android:layout_marginBottom="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"/>
+
+        <TextView
+            android:id="@+id/artist_name_view"
+            android:text="Artist Name"
+            style="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/player_controls_view"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp">
+
+            <TextView
+                android:id="@+id/audio_player_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textColor="@android:color/black"
+                android:layout_marginLeft="10dp"
+                tools:text="00:00"
+                tools:ignore="RtlHardcoded"/>
+
+            <TextView
+                android:id="@+id/audio_player_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textColor="@android:color/black"
+                android:layout_marginRight="10dp"
+                tools:text="00:00"
+                tools:ignore="RelativeOverlap,RtlHardcoded"/>
+        </RelativeLayout>
+
+        <SeekBar
+            android:id="@+id/audio_player_seek"
+            style="?android:seekBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="50dp">
+
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/audio_player_previous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/exomedia_ic_skip_previous_black"
+                android:scaleType="centerInside"
+                android:visibility="invisible"
+                tools:visibility="visible"
+                tools:ignore="ContentDescription"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="44dp"
+                android:layout_height="match_parent" />
+
+            <ImageButton
+                android:id="@+id/audio_player_play_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/exomedia_ic_play_arrow_black"
+                android:scaleType="centerInside"
+                tools:ignore="ContentDescription"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="44dp"
+                android:layout_height="match_parent" />
+
+            <ImageButton
+                android:id="@+id/audio_player_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/exomedia_ic_skip_next_black"
+                android:scaleType="centerInside"
+                android:visibility="invisible"
+                tools:visibility="visible"
+                tools:ignore="ContentDescription"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

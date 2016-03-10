@@ -6,8 +6,29 @@
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/redPink</item>
+        <item name="colorPrimaryDark">@color/redPink</item>
+        <item name="colorAccent">@color/redPink</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:colorPrimary">@color/redPink</item>
+        <item name="android:colorAccent">@color/redPink</item>
+        <item name="android:textColorPrimary">@color/blueBlack</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="RymeText" parent="Theme.AppCompat.Light">
+        <item name="android:colorControlActivated">@color/lighterBlueBlack</item>
+        <item name="android:colorControlNormal">@color/white_ash</item>
+    </style>
+
+    <style name="RymeSwitch" parent="Theme.AppCompat.Light">
+        <item name="android:colorControlActivated">@color/redPink</item>
+    </style>
+
+    <style name="WelcomeTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/blueBlack</item>
     </style>
 </resources>

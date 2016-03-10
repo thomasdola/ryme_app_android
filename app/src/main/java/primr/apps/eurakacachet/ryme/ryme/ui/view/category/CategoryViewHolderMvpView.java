@@ -11,4 +11,11 @@ public interface CategoryViewHolderMvpView extends MvpView {
 
     void toggleFollowButton();
 
+    void beingFollowed(boolean isFollowing);
+
+    void showStart();
+
+    void hideStart();
+
+    void showError(String message);
 }

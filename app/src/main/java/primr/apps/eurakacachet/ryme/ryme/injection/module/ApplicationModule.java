@@ -9,8 +9,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import primr.apps.eurakacachet.ryme.ryme.data.local.PreferencesHelper;
 import primr.apps.eurakacachet.ryme.ryme.data.remote.RymeService;
-import primr.apps.eurakacachet.ryme.ryme.injection.ApplicationContext;
+import primr.apps.eurakacachet.ryme.ryme.injection.context.ApplicationContext;
 
 @Module
 public class ApplicationModule {
@@ -39,7 +40,7 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    RymeService providesRymeService(){
-        return RymeService.Creator.newRymeService();
+    RymeService providesRymeService(PreferencesHelper preferencesHelper){
+        return RymeService.Creator.newRymeService(preferencesHelper);
     }
 }
