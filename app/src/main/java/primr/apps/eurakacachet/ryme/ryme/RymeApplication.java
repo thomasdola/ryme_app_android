@@ -2,8 +2,12 @@ package primr.apps.eurakacachet.ryme.ryme;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.liulishuo.filedownloader.FileDownloader;
@@ -15,6 +19,8 @@ import primr.apps.eurakacachet.ryme.ryme.data.remote.RymeService;
 import primr.apps.eurakacachet.ryme.ryme.injection.component.ApplicationComponent;
 import primr.apps.eurakacachet.ryme.ryme.injection.component.DaggerApplicationComponent;
 import primr.apps.eurakacachet.ryme.ryme.injection.module.ApplicationModule;
+import primr.apps.eurakacachet.ryme.ryme.ui.view.artist.profile.ArtistProfileActivity;
+import primr.apps.eurakacachet.ryme.ryme.ui.view.trackDisplay.PublicTrackDisplayActivity;
 import primr.apps.eurakacachet.ryme.ryme.utils.player.manager.OfflinePlaylistManager;
 import primr.apps.eurakacachet.ryme.ryme.utils.player.manager.OnlineAudioPlaylistManager;
 import primr.apps.eurakacachet.ryme.ryme.utils.player.manager.PCOfflinePlaylistManager;
@@ -87,17 +93,55 @@ public class RymeApplication extends Application{
 
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
                     }
 
                     @Override
                     public void onNext(ForegroundMessage message) {
                         Activity activity = message.getCurrentActivity();
                         Bundle payload = message.getPayload();
+                        createNotification(activity, payload);
                     }
                 });
 
         RxGcm.Notifications.onRefreshToken(RefreshTokenReceiver.class);
+    }
+
+    private void createNotification(Activity activity, Bundle payload) {
+        NotificationCompat.Builder builder = new NotificationCompat
+                .Builder(activity).setAutoCancel(true);
+        String event = payload.getString("event");
+        String title = payload.getString("title");
+        String text = payload.getString("body");
+
+        if(event != null && title != null && text != null){
+            builder.setContentTitle(title).setContentText(text);
+            switch (event){
+                case "track_uploaded":
+                    builder.setSmallIcon(R.drawable.play_button);
+                    String track_id = payload.getString("track_id");
+                    if(track_id != null){
+                        Intent intent = PublicTrackDisplayActivity.newIntent(activity, track_id);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(activity,
+                                (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                        builder.setContentIntent(pendingIntent);
+                    }
+                    break;
+                case "artist_joined":
+                    builder.setSmallIcon(R.drawable.play_button);
+                    String artist_id = payload.getString("artist_id");
+                    if(artist_id != null){
+                        Intent intent = ArtistProfileActivity.newIntent(activity, artist_id);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(activity,
+                                (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                        builder.setContentIntent(pendingIntent);
+                    }
+                    break;
+            }
+        }
+        NotificationManager notificationManager = (NotificationManager) activity
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(8888, builder.build());
     }
 
     public static RymeApplication get(Context context){

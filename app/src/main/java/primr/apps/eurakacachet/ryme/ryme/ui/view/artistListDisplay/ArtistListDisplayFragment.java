@@ -67,7 +67,7 @@ public class ArtistListDisplayFragment extends Fragment implements ArtistListDis
 
     @Override
     public void setArtists(List<Artist> artists) {
-        mAdapter.seArtistList(this, artists);
+        mAdapter.setArtistList(this, artists);
     }
 
     @Override

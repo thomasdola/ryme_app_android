@@ -28,7 +28,6 @@ public class EventParentViewHolder extends ParentViewHolder{
         mEventImageView = (ImageView) itemView.findViewById(R.id.event_photo_image_view);
         mEventViewsView = (TextView) itemView.findViewById(R.id.event_views_text_view);
         mEventDateTimeView = (TextView) itemView.findViewById(R.id.event_date_time_text_view);
-        mEventFareView = (TextView) itemView.findViewById(R.id.event_price_text_view);
         mEventExpandViewButton = (ImageView) itemView.findViewById(R.id.event_expand_button);
         mEventExpandViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,14 +41,14 @@ public class EventParentViewHolder extends ParentViewHolder{
         });
     }
 
-    public void bindEventHead(EventAd event) {
+    public void bind(EventAd event) {
         mEventAd = event;
         mPicasso.load(event.getCover())
                 .placeholder(R.drawable.wallpaper)
                 .error(R.drawable.wallpaper)
                 .into(mEventImageView);
-        mEventFareView.setText((int) event.getFare());
-        mEventViewsView.setText((int) event.getViews());
+        mEventDateTimeView.setText(String.format("%s @%s", event.getDate(), event.getTime()));
+        mEventViewsView.setText(Long.toString(event.getViews()));
     }
 
     @Override

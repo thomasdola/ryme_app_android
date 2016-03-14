@@ -632,6 +632,15 @@ public class DataManager {
         });
     }
 
+    public Observable<ActionResponse> viewEventAd(final String uuid){
+        return Observable.defer(new Func0<Observable<ActionResponse>>() {
+            @Override
+            public Observable<ActionResponse> call() {
+                return mRymeService.viewEventAd(uuid);
+            }
+        });
+    }
+
     public Observable<List<SavedTrack>> loadDownloadedTracks() {
         return Observable.defer(new Func0<Observable<List<SavedTrack>>>() {
             @Override

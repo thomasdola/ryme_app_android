@@ -7,7 +7,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import javax.inject.Inject;
 
@@ -19,7 +20,8 @@ public class PublicTrackDisplayActivity extends BaseActivity implements PublicTr
 
     @Inject PublicTrackDisplayActivityPresenter mPresenter;
     public static final String EXTRA_TRACK = "track";
-    private Track mTrack;
+    private String mTrackId;
+    ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,28 +30,29 @@ public class PublicTrackDisplayActivity extends BaseActivity implements PublicTr
         mPresenter.attachView(this);
         Intent intent = getIntent();
         if(intent != null){
-            mTrack = intent.getParcelableExtra(EXTRA_TRACK);
+            mTrackId = intent.getStringExtra(EXTRA_TRACK);
         }
         setContentView(R.layout.activity_public_track_display);
-        init();
+        mProgressBar = (ProgressBar) findViewById(R.id.track_layout_loading);
+        mPresenter.getTrack(mTrackId);
     }
 
 
 
-    private void init() {
+    private void init(Track track) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment trackFragment = fragmentManager.findFragmentById(R.id.public_track_display_container);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         if(trackFragment == null){
-            trackFragment =  TrackDisplayFragment.newInstance(mTrack);
+            trackFragment =  TrackDisplayFragment.newInstance(track);
             fragmentTransaction.add(R.id.public_track_display_container, trackFragment).commit();
         }
     }
 
-    public static Intent newIntent(Context packageContext, Track track){
+    public static Intent newIntent(Context packageContext, String track_id){
         Intent i = new Intent(packageContext, PublicTrackDisplayActivity.class);
-        i.putExtra(EXTRA_TRACK, track);
+        i.putExtra(EXTRA_TRACK, track_id);
         return i;
     }
 
@@ -57,5 +60,20 @@ public class PublicTrackDisplayActivity extends BaseActivity implements PublicTr
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+    }
+
+    @Override
+    public void setTrack(Track track) {
+        init(track);
+    }
+
+    @Override
+    public void showLoading() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        mProgressBar.setVisibility(View.INVISIBLE);
     }
 }

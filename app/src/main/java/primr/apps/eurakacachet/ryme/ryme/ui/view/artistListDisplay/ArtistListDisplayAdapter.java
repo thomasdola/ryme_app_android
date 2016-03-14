@@ -24,7 +24,7 @@ public class ArtistListDisplayAdapter extends RecyclerView.Adapter<ArtistDisplay
         mArtistList = new ArrayList<>();
     }
 
-    public void seArtistList(ArtistListDisplayFragment artistListDisplayFragment, List<Artist> artistArrayList) {
+    public void setArtistList(ArtistListDisplayFragment artistListDisplayFragment, List<Artist> artistArrayList) {
         mArtistListDisplayFragment = artistListDisplayFragment;
         mArtistList = artistArrayList;
         notifyDataSetChanged();

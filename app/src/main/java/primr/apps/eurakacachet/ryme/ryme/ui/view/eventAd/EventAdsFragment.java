@@ -42,7 +42,6 @@ public class EventAdsFragment extends Fragment implements EventAdsMvpView{
         View rootView = inflater.inflate(R.layout.fragment_events, container, false);
 
         mEventRecyclerView = (RecyclerView) rootView.findViewById(R.id.event_recycler_view);
-        mEventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return rootView;
     }
 
@@ -57,6 +56,7 @@ public class EventAdsFragment extends Fragment implements EventAdsMvpView{
             @Override
             public void onListItemCollapsed(int position) {
                 EventAd ad = mAds.get(position);
+                mEventAdsPresenter.logView(ad);
                 Log.d("event", "event -> " + ad.toString() + " is opened");
             }
         });
@@ -81,7 +81,6 @@ public class EventAdsFragment extends Fragment implements EventAdsMvpView{
         ((BaseActivity)getActivity()).getActivityComponent().inject(this);
         mEventAdsPresenter.attachView(this);
         mEventAdsPresenter.loadEventAds();
-        initListeners();
     }
 
     @Override
@@ -96,13 +95,16 @@ public class EventAdsFragment extends Fragment implements EventAdsMvpView{
 
     @Override
     public void setEventAds(List<EventAd> ads) {
+        Log.d("events", "setEventAds called with -> " + ads.toString());
         mAds = ads;
         mAdapter = new EventExpandableAdapter(getActivity(), prepareAds(ads));
+        initListeners();
+        mEventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mEventRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     public void showEmpty() {
-
+        Log.d("events", "showing empty state");
     }
 }

@@ -17,4 +17,8 @@ public class EventChildViewHolder extends ChildViewHolder {
         mEventDescription = (TextView) itemView.findViewById(R.id.event_description);
 
     }
+
+    public void bind(EventAdDetail eventChild) {
+        mEventDescription.setText(eventChild.mEventDescription);
+    }
 }

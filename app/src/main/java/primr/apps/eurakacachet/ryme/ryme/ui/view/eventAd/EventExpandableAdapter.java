@@ -41,13 +41,13 @@ public class EventExpandableAdapter extends ExpandableRecyclerAdapter<EventParen
     public void onBindParentViewHolder(EventParentViewHolder parentViewHolder, int position,
                                        ParentListItem parentListItem) {
         EventAd event = (EventAd) parentListItem;
-        parentViewHolder.bindEventHead(event);
+        parentViewHolder.bind(event);
     }
 
     @Override
     public void onBindChildViewHolder(EventChildViewHolder adDetailViewHolder, int position,
                                       Object childListItem) {
         EventAdDetail eventChild = (EventAdDetail) childListItem;
-        adDetailViewHolder.mEventDescription.setText(eventChild.mEventDescription);
+        adDetailViewHolder.bind(eventChild);
     }
 }

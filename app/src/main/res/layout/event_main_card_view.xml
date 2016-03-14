@@ -40,33 +40,22 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="$ 30"
-                android:id="@+id/event_price_text_view"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/event_date_time_text_view"
-                android:layout_marginStart="15dp" />
-
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:id="@+id/event_views_image_view"
                 android:src="@drawable/ic_expand_view"
-                android:layout_marginStart="54dp"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/event_price_text_view" />
+                android:layout_toStartOf="@+id/event_views_text_view" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="2k"
                 android:id="@+id/event_views_text_view"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/event_views_image_view"/>
+                android:layout_marginEnd="16dp"
+                android:layout_toStartOf="@+id/event_expand_button"/>
         </RelativeLayout>
 
     </LinearLayout>

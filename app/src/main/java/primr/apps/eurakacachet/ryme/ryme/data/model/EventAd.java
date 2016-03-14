@@ -17,13 +17,11 @@ public class EventAd implements Parcelable, ParentListItem {
     @NonNull
     public String title;
     @NonNull
-    public int date;
+    public String date;
     @NonNull
-    public int time;
+    public String time;
     @NonNull
     public String description;
-    @NonNull
-    public float fare;
     @NonNull
     public long views;
     @NonNull
@@ -34,14 +32,13 @@ public class EventAd implements Parcelable, ParentListItem {
     public String cover;
     private List<EventAdDetail> mChildItemList;
 
-    public static EventAd newAd(@NonNull String title, @NonNull int date, @NonNull int time,
+    public static EventAd newAd(@NonNull String title, @NonNull String date, @NonNull String time,
                                 @NonNull String description, @NonNull String venue,
-                                @NonNull float fare, @NonNull long views, @NonNull String cover){
+                                @NonNull long views, @NonNull String cover){
         EventAd ad = new EventAd();
         ad.title = title;
         ad.date = date;
         ad.time = time;
-        ad.fare = fare;
         ad.description = description;
         ad.venue = venue;
         ad.views = views;
@@ -55,23 +52,18 @@ public class EventAd implements Parcelable, ParentListItem {
     }
 
     @NonNull
-    public int getDate() {
+    public String getDate() {
         return date;
     }
 
     @NonNull
-    public int getTime() {
+    public String getTime() {
         return time;
     }
 
     @NonNull
     public String getDescription() {
         return description;
-    }
-
-    @NonNull
-    public float getFare() {
-        return fare;
     }
 
     @NonNull
@@ -95,43 +87,24 @@ public class EventAd implements Parcelable, ParentListItem {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        EventAd ad = (EventAd) o;
-
-        if (date != ad.date) return false;
-        if (time != ad.time) return false;
-        if (Float.compare(ad.fare, fare) != 0) return false;
-        if (views != ad.views) return false;
-        if (!title.equals(ad.title)) return false;
-        if (!description.equals(ad.description)) return false;
-        if (!uuid.equals(ad.uuid)) return false;
-        if (!venue.equals(ad.venue)) return false;
-        return cover.equals(ad.cover);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = title.hashCode();
-        result = 31 * result + date;
-        result = 31 * result + time;
-        result = 31 * result + description.hashCode();
-        result = 31 * result + (fare != +0.0f ? Float.floatToIntBits(fare) : 0);
-        result = 31 * result + (int) (views ^ (views >>> 32));
-        result = 31 * result + uuid.hashCode();
-        result = 31 * result + venue.hashCode();
-        result = 31 * result + cover.hashCode();
-        return result;
+    public String toString() {
+        return "EventAd{" +
+                "title='" + title + '\'' +
+                ", date=" + date +
+                ", time=" + time +
+                ", description='" + description + '\'' +
+                ", views=" + views +
+                ", uuid='" + uuid + '\'' +
+                ", venue='" + venue + '\'' +
+                ", cover='" + cover + '\'' +
+                '}';
     }
 
     public EventAd() {
     }
 
     @Override
-    public List<?> getChildItemList() {
+    public List getChildItemList() {
         return mChildItemList;
     }
 
@@ -152,10 +125,9 @@ public class EventAd implements Parcelable, ParentListItem {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.title);
-        dest.writeInt(this.date);
-        dest.writeInt(this.time);
+        dest.writeString(this.date);
+        dest.writeString(this.time);
         dest.writeString(this.description);
-        dest.writeFloat(this.fare);
         dest.writeLong(this.views);
         dest.writeString(this.uuid);
         dest.writeString(this.venue);
@@ -165,10 +137,9 @@ public class EventAd implements Parcelable, ParentListItem {
 
     protected EventAd(Parcel in) {
         this.title = in.readString();
-        this.date = in.readInt();
-        this.time = in.readInt();
+        this.date = in.readString();
+        this.time = in.readString();
         this.description = in.readString();
-        this.fare = in.readFloat();
         this.views = in.readLong();
         this.uuid = in.readString();
         this.venue = in.readString();

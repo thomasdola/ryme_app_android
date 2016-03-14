@@ -87,7 +87,7 @@ public class PublicTrackDisplayViewHolder extends RecyclerView.ViewHolder
     @Override
     public void onClick(View v) {
         mPresenter.view(mTrack);
-        Intent intent = PublicTrackDisplayActivity.newIntent(mPublicTrackListDisplayFragment.getActivity(), mTrack);
+        Intent intent = PublicTrackDisplayActivity.newIntent(mPublicTrackListDisplayFragment.getActivity(), mTrack.uuid());
         mPublicTrackListDisplayFragment.getActivity().startActivity(intent);
         mPublicTrackListDisplayFragment.getActivity()
                 .overridePendingTransition(R.anim.activity_in, R.anim.activity_out);

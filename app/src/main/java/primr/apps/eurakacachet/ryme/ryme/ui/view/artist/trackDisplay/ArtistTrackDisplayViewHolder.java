@@ -103,9 +103,9 @@ public class ArtistTrackDisplayViewHolder extends RecyclerView.ViewHolder implem
     public void onClick(View v) {
         Intent intent = new Intent();
         if(mArtistTrackListDisplayFragment != null){
-            intent = PublicTrackDisplayActivity.newIntent(mArtistTrackListDisplayFragment.getActivity(), mTrack);
+            intent = PublicTrackDisplayActivity.newIntent(mArtistTrackListDisplayFragment.getActivity(), mTrack.uuid());
         }else if(mActivity != null){
-            intent = PublicTrackDisplayActivity.newIntent(mActivity, mTrack);
+            intent = PublicTrackDisplayActivity.newIntent(mActivity, mTrack.uuid());
         }
 
         String transitionName = mArtistTrackListDisplayFragment.getString(R.string.track_transition_string);

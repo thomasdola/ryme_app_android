@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
 import primr.apps.eurakacachet.ryme.ryme.R;
-import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.followCategory.FollowCategoryActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity;
@@ -34,7 +33,7 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
             mPresenter.launchApp();
         }else if(getIntent().getStringExtra(EXTRA_TRACK_ID) != null){
             String track_id = getIntent().getStringExtra(EXTRA_TRACK_ID);
-            mPresenter.getTrack(track_id);
+            mPresenter.launchTrackDisplay(track_id);
         }
     }
 
@@ -90,9 +89,9 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     }
 
     @Override
-    public void launchPublicTrackDisplayActivity(Track track) {
+    public void launchPublicTrackDisplayActivity(String track_id) {
         Log.d("share", "launchPublicTrackDisplayActivity called");
-        Intent intent = PublicTrackDisplayActivity.newIntent(this, track);
+        Intent intent = PublicTrackDisplayActivity.newIntent(this, track_id);
         overridePendingTransition(R.anim.activity_push_up_in, R.anim.activity_push_up_out);
         startActivity(intent);
     }
