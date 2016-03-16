@@ -12,9 +12,13 @@ public interface PublicTrackListFragmentMvpView extends MvpView {
 
     void setTrackListAdapter(List<Track> tracks);
 
-    void showEmptyState();
+    void showNewTracksEmptyState();
+
+    void showTrendingTracksEmptyState();
 
     void hideLoading();
 
     void setMoreTracks(List<Track> moreTracks);
+
+    void showFavoriteTracksEmptyState();
 }

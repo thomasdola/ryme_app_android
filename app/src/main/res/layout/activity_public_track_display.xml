@@ -14,7 +14,6 @@
         </FrameLayout>
 
     <ProgressBar
-        android:visibility="invisible"
         android:id="@+id/track_layout_loading"
         style="?android:progressBarStyleLarge"
         android:layout_width="wrap_content"

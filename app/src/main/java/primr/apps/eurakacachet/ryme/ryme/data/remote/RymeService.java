@@ -67,12 +67,12 @@ public interface RymeService {
     @FormUrlEncoded
     @POST("categories/{uuid}/follow")
     Observable<ActionResponse> followCategory(@Path("uuid") String uuid,
-                                              @Field("regToken") String token);
+                                              @Field("token") String token);
 
     @FormUrlEncoded
     @POST("categories/{uuid}/unfollow")
     Observable<ActionResponse> unFollowCategory(@Path("uuid") String uuid,
-                                                @Field("regToken") String token);
+                                                @Field("token") String token);
 
     @GET("search")
     Observable<SearchResult> searchArtist(@Query("q") String query);
@@ -121,12 +121,12 @@ public interface RymeService {
     @FormUrlEncoded
     @POST("artists/{uuid}/follow")
     Observable<ActionResponse> followArtist(@Path("uuid") String uuid,
-                                            @Field("regToken") String token);
+                                            @Field("token") String token);
 
     @FormUrlEncoded
     @POST("artists/{uuid}/unfollow")
     Observable<ActionResponse> unFollowArtist(@Path("uuid") String uuid
-            , @Field("regToken") String token);
+            , @Field("token") String token);
 
     @GET("artists/{uuid}/tracks")
     Observable<TracksData> getArtistTracks(@Path("uuid") String uuid,
@@ -163,7 +163,7 @@ public interface RymeService {
     @POST("vouch/{uuid}/answer")
     Observable<ActionResponse> respondToVouch(@Path("uuid") String uuid,
                                               @Field("answer") boolean answer,
-                                              @Field("regToken") String token);
+                                              @Field("token") String token);
 
     @GET("user/categories")
     Observable<List<FollowedCategory>> getFollowedCategories();

@@ -42,7 +42,6 @@ import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
-import primr.apps.eurakacachet.ryme.ryme.ui.view.crop.CropImageActivity;
 import primr.apps.eurakacachet.ryme.ryme.utils.helpers.layout.CustomAutoCompleteTextView;
 import primr.apps.eurakacachet.ryme.ryme.utils.helpers.time.DateFormatter;
 import rx.Observable;
@@ -120,7 +119,7 @@ public class UploadTrackFragment extends DialogFragment implements UploadTrackFr
         mUploadTrack = (ImageButton) view.findViewById(R.id.new_track_upload);
         mUploadButton = (Button) view.findViewById(R.id.confirm_upload_button);
         mPickDateButton = (Button) view.findViewById(R.id.pick_date_button);
-        mUploadButton.setEnabled(false);
+//        mUploadButton.setEnabled(false);
         mCancelButton = (Button) view.findViewById(R.id.cancel_upload_button);
         mTrackTitleDisplay = (TextView) view.findViewById(R.id.pick_new_track_file_text);
         mCoverTextDisplay = (TextView) view.findViewById(R.id.new_track_cover_text_view);
@@ -269,14 +268,18 @@ public class UploadTrackFragment extends DialogFragment implements UploadTrackFr
         ).subscribe(new Action1<Boolean>() {
             @Override
             public void call(Boolean isValid) {
-                mUploadButton.setEnabled(isValid);
+//                mUploadButton.setEnabled(isValid);
             }
         });
     }
 
     private void onPickCover() {
-        Intent intent = CropImageActivity.newIntent(getContext(), CropImageActivity.REQUEST_CROP_TRACK_COVER);
-        startActivityForResult(intent, PICK_COVER_REQUEST_CODE);
+//        Intent intent = CropImageActivity.newIntent(getContext(), CropImageActivity.REQUEST_CROP_TRACK_COVER);
+//        startActivityForResult(intent, PICK_COVER_REQUEST_CODE);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Cover "), PICK_COVER_REQUEST_CODE);
     }
 
     private void onPickTrack() {
@@ -292,15 +295,17 @@ public class UploadTrackFragment extends DialogFragment implements UploadTrackFr
             if(requestCode == PICK_TRACK_REQUEST_CODE){
                 Uri uri = data.getData();
                 mTrackPath = uri.getPath();
-                File file = new File(uri.getPath());
+                File file = new File(mTrackPath);
                 mTrackTitleDisplay.setText(file.getName());
                 Log.d("upload", "track file exist ? -> " + file.exists() + " => " + mTrackPath);
                 Log.d("upload", "track file uri -> " + uri.toString());
             }else if(requestCode == PICK_COVER_REQUEST_CODE){
-                String path = data.getStringExtra(CropImageActivity.EXTRA_CROPPED_FILE_PATH);
-                Log.d("upload", path);
-                mCoverPath = path;
-                mCoverTextDisplay.setText(path);
+//                String path = data.getStringExtra(CropImageActivity.EXTRA_CROPPED_FILE_PATH);
+//                Log.d("upload", path);
+                Uri uri = data.getData();
+                Log.d("upload", "cover uri -> " + uri.toString());
+                mCoverPath = uri.getPath();
+                mCoverTextDisplay.setText(uri.getEncodedPath());
                 mPicasso.load(new File(mCoverPath))
                         .into(mUploadCover);
             }else if(requestCode == PICK_DATE_REQUEST_CODE){
@@ -313,13 +318,14 @@ public class UploadTrackFragment extends DialogFragment implements UploadTrackFr
 
     private void onUploadTrack() {
         HashMap<String, String> payload = new HashMap<>();
-        payload.put("title", mTrackTitle.getText().toString());
+        payload.put("title", mTrackTitle.getText().toString().trim());
         payload.put("cover", mCoverPath);
         payload.put("path", mTrackPath);
+        payload.put("date", mReleasedDateText.getText().toString().trim());
         payload.put("downloadable", String.valueOf(mDownloadableSwitch.isChecked()));
-        payload.put("category", mCategoriesAutoComplete.getText().toString());
+        payload.put("category", mCategoriesAutoComplete.getText().toString().trim());
         if(mFeatureSwitch.isChecked()){
-            payload.put("featured", mFeatureArtists.getText().toString());
+            payload.put("featured", mFeatureArtists.getText().toString().trim());
         }
         mPresenter.uploadTrack(payload);
     }

@@ -45,7 +45,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
 
     public void setUsername(){
         checkViewAttached();
-        mDataManager.getUsername()
+        mSubscription = mDataManager.getUsername()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {
@@ -68,7 +68,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
 
     public void setBackImage(){
         checkViewAttached();
-        mDataManager.getBackImage()
+        mSubscription = mDataManager.getBackImage()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
@@ -81,7 +81,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
 
     public void setAvatar(){
         checkViewAttached();
-        mDataManager.getAvatar()
+        mSubscription = mDataManager.getAvatar()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(new Action1<Throwable>() {
@@ -94,7 +94,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                     @Override
                     public void call(String path) {
                         if (path.isEmpty()) {
-                            mDataManager.getUsername()
+                            mSubscription = mDataManager.getUsername()
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(new Action1<String>() {
@@ -114,10 +114,11 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
 
     public void setUserType(){
         checkViewAttached();
-        mDataManager.isArtist()
+        mSubscription = mDataManager.isArtist()
                 .subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean isArtist) {
+                        Log.d("main", "is artist -> " + isArtist);
                         getMvpView().isArtist(isArtist);
                         mDataManager.getUserId()
                                 .subscribeOn(Schedulers.io())
@@ -125,6 +126,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                                 .subscribe(new Action1<String>() {
                                     @Override
                                     public void call(String uuid) {
+                                        Log.d("main", "user id -> " + uuid);
                                         getMvpView().setUserId(uuid);
                                     }
                                 });
@@ -132,17 +134,17 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                 });
     }
 
-    public void startAutoLogin(){
+    private void startAutoLogin(){
         mTimer = new Timer();
         mTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                autoLogin();
+                autoLogin(false);
             }
         }, 0, 1800000);
     }
 
-    private void autoLogin() {
+    public void autoLogin(final boolean fromMain) {
         Log.d("main", "autologin called");
         checkViewAttached();
         String username = mDataManager.getBlockingUsername();
@@ -151,13 +153,12 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
         payload.put("username", username);
         payload.put("password", password);
         Log.d("mainAuth", "payload for main auth => " + payload.toString());
-        mDataManager.login(payload)
+        mSubscription = mDataManager.login(payload)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<AuthResponse>() {
                     @Override
                     public void onCompleted() {
-
                     }
 
                     @Override
@@ -171,6 +172,12 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                             Log.d("mainAuth", authResponse.toString());
                             Log.d("mainAuth", "auto login done successfully");
                             mDataManager.setToken(authResponse.token());
+                            if(authResponse.data() != null)
+                                mDataManager.setIsArtist(authResponse.data().data().is_artist());
+                            if(fromMain){
+                                getMvpView().initMainView();
+                                startAutoLogin();
+                            }
                         }
                     }
                 });

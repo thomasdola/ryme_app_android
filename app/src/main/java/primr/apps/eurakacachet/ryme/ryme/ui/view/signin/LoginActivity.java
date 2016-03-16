@@ -128,6 +128,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView{
     @Override
     public void showLoading() {
         mLoadingView.setVisibility(View.VISIBLE);
+        mLoadingView.setIndeterminate(true);
     }
 
     @Override

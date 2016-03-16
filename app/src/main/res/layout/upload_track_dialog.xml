@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-    android:padding="8dp">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:padding="8dp">
 
 
     <android.support.design.widget.TextInputLayout
@@ -89,7 +90,7 @@
             android:id="@+id/new_track_cover_text"
             android:text="@string/track_cover_text"
             android:layout_width="wrap_content"
-            android:layout_marginEnd="100dp"
+            android:layout_marginEnd="200dp"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -103,10 +104,9 @@
             android:id="@+id/new_track_cover_image"
             android:layout_toEndOf="@id/new_track_cover_text"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/wallpaper"
             android:scaleType="centerCrop"
             android:layout_marginBottom="10dp"
-            android:layout_width="50dp"
+            android:layout_width="100dp"
             android:layout_height="100dp"/>
     </RelativeLayout>
 

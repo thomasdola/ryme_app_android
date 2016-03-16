@@ -60,6 +60,7 @@ public class PublicTrackListFragmentPresenter extends BasePresenter<PublicTrackL
     }
 
     public void loadPublicTracks(HashMap<String, String> specs) {
+        final String type = specs.get("type");
         mSubscription = mDataManager.getTracks(specs)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -79,7 +80,11 @@ public class PublicTrackListFragmentPresenter extends BasePresenter<PublicTrackL
                     @Override
                     public void onNext(List<Track> tracks) {
                         if (tracks.isEmpty()) {
-                            getMvpView().showEmptyState();
+                            if(type.equals("new")){
+                                getMvpView().showNewTracksEmptyState();
+                            }else if(type.equals("trending")){
+                                getMvpView().showTrendingTracksEmptyState();
+                            }
                         } else {
                             getMvpView().setTrackListAdapter(tracks);
                         }
@@ -89,7 +94,7 @@ public class PublicTrackListFragmentPresenter extends BasePresenter<PublicTrackL
 
     private void loadFavoriteTracks() {
         checkViewAttached();
-        mDataManager.loadTracks()
+        mSubscription = mDataManager.loadTracks()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Track>>() {
@@ -106,7 +111,7 @@ public class PublicTrackListFragmentPresenter extends BasePresenter<PublicTrackL
                     @Override
                     public void onNext(List<Track> tracks) {
                         if(tracks.isEmpty()){
-                            getMvpView().showEmptyState();
+                            getMvpView().showFavoriteTracksEmptyState();
                         }else {
                             getMvpView().setTrackListAdapter(tracks);
                         }

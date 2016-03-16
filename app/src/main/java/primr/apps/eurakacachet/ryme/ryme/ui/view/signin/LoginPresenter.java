@@ -52,7 +52,7 @@ public class LoginPresenter extends BasePresenter<LoginMvpView> {
         credentials.put("username", username);
         credentials.put("password", password);
         saveCredentials(credentials);
-        mDataManager.login(credentials)
+        mSubscription = mDataManager.login(credentials)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<AuthResponse>() {
@@ -75,7 +75,6 @@ public class LoginPresenter extends BasePresenter<LoginMvpView> {
                             setUpAccount(authResponse);
                             mDataManager.setLogIn(true);
                             mDataManager.setReady(true);
-                            getMvpView().showLoginSuccessful();
                             getMvpView().launchMainActivity();
                         } else {
                             onLoginFailed();
@@ -101,10 +100,12 @@ public class LoginPresenter extends BasePresenter<LoginMvpView> {
         ApiData data = authResponse.data();
         if(data != null){
             UserProfile user = data.data();
+            Log.d("main", "user data -> " + user);
             mDataManager.setUserId(user.uuid());
             mDataManager.setUsername(user.username());
             mDataManager.setRequestIsActive(user.is_request_on());
             if(user.is_artist()){
+                Log.d("main", "is user artist -> " + user.is_artist());
                 mDataManager.setIsArtist(user.is_artist());
                 mDataManager.setArtistName(user.stage_name());
                 if(user.background_picture() != null){

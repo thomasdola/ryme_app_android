@@ -170,6 +170,7 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView {
     @Override
     public void showLoading() {
         mProgressView.setVisibility(View.VISIBLE);
+        mProgressView.setIndeterminate(true);
     }
 
     @Override

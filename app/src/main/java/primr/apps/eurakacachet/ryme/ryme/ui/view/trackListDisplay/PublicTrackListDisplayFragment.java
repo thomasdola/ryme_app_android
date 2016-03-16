@@ -8,9 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -31,7 +30,9 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
     public static final int TRENDING = 3;
 
     private SwipeRefreshLayout mSwipeContainer;
-    private TextView mEmptyState;
+    private RelativeLayout mNewTracksEmptyState;
+    private RelativeLayout mTrendingTracksEmptyState;
+    private RelativeLayout mFavoriteTracksEmptyState;
     private RecyclerView mRecyclerView;
     int mType;
     private List<Track> mTracks;
@@ -93,7 +94,9 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
     }
 
     public void initViews(View rootView) {
-        mEmptyState = (TextView) rootView.findViewById(R.id.track_list_empty_state);
+        mNewTracksEmptyState = (RelativeLayout) rootView.findViewById(R.id.track_list_empty_state);
+        mTrendingTracksEmptyState = (RelativeLayout) rootView.findViewById(R.id.trending_track_list_empty_state);
+        mFavoriteTracksEmptyState = (RelativeLayout) rootView.findViewById(R.id.favorite_track_list_empty_state);
         mSwipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
         mSwipeContainer.setColorSchemeColors(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -115,12 +118,12 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
 
     public void showFullState() {
         mRecyclerView.setVisibility(View.VISIBLE);
-        mEmptyState.setVisibility(View.GONE);
+        mNewTracksEmptyState.setVisibility(View.GONE);
     }
 
     public void showEmpty() {
         mRecyclerView.setVisibility(View.GONE);
-        mEmptyState.setVisibility(View.VISIBLE);
+        mNewTracksEmptyState.setVisibility(View.VISIBLE);
     }
 
     private void refresh() {
@@ -154,10 +157,16 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
     }
 
     @Override
-    public void showEmptyState() {
-        mDisplayAdapter.setTracks(Collections.<Track>emptyList(), this);
-        mDisplayAdapter.notifyDataSetChanged();
+    public void showNewTracksEmptyState() {
+//        mDisplayAdapter.setTracks(Collections.<Track>emptyList(), this);
+//        mDisplayAdapter.notifyDataSetChanged();
         showEmpty();
+    }
+
+    @Override
+    public void showTrendingTracksEmptyState() {
+        mRecyclerView.setVisibility(View.GONE);
+        mTrendingTracksEmptyState.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -170,5 +179,11 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
         mDisplayAdapter.addAll(moreTracks);
         int curSize = mDisplayAdapter.getItemCount();
         mDisplayAdapter.notifyItemRangeInserted(curSize, moreTracks.size() - 1);
+    }
+
+    @Override
+    public void showFavoriteTracksEmptyState() {
+        mRecyclerView.setVisibility(View.GONE);
+        mFavoriteTracksEmptyState.setVisibility(View.VISIBLE);
     }
 }

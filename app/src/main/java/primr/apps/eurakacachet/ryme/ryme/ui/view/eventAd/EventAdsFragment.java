@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
@@ -30,6 +31,7 @@ public class EventAdsFragment extends Fragment implements EventAdsMvpView{
     List<EventAd> mAds;
     private EventExpandableAdapter mAdapter;
     private RecyclerView mEventRecyclerView;
+    private RelativeLayout mEventsEmptyState;
 
     public EventAdsFragment() {
         // Required empty public constructor
@@ -42,6 +44,7 @@ public class EventAdsFragment extends Fragment implements EventAdsMvpView{
         View rootView = inflater.inflate(R.layout.fragment_events, container, false);
 
         mEventRecyclerView = (RecyclerView) rootView.findViewById(R.id.event_recycler_view);
+        mEventsEmptyState = (RelativeLayout) rootView.findViewById(R.id.event_list_empty_state);
         return rootView;
     }
 
@@ -105,6 +108,8 @@ public class EventAdsFragment extends Fragment implements EventAdsMvpView{
 
     @Override
     public void showEmpty() {
+        mEventRecyclerView.setVisibility(View.INVISIBLE);
+        mEventsEmptyState.setVisibility(View.VISIBLE);
         Log.d("events", "showing empty state");
     }
 }

@@ -78,7 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3"
-                    android:gravity="start">
+                    android:gravity="start|center">
 
                     <ImageView
                         android:contentDescription="@null"
@@ -153,6 +153,11 @@
 
                     <android.support.v7.widget.SwitchCompat
                         android:visibility="invisible"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:thumb="@drawable/downloadable_switch_custom"
+                        app:track="@drawable/downloadable_switch_track_custom"
+                        android:scrollbarSize="15dp"
                         android:id="@+id/downloadable"
                         android:layout_toStartOf="@id/popup_menu_track_card"
                         android:layout_width="wrap_content"

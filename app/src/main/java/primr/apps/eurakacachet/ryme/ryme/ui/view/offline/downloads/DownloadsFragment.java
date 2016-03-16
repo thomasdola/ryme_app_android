@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class DownloadsFragment extends Fragment implements DownloadsMvpView{
 
     public List<SavedTrack> tracksToDelete;
     private RecyclerView mRecyclerView;
+    private RelativeLayout mDownloadsEmptyState;
 
     public DownloadsFragment(){}
 
@@ -42,6 +44,7 @@ public class DownloadsFragment extends Fragment implements DownloadsMvpView{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_download_track_list_display,
                 container, false);
+        mDownloadsEmptyState = (RelativeLayout) rootView.findViewById(R.id.downloads_list_empty_state);
         initRecyclerView(rootView);
         return rootView;
     }
@@ -82,14 +85,14 @@ public class DownloadsFragment extends Fragment implements DownloadsMvpView{
 
     @Override
     public void setTracks(List<SavedTrack> savedTracks) {
-        if(savedTracks.isEmpty()){
-            showEmptyState();
-        }
         mAdapter.setTracks(this, savedTracks);
         mAdapter.notifyDataSetChanged();
     }
 
-    private void showEmptyState() {
+    @Override
+    public void showEmptyState() {
+        mRecyclerView.setVisibility(View.INVISIBLE);
+        mDownloadsEmptyState.setVisibility(View.VISIBLE);
         Log.d("downloads", "showing empty state");
     }
 }

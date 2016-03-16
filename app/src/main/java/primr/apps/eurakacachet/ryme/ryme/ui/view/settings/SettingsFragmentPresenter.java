@@ -122,32 +122,14 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentMvp
     public void updateIsArtist(boolean isArtist) {
         Log.d("settings", "updateIsArtist called");
         checkViewAttached();
-        mDataManager.setIsArtist(isArtist)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Void>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onNext(Void aVoid) {
-                        Log.d("settings", "done setting artist");
-                    }
-                });
+        mDataManager.setIsArtist(isArtist);
     }
 
     public void updateStageName(final String stageName) {
         checkViewAttached();
         HashMap<String, String> payload = new HashMap<>();
         payload.put("stage_name", stageName);
-        mDataManager.updateUserInfo(payload)
+        mSubscription = mDataManager.updateUserInfo(payload)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ActionResponse>() {
@@ -173,7 +155,7 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentMvp
     public void getUsernameDefaultValue() {
         Log.d("settings", "getUsernameDefaultValue called");
         checkViewAttached();
-        mDataManager.getUsername()
+        mSubscription = mDataManager.getUsername()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {
@@ -223,7 +205,7 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentMvp
 
                     @Override
                     public void onNext(String token) {
-                        mDataManager.sendRequest(payload, token)
+                        mSubscription = mDataManager.sendRequest(payload, token)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new Subscriber<ActionResponse>() {
@@ -259,7 +241,7 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentMvp
         Log.d("settings", "loadCategoriesArray called");
         checkViewAttached();
         final List<String> categories = new ArrayList<>();
-        mDataManager.loadCategoriesArray()
+        mSubscription = mDataManager.loadCategoriesArray()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Category>() {
                     @Override

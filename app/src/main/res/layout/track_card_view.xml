@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="4dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
     app:cardPreventCornerOverlap="false"
     android:transitionName="@string/track_transition_string"
     android:id="@+id/track_cv"
@@ -13,13 +13,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="78dp"
+        android:layout_height="53dp"
         android:orientation="horizontal">
 
         <ImageView
             android:layout_margin="2dp"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:scaleType="fitCenter"
             android:id="@+id/track_cover_avatar"
             android:contentDescription="@null"
@@ -28,9 +28,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:paddingTop="8dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
+            android:padding="4dp"
             android:layout_height="match_parent">
 
             <LinearLayout
@@ -80,7 +78,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="4dp"
                     android:layout_weight="2"
                     android:gravity="end">
 

@@ -66,7 +66,7 @@ public class CategoryViewHolderPresenter extends BasePresenter<CategoryViewHolde
                     @Override
                     public void onNext(String token) {
                         Log.d("token", token);
-                        mDataManager.followCategory(category.uuid(), token)
+                        mSubscription = mDataManager.followCategory(category.uuid(), token)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new Subscriber<ActionResponse>() {
@@ -87,6 +87,7 @@ public class CategoryViewHolderPresenter extends BasePresenter<CategoryViewHolde
                                         if (actionResponse.code == Config.STATUS_OK) {
                                             onFollowSuccessful(category);
                                         }
+                                        getMvpView().enableFollowButton();
                                     }
                                 });
                     }
@@ -145,7 +146,7 @@ public class CategoryViewHolderPresenter extends BasePresenter<CategoryViewHolde
 
                     @Override
                     public void onNext(String token) {
-                        mDataManager.unFollowCategory(category.uuid(), token)
+                        mSubscription = mDataManager.unFollowCategory(category.uuid(), token)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new Subscriber<ActionResponse>() {
@@ -176,7 +177,7 @@ public class CategoryViewHolderPresenter extends BasePresenter<CategoryViewHolde
             Log.d("adapter", "attemptUnfollow Called from StoredCategories");
             final FollowedCategory followedCategory = FollowedCategory
                     .newCategory(null, category.name(), String.valueOf(category.uuid()));
-            mDataManager.canUnfollow()
+            mSubscription = mDataManager.canUnfollow()
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnError(new Action1<Throwable>() {
                         @Override

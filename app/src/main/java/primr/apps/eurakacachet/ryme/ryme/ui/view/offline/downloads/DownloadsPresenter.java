@@ -54,7 +54,11 @@ public class DownloadsPresenter extends BasePresenter<DownloadsMvpView>{
                     @Override
                     public void onNext(List<SavedTrack> savedTracks) {
                         Log.d("offline", savedTracks.toString());
-                        getMvpView().setTracks(savedTracks);
+                        if(savedTracks.isEmpty()){
+                            getMvpView().showEmptyState();
+                        }else {
+                            getMvpView().setTracks(savedTracks);
+                        }
                     }
                 });
     }

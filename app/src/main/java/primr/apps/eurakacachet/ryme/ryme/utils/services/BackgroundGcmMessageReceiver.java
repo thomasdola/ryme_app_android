@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.artist.profile.ArtistProfileActivity;
@@ -34,6 +35,7 @@ public class BackgroundGcmMessageReceiver implements GcmBackgroundReceiver {
 
             @Override
             public void onNext(BackgroundMessage message) {
+                Log.d("notify", "onBackgroundNotification called");
                 Bundle payload = message.getPayload();
                 Application application = message.getApplication();
                 createNotification(application, payload);
@@ -42,6 +44,7 @@ public class BackgroundGcmMessageReceiver implements GcmBackgroundReceiver {
     }
 
     private void createNotification(Application application, Bundle payload) {
+        Log.d("notify", "about to create notification in background with -> " + payload.toString());
         NotificationCompat.Builder builder = new NotificationCompat
                 .Builder(application).setAutoCancel(true);
         String event = payload.getString("event");

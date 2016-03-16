@@ -15,4 +15,6 @@ public interface DownloadsMvpView extends MvpView{
     void showFeedback(String trackTitle);
 
     void setTracks(List<SavedTrack> savedTracks);
+
+    void showEmptyState();
 }

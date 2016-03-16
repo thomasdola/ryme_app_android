@@ -22,4 +22,6 @@ public interface MainMvpView extends MvpView {
     void isArtist(Boolean isArtist);
 
     void setUserId(String uuid);
+
+    void initMainView();
 }

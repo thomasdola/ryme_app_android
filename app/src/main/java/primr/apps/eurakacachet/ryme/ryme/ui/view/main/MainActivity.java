@@ -75,7 +75,7 @@ public class MainActivity extends BaseActivity implements MainMvpView{
         getActivityComponent().inject(this);
         setContentView(R.layout.activity_main);
         mMainPresenter.attachView(this);
-        mMainPresenter.startAutoLogin();
+        mMainPresenter.autoLogin(true);
         mPicasso = Picasso.with(this);
         mMainPresenter.isUserAllowedToMakeArtistRequest();
         if( savedInstanceState != null ){
@@ -85,6 +85,14 @@ public class MainActivity extends BaseActivity implements MainMvpView{
         mToolbar.setTitle(mTitle);
         setSupportActionBar(mToolbar);
 
+        initNavigationView();
+
+        initDrawerLayout();
+
+        initialSetup();
+    }
+
+    private void initMainFragments() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment currentFragment = fragmentManager.findFragmentById(R.id.containerView);
 
@@ -93,12 +101,6 @@ public class MainActivity extends BaseActivity implements MainMvpView{
             fragmentTransaction.replace(R.id.containerView, new HomeTabFragment())
                     .commit();
         }
-
-        initNavigationView();
-
-        initDrawerLayout();
-
-        initialSetup();
     }
 
     private void initialSetup() {
@@ -350,6 +352,11 @@ public class MainActivity extends BaseActivity implements MainMvpView{
     @Override
     public void setUserId(String uuid) {
         mUserId = uuid;
+    }
+
+    @Override
+    public void initMainView() {
+        initMainFragments();
     }
 
     @Override

@@ -43,6 +43,7 @@ public class CropImagePresenter extends BasePresenter<CropImageMvpView> {
 
     public void uploadPicture(final File newImagePath, final String type) {
         checkViewAttached();
+        Log.d("crop", "uploadPicture called -> " + type);
         getMvpView().showLoading();
         getMvpView().disableButtons();
         RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), newImagePath);

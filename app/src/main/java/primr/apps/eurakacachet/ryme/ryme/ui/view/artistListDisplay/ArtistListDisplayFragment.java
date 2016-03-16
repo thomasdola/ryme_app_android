@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class ArtistListDisplayFragment extends Fragment implements ArtistListDis
     @Inject ArtistListDisplayAdapter mAdapter;
     @Inject ArtistListDisplayPresenter mPresenter;
     private RecyclerView mArtistListDisplayRecyclerView;
+    private RelativeLayout mFavoriteArtistEmptyState;
 
 
     public static ArtistListDisplayFragment newInstance() {
@@ -50,6 +52,7 @@ public class ArtistListDisplayFragment extends Fragment implements ArtistListDis
 
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
         mArtistListDisplayRecyclerView = (RecyclerView) rootView.findViewById(R.id.artist_list_display_recycler_view);
+        mFavoriteArtistEmptyState = (RelativeLayout) rootView.findViewById(R.id.favorite_artist_list_empty_state);
         mArtistListDisplayRecyclerView.addItemDecoration(new MarginDecoration(getActivity()));
         mArtistListDisplayRecyclerView.setHasFixedSize(true);
         mArtistListDisplayRecyclerView.setLayoutManager(layoutManager);
@@ -72,7 +75,8 @@ public class ArtistListDisplayFragment extends Fragment implements ArtistListDis
 
     @Override
     public void showEmptyState() {
-
+        mArtistListDisplayRecyclerView.setVisibility(View.INVISIBLE);
+        mFavoriteArtistEmptyState.setVisibility(View.VISIBLE);
     }
 
     @Override

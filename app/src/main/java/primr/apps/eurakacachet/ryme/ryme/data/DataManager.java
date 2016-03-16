@@ -44,7 +44,6 @@ import primr.apps.eurakacachet.ryme.ryme.data.model.TracksData;
 import primr.apps.eurakacachet.ryme.ryme.data.remote.RymeService;
 import primr.apps.eurakacachet.ryme.ryme.utils.helpers.event.EventPostHelper;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func0;
@@ -113,13 +112,8 @@ public class DataManager {
         return getPreferencesHelper().isArtist();
     }
 
-    public Observable<Void> setIsArtist(final boolean isHe){
-        return Observable.create(new Observable.OnSubscribe<Void>() {
-            @Override
-            public void call(Subscriber<? super Void> subscriber) {
-                getPreferencesHelper().setArtist(isHe);
-            }
-        });
+    public void setIsArtist(boolean isHe){
+        getPreferencesHelper().setArtist(isHe);
     }
 
     public Observable<String> getToken(){
@@ -900,6 +894,15 @@ public class DataManager {
             @Override
             public Observable<ActionResponse> call() {
                 return mRymeService.streamAudioAd(uuid);
+            }
+        });
+    }
+
+    public Observable<ActionResponse> uploadTrack(final HashMap<String, RequestBody> payload) {
+        return Observable.defer(new Func0<Observable<ActionResponse>>() {
+            @Override
+            public Observable<ActionResponse> call() {
+                return mRymeService.uplaodTrack(payload);
             }
         });
     }

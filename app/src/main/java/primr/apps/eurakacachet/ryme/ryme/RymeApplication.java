@@ -98,6 +98,7 @@ public class RymeApplication extends Application{
 
                     @Override
                     public void onNext(ForegroundMessage message) {
+                        Log.d("notify", "onForegroundNotification called");
                         Activity activity = message.getCurrentActivity();
                         Bundle payload = message.getPayload();
                         createNotification(activity, payload);
@@ -108,17 +109,20 @@ public class RymeApplication extends Application{
     }
 
     private void createNotification(Activity activity, Bundle payload) {
-        NotificationCompat.Builder builder = new NotificationCompat
-                .Builder(activity).setAutoCancel(true);
+        Log.d("notify", "about to create notification -> " + payload.toString());
         String event = payload.getString("event");
         String title = payload.getString("title");
         String text = payload.getString("body");
 
         if(event != null && title != null && text != null){
-            builder.setContentTitle(title).setContentText(text);
+            Log.d("notify", String.format("pass check -> %s => %s => %s", event, title, text));
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(activity)
+                    .setContentTitle(title)
+                    .setContentText(text)
+                    .setAutoCancel(true);
             switch (event){
                 case "track_uploaded":
-                    builder.setSmallIcon(R.drawable.play_button);
+                    builder.setSmallIcon(R.drawable.ic_stat_new_release);
                     String track_id = payload.getString("track_id");
                     if(track_id != null){
                         Intent intent = PublicTrackDisplayActivity.newIntent(activity, track_id);
@@ -128,7 +132,7 @@ public class RymeApplication extends Application{
                     }
                     break;
                 case "artist_joined":
-                    builder.setSmallIcon(R.drawable.play_button);
+                    builder.setSmallIcon(R.drawable.ic_stat_user_joined);
                     String artist_id = payload.getString("artist_id");
                     if(artist_id != null){
                         Intent intent = ArtistProfileActivity.newIntent(activity, artist_id);
@@ -137,11 +141,14 @@ public class RymeApplication extends Application{
                         builder.setContentIntent(pendingIntent);
                     }
                     break;
+                default:
+                    builder.setSmallIcon(R.drawable.ic_stat_new_release);
             }
+            NotificationManager notificationManager = (NotificationManager) activity
+                    .getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(8888, builder.build());
+            Log.d("notify", "done notifying user");
         }
-        NotificationManager notificationManager = (NotificationManager) activity
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(8888, builder.build());
     }
 
     public static RymeApplication get(Context context){

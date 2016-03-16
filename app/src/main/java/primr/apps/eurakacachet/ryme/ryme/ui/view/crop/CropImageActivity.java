@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -105,6 +106,7 @@ public class CropImageActivity extends BaseActivity implements CropImageMvpView{
     }
 
     public static Intent newIntent(Context context, int cropType) {
+        Log.d("crop", "newIntent called -> ");
         Intent intent = new Intent(context, CropImageActivity.class);
         intent.putExtra(EXTRA_CROP_TYPE, cropType);
         return intent;
@@ -113,6 +115,7 @@ public class CropImageActivity extends BaseActivity implements CropImageMvpView{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("crop", "onActivityResult called -> " + data.getData());
 
         if (requestCode == PICK_IMAGE_FROM_GALLERY
                 && resultCode == Activity.RESULT_OK) {
