@@ -69,7 +69,7 @@ public class ArtistTrackListDisplayFragmentPresenter extends BasePresenter<Artis
                         Log.d("artist", "download tracks done in all with -> " + tracks.toString());
                         getMvpView().hideLoading();
                         if(tracks.isEmpty()){
-                            getMvpView().showEmptyState();
+                            getMvpView().showNewEmptyState();
                         }else {
                             getMvpView().setTrackList(tracks);
                         }

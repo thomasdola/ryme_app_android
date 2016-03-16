@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.List;
@@ -28,6 +30,9 @@ public class ArtistTrackListDisplayFragment extends Fragment implements ArtistTr
     private static final String ARG_ARTIST_ID = "artistId";
     private static final String ARG_TRACK_TYPE = "track_type";
     RecyclerView mArtistTracksDisplayRecyclerView;
+    RelativeLayout mAllTracksEmptyState;
+    RelativeLayout mNewTracksEmptyState;
+    ProgressBar mLoadingBar;
     private int mTrackType;
     private String mArtistId;
     private boolean mIsArtistViewing;
@@ -58,6 +63,9 @@ public class ArtistTrackListDisplayFragment extends Fragment implements ArtistTr
         View rootView = inflater.inflate(R.layout.fragment_artist_tracks_display, container, false);
         mArtistTracksDisplayRecyclerView = (RecyclerView) rootView
                 .findViewById(R.id.artist_tracks_display_recycler_view);
+        mLoadingBar = (ProgressBar) rootView.findViewById(R.id.loading_progress_bar);
+        mNewTracksEmptyState = (RelativeLayout) rootView.findViewById(R.id.new_track_list_empty_state);
+        mAllTracksEmptyState = (RelativeLayout) rootView.findViewById(R.id.all_track_list_empty_state);
         mArtistTracksDisplayRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return rootView;
     }
@@ -74,12 +82,13 @@ public class ArtistTrackListDisplayFragment extends Fragment implements ArtistTr
 
     @Override
     public void showLoading() {
-
+        mLoadingBar.setVisibility(View.VISIBLE);
+        mLoadingBar.setIndeterminate(true);
     }
 
     @Override
     public void hideLoading() {
-
+        mLoadingBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -95,6 +104,13 @@ public class ArtistTrackListDisplayFragment extends Fragment implements ArtistTr
 
     @Override
     public void showEmptyState() {
+        mArtistTracksDisplayRecyclerView.setVisibility(View.INVISIBLE);
+        mAllTracksEmptyState.setVisibility(View.VISIBLE);
+    }
 
+    @Override
+    public void showNewEmptyState(){
+        mArtistTracksDisplayRecyclerView.setVisibility(View.INVISIBLE);
+        mNewTracksEmptyState.setVisibility(View.VISIBLE);
     }
 }

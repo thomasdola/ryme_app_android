@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
     private RelativeLayout mNewTracksEmptyState;
     private RelativeLayout mTrendingTracksEmptyState;
     private RelativeLayout mFavoriteTracksEmptyState;
+    private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     int mType;
     private List<Track> mTracks;
@@ -97,6 +99,7 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
         mNewTracksEmptyState = (RelativeLayout) rootView.findViewById(R.id.track_list_empty_state);
         mTrendingTracksEmptyState = (RelativeLayout) rootView.findViewById(R.id.trending_track_list_empty_state);
         mFavoriteTracksEmptyState = (RelativeLayout) rootView.findViewById(R.id.favorite_track_list_empty_state);
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.loading_progress_bar);
         mSwipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
         mSwipeContainer.setColorSchemeColors(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -145,7 +148,8 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
 
     @Override
     public void showLoading() {
-
+        mProgressBar.setVisibility(View.VISIBLE);
+        mProgressBar.setIndeterminate(true);
     }
 
     @Override
@@ -171,7 +175,7 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
 
     @Override
     public void hideLoading() {
-
+        mProgressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override

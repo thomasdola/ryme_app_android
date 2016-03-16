@@ -17,4 +17,6 @@ public interface ArtistTrackListDisplayFragmentMvpView extends MvpView{
     void showError();
 
     void showEmptyState();
+
+    void showNewEmptyState();
 }

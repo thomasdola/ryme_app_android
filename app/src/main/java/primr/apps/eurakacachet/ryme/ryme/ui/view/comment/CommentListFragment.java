@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -33,6 +35,8 @@ public class CommentListFragment extends Fragment implements CommentListMvpView{
     private static final String ARG_TRACK = "track";
 
     RecyclerView mRecyclerView;
+    RelativeLayout mCommentsEmptyState;
+    ProgressBar mLoadingProgressBar;
     private Track mTrack;
 
     public static CommentListFragment newInstance(Track track) {
@@ -69,6 +73,8 @@ public class CommentListFragment extends Fragment implements CommentListMvpView{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_comment_list, container, false);
+        mCommentsEmptyState = (RelativeLayout) rootView.findViewById(R.id.comment_list_empty_state);
+        mLoadingProgressBar = (ProgressBar) rootView.findViewById(R.id.loading_progress_bar);
         initViews(rootView);
         return rootView;
     }
@@ -81,12 +87,13 @@ public class CommentListFragment extends Fragment implements CommentListMvpView{
 
     @Override
     public void showLoading() {
-
+        mLoadingProgressBar.setVisibility(View.VISIBLE);
+        mLoadingProgressBar.setIndeterminate(true);
     }
 
     @Override
     public void hideLoading() {
-
+        mLoadingProgressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -96,7 +103,8 @@ public class CommentListFragment extends Fragment implements CommentListMvpView{
 
     @Override
     public void showNoCommentsYet() {
-
+        mRecyclerView.setVisibility(View.INVISIBLE);
+        mCommentsEmptyState.setVisibility(View.VISIBLE);
     }
 
     @Override

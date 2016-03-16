@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class ArtistListDisplayFragment extends Fragment implements ArtistListDis
     @Inject ArtistListDisplayPresenter mPresenter;
     private RecyclerView mArtistListDisplayRecyclerView;
     private RelativeLayout mFavoriteArtistEmptyState;
+    private ProgressBar mProgressBar;
 
 
     public static ArtistListDisplayFragment newInstance() {
@@ -53,6 +55,7 @@ public class ArtistListDisplayFragment extends Fragment implements ArtistListDis
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
         mArtistListDisplayRecyclerView = (RecyclerView) rootView.findViewById(R.id.artist_list_display_recycler_view);
         mFavoriteArtistEmptyState = (RelativeLayout) rootView.findViewById(R.id.favorite_artist_list_empty_state);
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.loading_progress_bar);
         mArtistListDisplayRecyclerView.addItemDecoration(new MarginDecoration(getActivity()));
         mArtistListDisplayRecyclerView.setHasFixedSize(true);
         mArtistListDisplayRecyclerView.setLayoutManager(layoutManager);
@@ -81,11 +84,12 @@ public class ArtistListDisplayFragment extends Fragment implements ArtistListDis
 
     @Override
     public void showLoading() {
-
+        mProgressBar.setVisibility(View.VISIBLE);
+        mProgressBar.setIndeterminate(true);
     }
 
     @Override
     public void hideLoading() {
-
+        mProgressBar.setVisibility(View.INVISIBLE);
     }
 }
