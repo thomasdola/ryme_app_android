@@ -4,13 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatRadioButton;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding.widget.AdapterViewItemClickEvent;
 import com.jakewharton.rxbinding.widget.RxAutoCompleteTextView;
@@ -26,6 +30,7 @@ import primr.apps.eurakacachet.ryme.ryme.ui.view.signin.LoginActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.verify_code.VerifyCodeActivity;
 import primr.apps.eurakacachet.ryme.ryme.utils.helpers.layout.CustomAutoCompleteTextView;
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -35,6 +40,7 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView {
 
     @Inject SignUpPresenter mSignUpPresenter;
 
+    Subscription mSubscription;
     CoordinatorLayout mCoordinatorLayout;
     ProgressBar mProgressView;
     Button mRegisterButton;
@@ -43,6 +49,9 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView {
     EditText mPhoneNumberEditView;
     EditText mUsernameEditView;
     EditText mPasswordEditView;
+    AppCompatRadioButton mFemaleRadioButton;
+    AppCompatRadioButton mMaleRadioButton;
+    RadioGroup mUserGenderRadioGroup;
 
     public static Intent newIntent(Context context){
         return new Intent(context, SignUpActivity.class);
@@ -69,6 +78,7 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView {
 
     private void initListeners() {
         final Pattern phone = Pattern.compile("^((?!(0))[0-9]{4,20})$");
+//        final Pattern no_space = Pattern.compile("[^\\s-]");
 
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +87,8 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView {
                 String password = mPasswordEditView.getText().toString();
                 String dialCode = mDialCode.getText().toString();
                 String phoneNumber = mPhoneNumberEditView.getText().toString();
-                mSignUpPresenter.signUp(username, password, dialCode, phoneNumber);
+                int userGender = getUserGender();
+                mSignUpPresenter.signUp(username, password, dialCode, phoneNumber, userGender);
             }
         });
 
@@ -89,21 +100,45 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView {
             }
         });
 
+//        Observable<Boolean> userGenderObservable = RxRadioGroup.checkedChanges(mUserGenderRadioGroup)
+//                .map(new Func1<Integer, Boolean>() {
+//                    @Override
+//                    public Boolean call(Integer checkedId) {
+//                        return checkedId != null;
+//                    }
+//                });
+
         Observable<Boolean> usernameObservable = RxTextView.textChanges(mUsernameEditView)
                 .map(new Func1<CharSequence, Boolean>() {
-            @Override
-            public Boolean call(CharSequence username) {
-                return username.length() >= 8;
-            }
-        }).distinctUntilChanged();
+                    @Override
+                    public Boolean call(CharSequence username) {
+                        return username.toString().trim().length() >= 8;
+//                                && no_space.matcher(username).matches();
+                    }
+                }).distinctUntilChanged()
+                .map(new Func1<Boolean, Boolean>() {
+                    @Override
+                    public Boolean call(Boolean isValid) {
+                        Log.d("register", "username is valid -> " + isValid);
+                        updateTextView(isValid, mUsernameEditView);
+                        return isValid;
+                    }
+                });
 
         Observable<Boolean> passwordObservable = RxTextView.textChanges(mPasswordEditView)
                 .map(new Func1<CharSequence, Boolean>() {
                     @Override
                     public Boolean call(CharSequence password) {
-                        return password.length() >= 10;
+                        return password.toString().trim().length() >= 10;
                     }
-                }).distinctUntilChanged();
+                }).distinctUntilChanged()
+                .map(new Func1<Boolean, Boolean>() {
+                    @Override
+                    public Boolean call(Boolean isValid) {
+                        updateTextView(isValid, mPasswordEditView);
+                        return isValid;
+                    }
+                });
 
         Observable<Boolean> phoneNumberObservable = RxTextView.textChanges(mPhoneNumberEditView)
                 .map(new Func1<CharSequence, Boolean>() {
@@ -111,7 +146,14 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView {
                     public Boolean call(CharSequence phoneNumber) {
                         return phone.matcher(phoneNumber).matches();
                     }
-                }).distinctUntilChanged();
+                }).distinctUntilChanged()
+                .map(new Func1<Boolean, Boolean>() {
+                    @Override
+                    public Boolean call(Boolean isValid) {
+                        updateTextView(isValid, mPhoneNumberEditView);
+                        return isValid;
+                    }
+                });
 
         Observable<Boolean> dialCodeObservable = RxAutoCompleteTextView.itemClickEvents(mDialCode)
                 .map(new Func1<AdapterViewItemClickEvent, Boolean>() {
@@ -121,7 +163,7 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView {
                     }
                 }).distinctUntilChanged();
 
-        Observable.combineLatest(usernameObservable,
+        mSubscription = Observable.combineLatest(usernameObservable,
                 passwordObservable,
                 dialCodeObservable,
                 phoneNumberObservable, new Func4<Boolean,
@@ -134,6 +176,22 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView {
                                         Boolean passwordValid,
                                         Boolean dialCodeValid,
                                         Boolean phoneValid) {
+//                        if(!usernameValid){
+//                            mUsernameEditView.setTextColor(ContextCompat
+//                                    .getColor(SignUpActivity.this, R.color.redPink));
+//                        }
+//
+//                        if(!passwordValid){
+//                            mPasswordEditView.setTextColor(ContextCompat
+//                                    .getColor(SignUpActivity.this, R.color.redPink));
+//                        }
+//
+//                        if(!phoneValid){
+//                            mPhoneNumberEditView.setTextColor(ContextCompat
+//                                    .getColor(SignUpActivity.this, R.color.redPink));
+//                        }
+                        Log.d("register", String.format("username -> %s , password -> %s , phone -> %s",
+                                usernameValid, passwordValid, phoneValid));
                         return usernameValid &&
                                 passwordValid &&
                                 dialCodeValid &&
@@ -155,6 +213,37 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView {
 
     }
 
+    public void updateTextView(Boolean isValid, TextView textView) {
+        Log.d("register", "updateTextView called with -> " + isValid);
+        if (!isValid) {
+            textView.setTextColor(ContextCompat
+                    .getColor(SignUpActivity.this, R.color.redPink));
+        }else {
+            textView.setTextColor(ContextCompat
+                    .getColor(SignUpActivity.this, R.color.white_ash));
+        }
+    }
+
+    private int getUserGender() {
+        int gender = 1;
+        int checkedRadioId = mUserGenderRadioGroup.getCheckedRadioButtonId();
+        switch (checkedRadioId){
+            case R.id.male_radio_button:
+                gender = 1;
+                break;
+            case R.id.female_radio_button:
+                gender = 0;
+                break;
+        }
+        return gender;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mSubscription != null) mSubscription.unsubscribe();
+    }
+
     private void initViews() {
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.register_layout);
         mRegisterButton = (Button) findViewById(R.id.sign_up_button);
@@ -165,6 +254,10 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView {
         mUsernameEditView = (EditText) findViewById(R.id.username_edit_view);
         mPasswordEditView = (EditText) findViewById(R.id.password_edit_view);
         mPhoneNumberEditView = (EditText) findViewById(R.id.phone_number_edit_text);
+        mMaleRadioButton = (AppCompatRadioButton) findViewById(R.id.male_radio_button);
+        mMaleRadioButton.setChecked(true);
+        mFemaleRadioButton = (AppCompatRadioButton) findViewById(R.id.female_radio_button);
+        mUserGenderRadioGroup = (RadioGroup) findViewById(R.id.user_gender_radio_group);
     }
 
     @Override
@@ -185,16 +278,12 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView {
 
     @Override
     public void showSignUpFail(String message) {
-        Snackbar errorSnackbar = Snackbar.make(mCoordinatorLayout,
-                message.toUpperCase(), Snackbar.LENGTH_LONG);
-        errorSnackbar.show();
+        Toast.makeText(SignUpActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showSignUpSuccessful() {
-        Snackbar successSnackbar = Snackbar.make(mCoordinatorLayout,
-                "Registration Successful", Snackbar.LENGTH_SHORT);
-        successSnackbar.show();
+
     }
 
     @Override
@@ -214,6 +303,7 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView {
         mPasswordEditView.setEnabled(false);
         mDialCode.setEnabled(false);
         mPhoneNumberEditView.setEnabled(false);
+        mUserGenderRadioGroup.setEnabled(false);
     }
 
     @Override
@@ -222,5 +312,6 @@ public class SignUpActivity extends BaseActivity implements SignUpMvpView {
         mPasswordEditView.setEnabled(true);
         mDialCode.setEnabled(true);
         mPhoneNumberEditView.setEnabled(true);
+        mUserGenderRadioGroup.setEnabled(true);
     }
 }

@@ -14,8 +14,11 @@ import android.util.Log;
 import com.devbrackets.android.playlistcore.api.AudioPlayerApi;
 import com.devbrackets.android.playlistcore.helper.AudioFocusHelper;
 import com.devbrackets.android.playlistcore.service.BasePlaylistService;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -127,6 +130,24 @@ public class PCOnlineAudioPlayerService extends BasePlaylistService<PCOnlineAudi
     @Override
     protected float getAudioDuckVolume() {
         return AUDIO_DUCK_VOLUME;
+    }
+
+    @Override
+    protected void updateLargeNotificationImage(int size, PCOnlineAudioItemInterface playlistItem) {
+        picasso.load(new File(playlistItem.getArtworkUrl()))
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .resize(100, 100)
+                .centerCrop()
+                .into(notificationImageTarget);
+    }
+
+    @Override
+    protected void updateRemoteViewArtwork(PCOnlineAudioItemInterface playlistItem) {
+        picasso.load(new File(playlistItem.getArtworkUrl()))
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .resize(100, 100)
+                .centerCrop()
+                .into(lockScreenImageTarget);
     }
 
     @NonNull

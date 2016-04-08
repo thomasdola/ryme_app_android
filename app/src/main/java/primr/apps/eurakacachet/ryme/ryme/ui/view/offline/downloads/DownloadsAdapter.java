@@ -1,6 +1,7 @@
 package primr.apps.eurakacachet.ryme.ryme.ui.view.offline.downloads;
 
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,7 @@ import primr.apps.eurakacachet.ryme.ryme.data.local.storio.models.SavedTrack;
 
 public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsViewHolder> {
 
-    DownloadsFragment mDownloadsFragment;
+    Context mContext;
     List<SavedTrack> mTracks;
 
     @Inject
@@ -25,18 +26,20 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsViewHolder> 
         mTracks = new ArrayList<>();
     }
 
-    public void setTracks(DownloadsFragment downloadsFragment, List<SavedTrack> tracks){
-        mDownloadsFragment = downloadsFragment;
+    public void setTracks(Context context, List<SavedTrack> tracks){
+        mContext = context;
         mTracks = tracks;
     }
 
     @Override
     public DownloadsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(mDownloadsFragment.getActivity());
-        View downloadTrackView = layoutInflater.inflate(R.layout.download_track_card,
+        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+        View downloadTrackView = layoutInflater.inflate(
+//                R.layout.download_track_card,
+                R.layout.download_track_list_item,
                 parent, false);
 
-        return new DownloadsViewHolder(mDownloadsFragment, downloadTrackView);
+        return new DownloadsViewHolder(mContext, downloadTrackView);
     }
 
     @Override

@@ -24,4 +24,8 @@ public interface PublicTrackFragmentMvpView extends MvpView{
     void updateStreamsCount();
 
     void trackIsAlreadySaved(Boolean isSaved);
+
+    void showDownloadSuccess();
+
+    void showDownloadFailure();
 }

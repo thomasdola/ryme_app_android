@@ -1,9 +1,12 @@
 package primr.apps.eurakacachet.ryme.ryme.ui.view.splash;
 
+import android.util.Log;
+
 import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.data.DataManager;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BasePresenter;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -62,22 +65,47 @@ public class SplashPresenter extends BasePresenter<SplashMvpView> {
 
 
     public void onLoggedInAndReady() {
-        getMvpView().closeActivity();
         getMvpView().launchMainActivity();
+        getMvpView().closeActivity();
     }
 
     public void onNotReady() {
-        getMvpView().closeActivity();
-        getMvpView().launchFollowCategoryActivity();
+        Log.d("verify", "onNotReady called");
+        mSubscription = mDataManager.isVerified()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Boolean isVerified) {
+                        if(isVerified){
+                            getMvpView().launchFollowCategoryActivity();
+                        }else {
+                            getMvpView().launchVerifyCodeActivity();
+                        }
+                        getMvpView().closeActivity();
+                    }
+                });
+
     }
 
     public void onNotLoggedIn() {
-        getMvpView().closeActivity();
         getMvpView().launchSignUpActivity();
+        getMvpView().closeActivity();
     }
 
     public void launchTrackDisplay(String track_id) {
         checkViewAttached();
         getMvpView().launchPublicTrackDisplayActivity(track_id);
+        getMvpView().closeActivity();
     }
 }

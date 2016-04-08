@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:visibility="invisible"
-            android:background="@color/blueBlack"
+            android:background="@color/lighterBlueBlack"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -27,15 +27,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
+            android:id="@+id/no_new_track_empty_icon"
             android:src="@drawable/no_new_tracks"
+            android:layout_marginBottom="8dp"
             android:layout_marginTop="150dp"
             android:layout_centerHorizontal="true"
             android:layout_width="100dp"
             android:layout_height="100dp"/>
 
         <TextView
+            android:layout_below="@id/no_new_track_empty_icon"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="No New Tracks"
             android:gravity="center"/>
     </RelativeLayout>
@@ -46,6 +49,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
+            android:id="@+id/no_trending_track_empty_icon"
+            android:layout_marginBottom="8dp"
             android:src="@drawable/no_trending"
             android:layout_marginTop="150dp"
             android:layout_centerHorizontal="true"
@@ -53,8 +58,9 @@
             android:layout_height="100dp"/>
 
         <TextView
+            android:layout_below="@id/no_trending_track_empty_icon"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="No Trending Tracks"
             android:gravity="center"/>
     </RelativeLayout>
@@ -65,6 +71,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
+            android:id="@+id/empty_icon"
+            android:layout_marginBottom="8dp"
             android:src="@drawable/no_favorites"
             android:layout_marginTop="150dp"
             android:layout_centerHorizontal="true"
@@ -72,8 +80,10 @@
             android:layout_height="100dp"/>
 
         <TextView
+            android:layout_below="@id/empty_icon"
+            android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="No Favorite Tracks"
             android:gravity="center"/>
     </RelativeLayout>

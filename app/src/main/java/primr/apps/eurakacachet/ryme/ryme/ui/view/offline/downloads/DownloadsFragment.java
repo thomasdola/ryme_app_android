@@ -85,7 +85,7 @@ public class DownloadsFragment extends Fragment implements DownloadsMvpView{
 
     @Override
     public void setTracks(List<SavedTrack> savedTracks) {
-        mAdapter.setTracks(this, savedTracks);
+        mAdapter.setTracks(getContext(), savedTracks);
         mAdapter.notifyDataSetChanged();
     }
 

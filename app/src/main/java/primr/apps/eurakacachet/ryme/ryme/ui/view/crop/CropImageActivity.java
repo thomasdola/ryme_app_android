@@ -53,21 +53,28 @@ public class CropImageActivity extends BaseActivity implements CropImageMvpView{
         super.onCreate(savedInstanceState);
         getActivityComponent().inject(this);
         setContentView(R.layout.activity_crop_image);
-
-        initViews();
         mPresenter.attachView(this);
+        initViews();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (getIntent() != null) {
             mCropType = getIntent().getIntExtra(EXTRA_CROP_TYPE, 0);
         }
 
+        initListeners();
+        toolbar.setTitle(R.string.profile);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        onPickClicked();
+    }
+
+    private void initListeners() {
         mMiniPick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onPickClicked();
             }
         });
-        mMiniPick.setVisibility(View.GONE);
 
         mBigPick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,22 +86,15 @@ public class CropImageActivity extends BaseActivity implements CropImageMvpView{
         mCrop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mCropType == REQUEST_CROP_AVATAR){
+                if (mCropType == REQUEST_CROP_AVATAR) {
                     onCropClicked("avatar");
-                }else if(mCropType == REQUEST_CROP_BACK_IMAGE){
+                } else if (mCropType == REQUEST_CROP_BACK_IMAGE) {
                     onCropClicked("background");
-                }else if(mCropType == REQUEST_CROP_TRACK_COVER) {
+                } else if (mCropType == REQUEST_CROP_TRACK_COVER) {
                     onCropClicked("track_cover");
                 }
             }
         });
-        mCrop.setVisibility(View.GONE);
-
-        toolbar.setTitle(R.string.profile);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        onPickClicked();
     }
 
     private void initViews() {
@@ -103,10 +103,12 @@ public class CropImageActivity extends BaseActivity implements CropImageMvpView{
         mCrop = (FloatingActionButton) findViewById(R.id.crop_fab);
         mBigPick = (FloatingActionButton) findViewById(R.id.pick_fab);
         mLoadingView = (ProgressBar) findViewById(R.id.loading_view);
+        mMiniPick.setVisibility(View.INVISIBLE);
+        mCrop.setVisibility(View.INVISIBLE);
     }
 
     public static Intent newIntent(Context context, int cropType) {
-        Log.d("crop", "newIntent called -> ");
+        Log.d("crop", "newIntent called -> " + cropType);
         Intent intent = new Intent(context, CropImageActivity.class);
         intent.putExtra(EXTRA_CROP_TYPE, cropType);
         return intent;
@@ -135,6 +137,7 @@ public class CropImageActivity extends BaseActivity implements CropImageMvpView{
     }
 
     private void setNewImagePath(File newImagePath) {
+        Log.d("crop", "image file -> " + newImagePath.getAbsolutePath());
         if(mCropType == REQUEST_CROP_AVATAR){
             mPresenter.uploadPicture(newImagePath, "avatar");
         }else if(mCropType == REQUEST_CROP_BACK_IMAGE){
@@ -156,7 +159,7 @@ public class CropImageActivity extends BaseActivity implements CropImageMvpView{
     }
 
     public void onCropClicked(String type) {
-        final File croppedFile = new File(getFilesDir(), type + "_cropped.jpg");
+        final File croppedFile = new File(getCacheDir(), type + "_cropped.jpg");
 
         Observable<Void> onSave = Observable.from(mCropView.extensions()
                 .crop()
@@ -204,7 +207,7 @@ public class CropImageActivity extends BaseActivity implements CropImageMvpView{
     public void respondWithCroppedImage(@Nullable File imageFile) {
         Intent data = new Intent();
         if( imageFile != null){
-            data.putExtra(EXTRA_CROPPED_FILE_PATH, imageFile.getPath());
+            data.putExtra(EXTRA_CROPPED_FILE_PATH, imageFile.getAbsolutePath());
             if (mCropType == REQUEST_CROP_AVATAR) {
                 data.putExtra(EXTRA_CROP_TYPE, REQUEST_CROP_AVATAR);
             } else if (mCropType == REQUEST_CROP_BACK_IMAGE) {

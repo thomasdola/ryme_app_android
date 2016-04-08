@@ -35,6 +35,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/any_coll_view_wrapper"
         android:layout_below="@id/track_genre_layout"
         android:layout_width="match_parent"
@@ -60,6 +61,7 @@
     </RelativeLayout>
 
     <View
+        android:visibility="gone"
         android:id="@+id/first_divider"
         android:layout_below="@id/any_coll_view_wrapper"
         android:layout_width="match_parent"
@@ -67,6 +69,7 @@
         android:background="@android:color/darker_gray"/>
 
     <android.support.design.widget.TextInputLayout
+        android:visibility="gone"
         android:layout_below="@id/first_divider"
         android:layout_width="match_parent"
         android:id="@+id/collabors_edit_wrap_view"
@@ -101,13 +104,14 @@
             android:layout_height="wrap_content"/>
 
         <ImageView
+            android:src="@drawable/wallpaper"
             android:id="@+id/new_track_cover_image"
             android:layout_toEndOf="@id/new_track_cover_text"
             android:layout_alignParentEnd="true"
             android:scaleType="centerCrop"
             android:layout_marginBottom="10dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
     </RelativeLayout>
 
     <View
@@ -142,7 +146,7 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/second_divider"
+        android:id="@+id/no_divider"
         android:layout_below="@id/select_released_date"
         android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
@@ -151,7 +155,7 @@
 
     <RelativeLayout
         android:id="@+id/track_downloadable"
-        android:layout_below="@id/second_divider"
+        android:layout_below="@id/no_divider"
         android:layout_width="match_parent"
         android:gravity="center_vertical"
         android:layout_marginBottom="5dp"
@@ -192,7 +196,7 @@
             android:text="@string/select_track_text"
             android:id="@+id/pick_new_track_file_text"
             android:layout_width="0dp"
-            android:layout_weight="5"
+            android:layout_weight="6"
             android:ellipsize="marquee"
             android:singleLine="true"
             android:layout_height="wrap_content"/>
@@ -201,7 +205,7 @@
             android:id="@+id/new_track_upload"
             android:src="@drawable/ic_action_new_audio_file"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:layout_height="35dp"/>
     </LinearLayout>
 

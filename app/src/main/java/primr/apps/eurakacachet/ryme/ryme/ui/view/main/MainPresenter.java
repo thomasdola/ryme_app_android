@@ -10,7 +10,9 @@ import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.data.DataManager;
 import primr.apps.eurakacachet.ryme.ryme.data.model.ActionResponse;
+import primr.apps.eurakacachet.ryme.ryme.data.model.ApiData;
 import primr.apps.eurakacachet.ryme.ryme.data.model.AuthResponse;
+import primr.apps.eurakacachet.ryme.ryme.data.model.UserProfile;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BasePresenter;
 import primr.apps.eurakacachet.ryme.ryme.utils.Config;
 import rx.Subscriber;
@@ -74,6 +76,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                 .subscribe(new Action1<String>() {
                     @Override
                     public void call(String path) {
+                        Log.d("main", "back image path -> " + path);
                         getMvpView().setBackImage(path);
                     }
                 });
@@ -97,9 +100,19 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                             mSubscription = mDataManager.getUsername()
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(new Action1<String>() {
+                                    .subscribe(new Subscriber<String>() {
                                         @Override
-                                        public void call(String username) {
+                                        public void onCompleted() {
+
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        @Override
+                                        public void onNext(String username) {
                                             getMvpView().hidePhotoAvatarView();
                                             getMvpView().setLetterAvatar(username);
                                         }
@@ -171,9 +184,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                         if (authResponse.code == Config.STATUS_OK) {
                             Log.d("mainAuth", authResponse.toString());
                             Log.d("mainAuth", "auto login done successfully");
-                            mDataManager.setToken(authResponse.token());
-                            if(authResponse.data() != null)
-                                mDataManager.setIsArtist(authResponse.data().data().is_artist());
+                            updateAccount(authResponse);
                             if(fromMain){
                                 getMvpView().initMainView();
                                 startAutoLogin();
@@ -181,6 +192,20 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                         }
                     }
                 });
+    }
+
+    private void updateAccount(AuthResponse authResponse) {
+        mDataManager.setToken(authResponse.token());
+        ApiData data = authResponse.data();
+        if(data != null){
+            UserProfile user = data.data();
+            mDataManager.setUsername(user.username());
+            mDataManager.setUserId(user.uuid());
+            mDataManager.setAvatarPath(user.avatar());
+            mDataManager.setBackImagePath(user.background_picture());
+            mDataManager.setIsArtist(user.is_artist());
+            mDataManager.setRequestIsActive(user.is_request_on);
+        }
     }
 
     public void isUserAllowedToMakeArtistRequest(){

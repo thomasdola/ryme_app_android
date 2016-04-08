@@ -199,8 +199,9 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentMvp
                     @Override
                     public void onError(Throwable e) {
                         getMvpView().hideDialogLoading();
-                        getMvpView().showError();
+                        getMvpView().setIsArtist(false);
                         e.printStackTrace();
+                        getMvpView().showError(SettingsFragment.NO_TOKEN_ERROR);
                     }
 
                     @Override
@@ -225,10 +226,11 @@ public class SettingsFragmentPresenter extends BasePresenter<SettingsFragmentMvp
                                     public void onNext(ActionResponse actionResponse) {
                                         getMvpView().hideDialogLoading();
                                         if (actionResponse.code == Config.STATUS_OK){
-                                            getMvpView().disableArtistSwitch();
+                                            getMvpView().hideArtistRequest();
+                                            getMvpView().showSuccessDialog();
                                         }else {
                                             Log.d("settings", actionResponse.toString());
-                                            getMvpView().showError();
+                                            getMvpView().showError(SettingsFragment.ON_FAILURE);
                                             getMvpView().setIsArtist(false);
                                         }
                                     }

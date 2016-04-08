@@ -46,7 +46,9 @@ public class PublicTrackListDisplayAdapter extends RecyclerView.Adapter<Recycler
         RecyclerView.ViewHolder viewHolder;
         if( viewType == VIEW_TYPE_TRACK){
             LayoutInflater layoutInflater = LayoutInflater.from(mPublicTrackListDisplayFragment.getActivity());
-            View trackItemView = layoutInflater.inflate(R.layout.track_card_view,
+            View trackItemView = layoutInflater.inflate(
+//                    R.layout.track_item_no_back,
+                    R.layout.track_card_view,
                     parent, false);
             viewHolder = new PublicTrackDisplayViewHolder(mPublicTrackListDisplayFragment,
                     trackItemView);

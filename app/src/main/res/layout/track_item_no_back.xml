@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="1dp"
+    android:id="@+id/track_cv"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/track_cover_avatar"
+            android:contentDescription="@null"
+            android:layout_marginEnd="8dp"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:padding="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/track_info_view">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:textSize="15sp"
+                            android:text="Amen"
+                            android:textStyle="bold"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:layout_width="0dp"
+                            android:layout_weight="7"
+                            android:layout_height="match_parent"
+                            android:textAllCaps="false"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:id="@+id/track_title_text_view"
+                            android:textColor="@color/lightBlueBlack"/>
+
+
+                        <TextView
+                            android:text="2:12"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/lightBlueBlack"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textSize="11sp"
+                            android:id="@+id/track_duration_text_view"
+                            android:gravity="start|center_vertical"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:text="Pinana Pijo"
+                        android:gravity="center_vertical"
+                        android:textSize="12sp"
+                        android:textColor="@color/lightBlueBlack"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/artist_name_view"
+                        android:layout_height="match_parent"/>
+
+                    <RelativeLayout
+                        android:gravity="end|center_vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"
+                            android:id="@+id/info_track_stream"
+                            android:src="@drawable/ic_action_play_blueblack"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="@null"/>
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:text="20"
+                            android:textSize="10sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/lightBlueBlack"
+                            android:id="@+id/info_track_stream_text"
+                            android:layout_toEndOf="@+id/info_track_stream" />
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"
+                            android:id="@+id/info_track_favorite"
+                            android:src="@drawable/ic_action_like_fill_blueblack"
+                            android:layout_marginStart="32dp"
+                            android:layout_alignBottom="@+id/info_track_stream"
+                            android:layout_toEndOf="@+id/info_track_stream_text"
+                            android:contentDescription="@null"/>
+
+                        <TextView
+                            android:text="20"
+                            android:gravity="center_vertical"
+                            android:textSize="10sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/lightBlueBlack"
+                            android:id="@+id/info_track_favorite_text"
+                            android:layout_toEndOf="@+id/info_track_favorite" />
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"
+                            android:id="@+id/info_track_download"
+                            android:layout_alignBottom="@+id/info_track_stream"
+                            android:layout_toEndOf="@+id/info_track_favorite_text"
+                            android:layout_marginStart="32dp"
+                            android:src="@drawable/ic_action_downloads_blueblack"
+                            android:contentDescription="@null"/>
+
+                        <TextView
+                            android:text="20"
+                            android:gravity="center_vertical"
+                            android:textSize="10sp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/lightBlueBlack"
+                            android:id="@+id/info_track_download_text"
+                            android:layout_toEndOf="@+id/info_track_download" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

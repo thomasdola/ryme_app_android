@@ -13,7 +13,7 @@ public interface SettingsFragmentMvpView extends MvpView{
 
     void isAllowed(Boolean isAllowed);
 
-    void disableArtistSwitch();
+    void hideArtistRequest();
 
     void showDialogLoading();
 
@@ -21,5 +21,7 @@ public interface SettingsFragmentMvpView extends MvpView{
 
     void setCategories(String[] categories);
 
-    void showError();
+    void showError(int errorCode);
+
+    void showSuccessDialog();
 }

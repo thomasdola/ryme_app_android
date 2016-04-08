@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -51,8 +52,8 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeMvpVie
         getActivityComponent().inject(this);
         setContentView(R.layout.activity_verify_code);
 
-        initViews();
         mPresenter.attachView(this);
+        initViews();
         initListeners();
         mPresenter.autoVerify();
     }
@@ -69,9 +70,16 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeMvpVie
                 .map(new Func1<CharSequence, Boolean>() {
                     @Override
                     public Boolean call(CharSequence charSequence) {
-                        return charSequence.length() == 4;
+                        return charSequence.toString().trim().length() == 4;
                     }
-                }).distinctUntilChanged();
+                }).distinctUntilChanged()
+                .map(new Func1<Boolean, Boolean>() {
+                    @Override
+                    public Boolean call(Boolean isValid) {
+                        updateTextView(isValid, mCodeEdit);
+                        return isValid;
+                    }
+                });
 
         codeObservable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Boolean>() {
@@ -219,5 +227,15 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeMvpVie
     @Override
     public void stopSmsService() {
         SmsRadar.stopSmsRadarService(this);
+    }
+
+    private void updateTextView(Boolean isValid, TextView textView){
+        if (!isValid) {
+            textView.setTextColor(ContextCompat
+                    .getColor(VerifyCodeActivity.this, R.color.redPink));
+        }else {
+            textView.setTextColor(ContextCompat
+                    .getColor(VerifyCodeActivity.this, R.color.white_ash));
+        }
     }
 }

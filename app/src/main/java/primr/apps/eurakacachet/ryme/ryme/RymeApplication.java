@@ -73,6 +73,7 @@ public class RymeApplication extends Application{
                     @Override
                     public void onError(Throwable e) {
                         Log.d("application", "error from application -> " + e.getMessage());
+                        onPlayServiceNotAvailable();
                         e.printStackTrace();
                     }
 
@@ -106,6 +107,10 @@ public class RymeApplication extends Application{
                 });
 
         RxGcm.Notifications.onRefreshToken(RefreshTokenReceiver.class);
+    }
+
+    private void onPlayServiceNotAvailable() {
+
     }
 
     private void createNotification(Activity activity, Bundle payload) {
@@ -195,5 +200,7 @@ public class RymeApplication extends Application{
         sApplication = null;
         sOnlineAudioPlaylistManager = null;
         sOfflinePlaylistManager = null;
+        sPCOfflinePlaylistManager = null;
+        sPCOnlinePlaylistManager = null;
     }
 }

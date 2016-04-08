@@ -1,194 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="primr.apps.eurakacachet.ryme.ryme" >
+<manifest package="primr.apps.eurakacachet.ryme.ryme"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".RymeApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:largeHeap="true"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".ui.view.main.MainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.view.trackDisplay.PublicTrackDisplayActivity"
             android:parentActivityName=".ui.view.main.MainActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.view.main.MainActivity" />
+                android:value=".ui.view.main.MainActivity"/>
         </activity>
         <activity
             android:name=".ui.view.artist.profile.ArtistProfileActivity"
             android:parentActivityName=".ui.view.main.MainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.view.main.MainActivity" />
+                android:value=".ui.view.main.MainActivity"/>
         </activity>
         <activity
             android:name=".ui.view.artist.trackDisplay.ArtistTrackDisplayActivity"
             android:parentActivityName=".ui.view.artist.profile.ArtistProfileActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.view.artist.profile.ArtistProfileActivity" />
+                android:value=".ui.view.artist.profile.ArtistProfileActivity"/>
         </activity>
         <activity
             android:name=".ui.view.search.SearchableActivity"
             android:launchMode="singleTop"
             android:parentActivityName=".ui.view.main.MainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.SEARCH"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+                android:resource="@xml/searchable"/>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.view.main.MainActivity" />
+                android:value=".ui.view.main.MainActivity"/>
         </activity>
         <activity
-            android:theme="@style/WelcomeTheme"
-            android:noHistory="true"
             android:name=".ui.view.signup.SignUpActivity"
-            android:screenOrientation="portrait" >
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/WelcomeTheme">
         </activity>
         <activity
-            android:theme="@style/WelcomeTheme"
-            android:noHistory="true"
             android:name=".ui.view.verify_code.VerifyCodeActivity"
-            android:screenOrientation="portrait" >
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/WelcomeTheme">
         </activity>
         <activity
-            android:noHistory="true"
-            android:theme="@style/WelcomeTheme"
             android:name=".ui.view.signin.LoginActivity"
-            android:screenOrientation="portrait" >
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/WelcomeTheme">
         </activity>
         <activity
-            android:noHistory="true"
             android:name=".ui.view.followCategory.FollowCategoryActivity"
             android:label="@string/title_activity_follow_category"
+            android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
         </activity>
         <activity
             android:name=".ui.view.splash.SplashActivity"
-            android:noHistory="true"
             android:launchMode="singleTask"
+            android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme" >
+            android:theme="@style/SplashTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <intent-filter>
-                <data android:scheme="ryme" android:host="open"/>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="open"
+                    android:scheme="ryme"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
+
             <meta-data
                 android:name="io.branch.sdk.auto_link_keys"
-                android:value="track_id" />
+                android:value="track_id"/>
         </activity>
         <activity
             android:name=".ui.view.settings.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".ui.view.main.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity" />
+                android:value="primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity"/>
         </activity>
         <activity
             android:name=".ui.view.crop.CropImageActivity"
-            android:noHistory="true"
             android:label="@string/title_activity_crop_image"
             android:parentActivityName=".ui.view.main.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity" />
+                android:value="primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity"/>
         </activity>
         <activity
             android:name=".ui.view.offline.trackDisplay.TrackDisplayActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
-            android:noHistory="true"
-            android:name=".ui.view.splash.WelcomeActivity">
+            android:name=".ui.view.splash.WelcomeActivity"
+            android:noHistory="true">
         </activity>
 
         <service
             android:name="org.vaslabs.smsradar.SmsRadarService"
             android:exported="false"
-            android:label="@string/app_name" />
-        <service
-            android:name=".utils.player.service.OnlineAudioPlayerService"
-            android:enabled="true"
-            android:exported="false"
-            android:label="@string/app_name" />
-        <service
-            android:name=".utils.player.service.OfflineAudioPlayerService"
-            android:enabled="true"
-            android:exported="false"
-            android:label="@string/app_name" />
-
+            android:label="@string/app_name"/>
         <service
             android:name=".utils.player.service.PCOfflineAudioPlayerService"
             android:enabled="true"
-            android:exported="false"
-            android:label="@string/app_name"/>
-
+            android:exported="false"/>
         <service
             android:name=".utils.player.service.PCOnlineAudioPlayerService"
             android:enabled="true"
-            android:exported="false"
-            android:label="@string/app_name"/>
+            android:exported="false"/>
 
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
         <meta-data
             android:name="android.app.default_searchable"
             android:value="primr.apps.eurakacachet.ryme.ryme.ui.view.search.SearchableActivity"/>
-        <!--<meta-data-->
-            <!--android:name="io.branch.sdk.TestMode"-->
-            <!--android:value="true" />-->
-        <!--<meta-data-->
-            <!--android:name="io.branch.sdk.BranchKey"-->
-            <!--android:value="key_live_ncnZj133Tqyj9j64Sp2VGfpbEumAhNpv" />-->
+        <!-- <meta-data -->
+        <!-- android:name="io.branch.sdk.TestMode" -->
+        <!-- android:value="true" /> -->
+        <!-- <meta-data -->
+        <!-- android:name="io.branch.sdk.BranchKey" -->
+        <!-- android:value="key_live_ncnZj133Tqyj9j64Sp2VGfpbEumAhNpv" /> -->
         <meta-data
             android:name="io.branch.sdk.BranchKey"
-            android:value="key_test_onl7d3Z8TDrlWg26UfZ2gfmnDClxhJjK" />
+            android:value="key_live_ncnZj133Tqyj9j64Sp2VGfpbEumAhNpv"/>
 
-
-        <receiver android:name="io.branch.referral.InstallListener" android:exported="true">
+        <receiver
+            android:name="io.branch.referral.InstallListener"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
+                <action android:name="com.android.vending.INSTALL_REFERRER"/>
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name=".ui.view.offline.downloads.OfflineTrackListActivity"
+            android:label="@string/title_activity_offline_track_list"
+            android:parentActivityName=".ui.view.main.MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity"/>
+        </activity>
     </application>
 
 </manifest>

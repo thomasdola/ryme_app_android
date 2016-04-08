@@ -1,9 +1,6 @@
 package primr.apps.eurakacachet.ryme.ryme.ui.view.offline.trackDisplay;
 
 
-import android.annotation.TargetApi;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -122,12 +119,10 @@ public class DownloadTrackDisplayFragment extends Fragment implements DownloadTr
 //                .onto(mPlayerControlsView);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((BaseActivity)getActivity()).getActivityComponent().inject(this);
-        getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
         mPresenter.attachView(this);
         initPlayer();
     }
@@ -236,6 +231,7 @@ public class DownloadTrackDisplayFragment extends Fragment implements DownloadTr
     }
 
     private void initListeners() {
+
         seekBar.setOnSeekBarChangeListener(new SeekBarChanged());
 
         previousButton.setOnClickListener(new View.OnClickListener() {

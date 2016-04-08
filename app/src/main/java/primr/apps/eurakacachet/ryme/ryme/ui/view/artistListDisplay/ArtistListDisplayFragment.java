@@ -73,12 +73,12 @@ public class ArtistListDisplayFragment extends Fragment implements ArtistListDis
 
     @Override
     public void setArtists(List<Artist> artists) {
+        mArtistListDisplayRecyclerView.setVisibility(View.VISIBLE);
         mAdapter.setArtistList(this, artists);
     }
 
     @Override
     public void showEmptyState() {
-        mArtistListDisplayRecyclerView.setVisibility(View.INVISIBLE);
         mFavoriteArtistEmptyState.setVisibility(View.VISIBLE);
     }
 

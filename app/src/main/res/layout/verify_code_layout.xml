@@ -25,10 +25,12 @@
             android:layout_height="match_parent">
 
             <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:theme="@style/MyProgress"
                 android:visibility="invisible"
                 android:id="@+id/loading_view"
                 android:layout_width="match_parent"
-                android:layout_height="5dp"/>
+                android:layout_height="10dp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -67,6 +69,7 @@
                 android:text="@string/notice_fail"/>
 
             <android.support.design.widget.TextInputLayout
+                app:hintTextAppearance="@style/MyHintText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/white_ash"
@@ -77,6 +80,8 @@
                 android:layout_marginStart="100dp"
                 android:layout_marginEnd="100dp">
                 <EditText
+                    android:fontFamily="roboto"
+                    android:theme="@style/MyEditText"
                     android:id="@+id/opt_code_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

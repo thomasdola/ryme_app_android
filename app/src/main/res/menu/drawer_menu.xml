@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:id="@+id/track_activity">
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/track_activity">
         <item
             android:id="@+id/home"
             android:title="@string/menu_inbox"
-            android:icon="@drawable/ic_action_home_blueblack"/>
+            android:icon="@drawable/menu_home_icon"/>
         <item
             android:id="@+id/categories"
-            android:icon="@drawable/ic_action_categories_blueblack"
+            android:icon="@drawable/menu_category_icon"
             android:title="@string/menu_categories"
             />
 
         <item
             android:id="@+id/favorites"
-            android:icon="@drawable/ic_action_like_fill_blueblack"
+            android:icon="@drawable/menu_favorite_icon"
             android:title="@string/menu_favorites"
             />
 
         <item
             android:id="@+id/downloads"
-            android:icon="@drawable/ic_action_downloads_blueblack"
+            android:icon="@drawable/menu_download_icon"
             android:title="@string/menu_downloads"
             />
     </group>
@@ -29,14 +31,14 @@
         <item
             android:id="@+id/upload"
             android:title="@string/upload_menu_title"
-            android:icon="@drawable/ic_action_upload_blueblack"/>
+            android:icon="@drawable/menu_upload_icon"/>
     </group>
 
     <group android:id="@+id/group_settings_id">
         <item
             android:id="@+id/main_settings"
             android:title="@string/settings_menu_title"
-            android:icon="@drawable/ic_action_settings_blueblack"/>
+            android:icon="@drawable/menu_setting_icon"/>
     </group>
 
 </menu>

@@ -93,6 +93,7 @@ public class ArtistTrackListDisplayFragment extends Fragment implements ArtistTr
 
     @Override
     public void setTrackList(List<Track> trackList) {
+        mArtistTracksDisplayRecyclerView.setVisibility(View.VISIBLE);
         mAdapter.setTracks(this, trackList, mIsArtistViewing);
         mAdapter.notifyDataSetChanged();
     }

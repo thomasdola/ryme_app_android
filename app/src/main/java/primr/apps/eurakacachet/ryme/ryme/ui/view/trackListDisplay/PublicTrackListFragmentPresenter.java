@@ -40,26 +40,28 @@ public class PublicTrackListFragmentPresenter extends BasePresenter<PublicTrackL
 
     public void refreshTrackStore(int type){
         checkViewAttached();
-        downloadTracks(type);
+        downloadTracks(type, false);
     }
 
-    public void downloadTracks(int type){
+    public void downloadTracks(int type, boolean showLoading){
         checkViewAttached();
         Log.d("main", "download tracks called ");
-        getMvpView().showLoading();
+        if(showLoading){
+            getMvpView().showLoading();
+        }
         HashMap<String, String> specs = new HashMap<>();
         if(type == PublicTrackListDisplayFragment.NEW_RELEASE){
             specs.put("type", "new");
-            loadPublicTracks(specs);
+            loadPublicTracks(specs, showLoading);
         }else if(type == PublicTrackListDisplayFragment.TRENDING){
             specs.put("type", "trending");
-            loadPublicTracks(specs);
+            loadPublicTracks(specs, showLoading);
         }else if(type == PublicTrackListDisplayFragment.FAVORITE){
-            loadFavoriteTracks();
+            loadFavoriteTracks(showLoading);
         }
     }
 
-    public void loadPublicTracks(HashMap<String, String> specs) {
+    public void loadPublicTracks(HashMap<String, String> specs, final boolean showLoading) {
         final String type = specs.get("type");
         mSubscription = mDataManager.getTracks(specs)
                 .subscribeOn(Schedulers.io())
@@ -75,10 +77,18 @@ public class PublicTrackListFragmentPresenter extends BasePresenter<PublicTrackL
                     public void onError(Throwable e) {
                         e.getMessage();
                         e.printStackTrace();
+                        if(!showLoading){
+                            getMvpView().hideRefreshLoading();
+                        }
                     }
 
                     @Override
                     public void onNext(List<Track> tracks) {
+                        if(showLoading){
+                            getMvpView().hideLoading();
+                        }else {
+                            getMvpView().hideRefreshLoading();
+                        }
                         if (tracks.isEmpty()) {
                             if(type.equals("new")){
                                 getMvpView().showNewTracksEmptyState();
@@ -92,7 +102,7 @@ public class PublicTrackListFragmentPresenter extends BasePresenter<PublicTrackL
                 });
     }
 
-    private void loadFavoriteTracks() {
+    private void loadFavoriteTracks(final boolean showLoading) {
         checkViewAttached();
         mSubscription = mDataManager.loadTracks()
                 .subscribeOn(Schedulers.io())
@@ -105,11 +115,21 @@ public class PublicTrackListFragmentPresenter extends BasePresenter<PublicTrackL
 
                     @Override
                     public void onError(Throwable e) {
+                        if(showLoading){
+                            getMvpView().hideLoading();
+                        }else {
+                            getMvpView().hideRefreshLoading();
+                        }
                         e.printStackTrace();
                     }
 
                     @Override
                     public void onNext(List<Track> tracks) {
+                        if(showLoading){
+                            getMvpView().hideLoading();
+                        }else {
+                            getMvpView().hideRefreshLoading();
+                        }
                         if(tracks.isEmpty()){
                             getMvpView().showFavoriteTracksEmptyState();
                         }else {

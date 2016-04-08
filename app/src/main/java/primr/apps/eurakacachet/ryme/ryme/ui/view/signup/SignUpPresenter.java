@@ -36,19 +36,20 @@ public class SignUpPresenter extends BasePresenter<SignUpMvpView> {
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void signUp(String username, String password, String dial_code, String phone_number){
+    public void signUp(String username, String password, String dial_code,
+                       String phone_number, int userGender){
         checkViewAttached();
         getMvpView().disableSignUpButton();
         getMvpView().disableFields();
         getMvpView().showLoading();
         updateUserPreferences(username, dial_code, phone_number);
         HashMap<String, String> payload =
-                getPayload(username, password, dial_code, phone_number);
+                getPayload(username, password, dial_code, phone_number, userGender);
         mDataManager.setUsername(username);
         mDataManager.setPassword(password);
         mDataManager.setPhone(dial_code+phone_number);
 
-        mDataManager.registerAttempt(payload)
+        mSubscription = mDataManager.registerAttempt(payload)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<AuthResponse>() {
@@ -81,12 +82,14 @@ public class SignUpPresenter extends BasePresenter<SignUpMvpView> {
     }
 
     @NonNull
-    public HashMap<String, String> getPayload(String username, String password, String dial_code, String phone_number) {
+    public HashMap<String, String> getPayload(String username, String password, String dial_code,
+                                              String phone_number, int user_gender) {
         HashMap<String , String> payload = new HashMap<>();
         payload.put("username", username);
         payload.put("password", password);
         payload.put("dial_code", dial_code);
         payload.put("phone_number", phone_number);
+        payload.put("gender", String.valueOf(user_gender));
         return payload;
     }
 

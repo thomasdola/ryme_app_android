@@ -3,7 +3,6 @@ package primr.apps.eurakacachet.ryme.ryme.ui.view.artist.profile;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -81,7 +80,7 @@ public class ArtistProfileActivity extends BaseActivity implements ArtistProfile
         mPresenter.loadCategoriesArray();
         initViews();
         initCollapsingToolbarLayout();
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
+//        getWindow().setStatusBarColor(Color.TRANSPARENT);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

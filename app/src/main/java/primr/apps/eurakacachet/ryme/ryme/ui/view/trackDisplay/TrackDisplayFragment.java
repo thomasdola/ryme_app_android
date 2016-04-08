@@ -1,8 +1,6 @@
 package primr.apps.eurakacachet.ryme.ryme.ui.view.trackDisplay;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -149,6 +147,7 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackFragmen
         getActivity().invalidateOptionsMenu();
         if (getArguments() != null) {
             mTrack = getArguments().getParcelable(ARG_TRACK);
+            if(mTrack != null) Log.d("track", "track -> " + mTrack.toString());
         }
     }
 
@@ -175,7 +174,6 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackFragmen
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -350,11 +348,6 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackFragmen
         }
     }
 
-    public void launchArtistProfileActivity() {
-        Intent intent = ArtistProfileActivity.newIntent(getActivity(), mTrack.artistId());
-        startActivity(intent);
-    }
-
     private void showCommentDialog(String trackId) {
         FragmentManager fragmentManager = getChildFragmentManager();
         AddCommentDialogFragment fragment = AddCommentDialogFragment.newInstance(trackId);
@@ -368,6 +361,7 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackFragmen
     }
 
     private void onStartTrackDownload() {
+        disableDownloadButton();
         final Track item = mTrack;
         final FileDownloadNotificationListener queueTarget = new
                 FileDownloadNotificationListener(notificationHelper) {
@@ -423,13 +417,9 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackFragmen
                         if(taskTag.equals(TRACK_DOWNLOAD_ID)){
                             String path = task.getPath();
                             mPresenter.saveTrack(mTrack, path);
-                            Toast.makeText(getContext(),
-                                    String.format("Mp3 => %s", path), Toast.LENGTH_SHORT).show();
                         }else if(taskTag.equals(COVER_DOWNLOAD_ID)){
                             String path = task.getPath();
                             mPresenter.updateSavedTrackWithCover(path, mTrack.uuid());
-                            Toast.makeText(getContext(),
-                                    String.format("Jpeg => %s", path), Toast.LENGTH_SHORT).show();
                         }
                         mDownloadProgressBar.setIndeterminate(false);
                         mDownloadProgressBar.setProgress(task.getSmallFileTotalBytes());
@@ -521,20 +511,20 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackFragmen
         mPlayLoadingFab.hide();
     }
 
-
     @Override
     public void toggleLikeButton() {
 
     }
 
+
     @Override
     public void disableDownloadButton() {
-
+        mDownloadTrackButton.setEnabled(false);
     }
 
     @Override
     public void enableDownloadButton() {
-
+        mDownloadTrackButton.setEnabled(true);
     }
 
     @Override
@@ -567,6 +557,15 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackFragmen
         }
     }
 
+    @Override
+    public void showDownloadSuccess() {
+        Toast.makeText(getContext(),"Track Downloaded.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showDownloadFailure() {
+        Toast.makeText(getContext(),"Downloading Failed.", Toast.LENGTH_SHORT).show();
+    }
 
     private void updateLikeButton(Boolean isLiked) {
         if(mMenu != null ){
@@ -578,6 +577,7 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackFragmen
             }
         }
     }
+
 
     @Override
     public void onPause() {
@@ -601,6 +601,9 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackFragmen
 
     private boolean setupPlaylistManager() {
         playlistManager = RymeApplication.getPCOnlinePlaylistManager();
+        Log.d("online", "setupPlaylistManager called");
+        Log.d("online", "local playlist id -> " + PLAYLIST_ID);
+        Log.d("online", "foreign playlist id -> " + playlistManager.getId());
         if (playlistManager.getId() == PLAYLIST_ID) {
             return false;
         }
@@ -608,7 +611,8 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackFragmen
 
         //First Ad
         if(mTrack.firstAd() != null){
-            PCOnlineAudioItemInterface audioAd1 = new PCOnlineAudioItemInterface(mTrack.firstAd(), mTrack.title(),
+            PCOnlineAudioItemInterface audioAd1 = new
+                    PCOnlineAudioItemInterface(mTrack.firstAd(), mTrack.title(),
                     mTrack.artist_name(), mTrack.cover());
             audioList.add(audioAd1);
         }
@@ -799,12 +803,6 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackFragmen
         return true;
     }
 
-//    public void setIsTrack(){
-//        if(playlistManager.getCurrentItem().getUuid().equals(mTrack.uuid())){
-//            mIsTrack = true;
-//        }
-//    }
-
     public void onTrackCompleted() {
         Log.d("playlist", "About to cancel mTrackProgressBar => 4");
         mTrackProgressBar.cancel();
@@ -818,6 +816,11 @@ public class TrackDisplayFragment extends Fragment implements PublicTrackFragmen
     private void setDuration(long duration) {
         Log.d("playlist", "About to set Max Duration mTrackProgressBar => 5");
         mTrackProgressBar.setMaxProgress((int) duration);
-        Log.d("adapter", "Total Duration (" + duration+ ") => " + TimeFormatUtil.formatMs(duration));
+        Log.d("adapter", "Total Duration (" + duration + ") => " + TimeFormatUtil.formatMs(duration));
+    }
+
+    public void launchArtistProfileActivity() {
+        Intent intent = ArtistProfileActivity.newIntent(getActivity(), mTrack.artistId());
+        startActivity(intent);
     }
 }

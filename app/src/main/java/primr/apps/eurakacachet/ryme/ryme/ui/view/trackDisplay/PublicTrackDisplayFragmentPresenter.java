@@ -183,8 +183,7 @@ public class PublicTrackDisplayFragmentPresenter extends BasePresenter<PublicTra
 
     public void saveTrack(Track track, String localPath) {
         checkViewAttached();
-        SavedTrack savedTrack = SavedTrack.newTrack(null,
-                track.uuid(), track.title(), track.artist_name(), localPath, null, null, "mp3");
+        SavedTrack savedTrack = prepareTrackData(track, localPath);
         mDataManager.saveDownloadedTrack(savedTrack)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<PutResult>() {
@@ -206,24 +205,23 @@ public class PublicTrackDisplayFragmentPresenter extends BasePresenter<PublicTra
                 });
     }
 
+    public SavedTrack prepareTrackData(Track track, String localPath) {
+        return SavedTrack.newTrack(null,
+                track.uuid(), track.title(), track.artist_name(), localPath,
+                track.duration(), null, "mp3");
+    }
+
     public void updateSavedTrackWithCover(final String cover, String uuid){
         checkViewAttached();
-        mDataManager.getSavedTrack(uuid)
-                .doOnError(new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        throwable.printStackTrace();
-                    }
-                }).take(1)
+        mSubscription = mDataManager.getSavedTrack(uuid)
+                .take(1)
                 .subscribe(new Action1<SavedTrack>() {
                     @Override
                     public void call(SavedTrack savedTrack) {
-                        SavedTrack track = SavedTrack.newTrack(savedTrack.id(), savedTrack.uuid(),
-                                savedTrack.title(), savedTrack.artist(), savedTrack.path(),
-                                savedTrack.duration(), cover, savedTrack.extention());
+                        SavedTrack track = prepareTrackDataWithCover(savedTrack, cover);
                         Log.d("adapter", "before track " + savedTrack.toString());
                         Log.d("adapter", "after track " + track.toString());
-                        mDataManager.updateTrackWithCover(track)
+                        mSubscription = mDataManager.updateTrackWithCover(track)
                                 .subscribe(new Subscriber<PutResult>() {
                                     @Override
                                     public void onCompleted() {
@@ -233,16 +231,25 @@ public class PublicTrackDisplayFragmentPresenter extends BasePresenter<PublicTra
                                     @Override
                                     public void onError(Throwable e) {
                                         e.printStackTrace();
+                                        getMvpView().enableDownloadButton();
+                                        getMvpView().showDownloadFailure();
                                     }
 
                                     @Override
                                     public void onNext(PutResult putResult) {
+                                        getMvpView().showDownloadSuccess();
                                         Timber.d(String.valueOf(putResult.wasUpdated()));
                                         Log.d("adapter", "track updated ? " + putResult.wasUpdated());
                                     }
                                 });
                     }
                 });
+    }
+
+    public SavedTrack prepareTrackDataWithCover(SavedTrack savedTrack, String cover) {
+        return SavedTrack.newTrack(savedTrack.id(), savedTrack.uuid(),
+                savedTrack.title(), savedTrack.artist(), savedTrack.path(),
+                savedTrack.duration(), cover, savedTrack.extention());
     }
 
     private LikedTrack makeLikedTrack(Track track) {

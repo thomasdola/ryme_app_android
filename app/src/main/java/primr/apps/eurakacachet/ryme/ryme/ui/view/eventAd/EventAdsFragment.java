@@ -98,6 +98,7 @@ public class EventAdsFragment extends Fragment implements EventAdsMvpView{
 
     @Override
     public void setEventAds(List<EventAd> ads) {
+        mEventRecyclerView.setVisibility(View.VISIBLE);
         Log.d("events", "setEventAds called with -> " + ads.toString());
         mAds = ads;
         mAdapter = new EventExpandableAdapter(getActivity(), prepareAds(ads));
@@ -108,7 +109,6 @@ public class EventAdsFragment extends Fragment implements EventAdsMvpView{
 
     @Override
     public void showEmpty() {
-        mEventRecyclerView.setVisibility(View.INVISIBLE);
         mEventsEmptyState.setVisibility(View.VISIBLE);
         Log.d("events", "showing empty state");
     }

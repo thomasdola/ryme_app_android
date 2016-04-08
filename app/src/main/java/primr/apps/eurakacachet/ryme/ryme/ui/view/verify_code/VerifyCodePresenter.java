@@ -2,7 +2,6 @@ package primr.apps.eurakacachet.ryme.ryme.ui.view.verify_code;
 
 
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import java.util.HashMap;
 
@@ -117,11 +116,10 @@ public class VerifyCodePresenter extends BasePresenter<VerifyCodeMvpView>{
 
     public void onSuccess(AuthResponse response) {
         getMvpView().updateVerificationState(DONE);
+        mDataManager.setIsVerified(true);
         mDataManager.setToken(response.token());
         mDataManager.setLogIn(true);
         getMvpView().stopLoading();
-        Log.d("auth", response.user.data().uuid());
-        Log.d("auth", response.token());
         getMvpView().launchFollowCategoryActivity();
     }
 
@@ -163,7 +161,6 @@ public class VerifyCodePresenter extends BasePresenter<VerifyCodeMvpView>{
             getMvpView().hideTimer();
             getMvpView().stopLoading();
             getMvpView().enableField();
-//            getMvpView().enableVerifyButton();
             getMvpView().showInstruction();
         }
     }

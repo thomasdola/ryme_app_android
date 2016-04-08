@@ -23,7 +23,7 @@
         <android.support.v7.preference.SwitchPreferenceCompat
             android:key="is_artist"
             android:icon="@drawable/ic_aside_button_fill_blueblack"
-            android:title="Are You an Artist?"
+            android:title="@string/is_musician_question_text"
             android:summary="If yes, put the switch on."/>
     </android.support.v7.preference.PreferenceCategory>
     <android.support.v7.preference.PreferenceCategory

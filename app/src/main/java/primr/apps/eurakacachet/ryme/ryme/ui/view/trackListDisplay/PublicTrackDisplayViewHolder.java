@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.curioustechizen.ago.RelativeTimeTextView;
+import com.devbrackets.android.exomedia.util.TimeFormatUtil;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -22,13 +22,13 @@ public class PublicTrackDisplayViewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener, PublicTrackDisplayViewHolderMvpView {
 
     @Inject PublicTrackDisplayViewHolderPresenter mPresenter;
-
     private PublicTrackListDisplayFragment mPublicTrackListDisplayFragment;
-    Picasso mPicasso;
 
+    Picasso mPicasso;
     ImageView mTrackCover;
-    TextView mTrackArtistAndTitleView;
-    RelativeTimeTextView mTrackReleaseDateView;
+    TextView mTrackArtistName;
+    TextView mTrackTitleView;
+    TextView mTrackDurationView;
     TextView mTrackStreamsView;
     TextView mTrackLikesView;
     TextView mTrackDownloads;
@@ -44,11 +44,12 @@ public class PublicTrackDisplayViewHolder extends RecyclerView.ViewHolder
         itemView.setOnClickListener(this);
         mPublicTrackListDisplayFragment = fragment;
         mTrackCover = (ImageView) itemView.findViewById(R.id.track_cover_avatar);
-        mTrackArtistAndTitleView = (TextView) itemView.findViewById(R.id.track_title_text_view);
-        mTrackReleaseDateView = (RelativeTimeTextView) itemView.findViewById(R.id.track_release_date_text_view);
+        mTrackTitleView = (TextView) itemView.findViewById(R.id.track_title_text_view);
+        mTrackDurationView = (TextView) itemView.findViewById(R.id.track_duration_text_view);
         mTrackStreamsView = (TextView) itemView.findViewById(R.id.info_track_stream_text);
         mTrackLikesView = (TextView) itemView.findViewById(R.id.info_track_favorite_text);
         mTrackDownloads = (TextView) itemView.findViewById(R.id.info_track_download_text);
+        mTrackArtistName = (TextView) itemView.findViewById(R.id.artist_name_view);
     }
 
 //    @Override
@@ -73,15 +74,12 @@ public class PublicTrackDisplayViewHolder extends RecyclerView.ViewHolder
         }else {
             mPicasso.load(R.drawable.wallpaper).into(mTrackCover);
         }
-        mTrackArtistAndTitleView.setText(getArtistAndTrackTitle(track));
-        mTrackReleaseDateView.setReferenceTime(track.released_date());
+        mTrackTitleView.setText(track.title());
+        mTrackDurationView.setText(TimeFormatUtil.formatMs(track.duration()));
         mTrackStreamsView.setText(Long.toString(track.streams()));
         mTrackLikesView.setText(Long.toString(track.likes()));
         mTrackDownloads.setText(Long.toString(track.downloads()));
-    }
-
-    private String getArtistAndTrackTitle(Track track) {
-        return track.artist_name() + " - " + track.title();
+        mTrackArtistName.setText(track.artist_name());
     }
 
     @Override

@@ -17,6 +17,7 @@ import primr.apps.eurakacachet.ryme.ryme.ui.view.followCategory.FollowCategoryAc
 import primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.signup.SignUpActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.trackDisplay.PublicTrackDisplayActivity;
+import primr.apps.eurakacachet.ryme.ryme.ui.view.verify_code.VerifyCodeActivity;
 
 public class SplashActivity extends BaseActivity implements SplashMvpView {
 
@@ -68,7 +69,7 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     public void launchMainActivity() {
         Log.d("share", "launchMainActivity called");
         Intent intent = MainActivity.newIntent(this);
-        overridePendingTransition(R.anim.activity_push_up_in, R.anim.activity_push_up_out);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
         startActivity(intent);
     }
 
@@ -76,7 +77,7 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     public void launchSignUpActivity() {
         Log.d("share", "launchSignUpActivity called");
         Intent intent = SignUpActivity.newIntent(this);
-        overridePendingTransition(R.anim.activity_push_up_in, R.anim.activity_push_up_out);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
         startActivity(intent);
     }
 
@@ -84,7 +85,7 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     public void launchFollowCategoryActivity() {
         Log.d("share", "launchFollowCategoryActivity called");
         Intent intent = FollowCategoryActivity.newIntent(this);
-        overridePendingTransition(R.anim.activity_push_up_in, R.anim.activity_push_up_out);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
         startActivity(intent);
     }
 
@@ -92,12 +93,20 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     public void launchPublicTrackDisplayActivity(String track_id) {
         Log.d("share", "launchPublicTrackDisplayActivity called");
         Intent intent = PublicTrackDisplayActivity.newIntent(this, track_id);
-        overridePendingTransition(R.anim.activity_push_up_in, R.anim.activity_push_up_out);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
         startActivity(intent);
     }
 
     @Override
     public void closeActivity() {
         finish();
+    }
+
+    @Override
+    public void launchVerifyCodeActivity() {
+        Log.d("share", "launchVerifyCodeActivity called");
+        Intent intent = VerifyCodeActivity.newIntent(this);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+        startActivity(intent);
     }
 }

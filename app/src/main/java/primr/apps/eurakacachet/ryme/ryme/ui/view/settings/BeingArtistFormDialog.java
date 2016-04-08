@@ -91,7 +91,7 @@ public class BeingArtistFormDialog extends DialogFragment{
                 .map(new Func1<CharSequence, Boolean>() {
                     @Override
                     public Boolean call(CharSequence charSequence) {
-                        return charSequence.toString().length() > 5;
+                        return charSequence.toString().trim().length() > 5;
                     }
                 }).distinctUntilChanged();
 

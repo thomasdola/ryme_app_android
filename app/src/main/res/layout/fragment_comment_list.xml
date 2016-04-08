@@ -27,15 +27,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
+            android:id="@+id/no_comment_empty_icon"
             android:src="@drawable/no_comments"
+            android:layout_marginBottom="8dp"
             android:layout_marginTop="150dp"
             android:layout_centerHorizontal="true"
             android:layout_width="100dp"
             android:layout_height="100dp"/>
 
         <TextView
+            android:layout_below="@id/no_comment_empty_icon"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="No Comments"
             android:gravity="center"/>
     </RelativeLayout>

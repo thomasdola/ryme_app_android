@@ -21,4 +21,6 @@ public interface PublicTrackListFragmentMvpView extends MvpView {
     void setMoreTracks(List<Track> moreTracks);
 
     void showFavoriteTracksEmptyState();
+
+    void hideRefreshLoading();
 }

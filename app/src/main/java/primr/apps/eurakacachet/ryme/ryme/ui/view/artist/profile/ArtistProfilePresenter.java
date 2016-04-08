@@ -219,6 +219,7 @@ public class ArtistProfilePresenter extends BasePresenter<ArtistProfileMvpView> 
                     @Override
                     public void onNext(Artist artist) {
                         if(artist == null){
+                            Log.d("artist", "artist -> null");
                             getMvpView().launchMainActivity();
                         }else {
                             Log.d("artist", artist.toString());

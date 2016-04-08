@@ -9,16 +9,19 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.devbrackets.android.exomedia.EMNotification;
 import com.devbrackets.android.exomedia.listener.EMAudioFocusCallback;
 import com.devbrackets.android.exomedia.service.EMPlaylistService;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.File;
+import java.util.Random;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.RymeApplication;
-import primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity;
+import primr.apps.eurakacachet.ryme.ryme.ui.view.offline.downloads.OfflineTrackListActivity;
 import primr.apps.eurakacachet.ryme.ryme.utils.player.dataInterface.OfflineAudioItemInterface;
 import primr.apps.eurakacachet.ryme.ryme.utils.player.manager.OfflinePlaylistManager;
 
@@ -62,7 +65,8 @@ public class OfflineAudioPlayerService extends EMPlaylistService<OfflineAudioIte
 
     @Override
     protected PendingIntent getNotificationClickPendingIntent() {
-        Intent intent = MainActivity.newIntent(getApplicationContext());
+        int position = getMediaPlaylistManager().getCurrentIndex();
+        Intent intent = OfflineTrackListActivity.newIntent(getApplicationContext());
         return PendingIntent.getActivity(getApplicationContext(), FOREGROUND_REQUEST_CODE,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
@@ -72,6 +76,31 @@ public class OfflineAudioPlayerService extends EMPlaylistService<OfflineAudioIte
         getMediaPlaylistManager().setCurrentIndex(0);
         seekToPosition = 0;
         startItemPlayback();
+    }
+
+    @Override
+    protected void performNext() {
+        seekToPosition = 0;
+        immediatelyPause = false;
+
+        getMediaPlaylistManager().next();
+        startItemPlayback();
+    }
+
+    @Override
+    protected void performShuffle() {
+        int position = getRandomPosition();
+        getMediaPlaylistManager().setCurrentIndex(position);
+        seekToPosition = 0;
+        immediatelyPause = false;
+        startItemPlayback();
+    }
+
+    private int getRandomPosition() {
+        Random random = new Random();
+        int min = 0;
+        int playlistSize = getMediaPlaylistManager().getPlayListSize();
+        return random.nextInt(playlistSize - min + 1) + min;
     }
 
     @Override
@@ -99,13 +128,52 @@ public class OfflineAudioPlayerService extends EMPlaylistService<OfflineAudioIte
     }
 
     @Override
+    protected void updateNotification() {
+        if (currentPlaylistItem == null || !notificationSetup || notificationHelper == null) {
+            return;
+        }
+
+        //Generate the notification state
+        EMNotification.NotificationMediaState mediaState = new EMNotification.NotificationMediaState();
+        mediaState.setNextEnabled(getMediaPlaylistManager().isNextAvailable());
+        mediaState.setPreviousEnabled(getMediaPlaylistManager().isPreviousAvailable());
+        mediaState.setPlaying(isPlaying());
+
+
+        //Update the big notification images
+        Bitmap bitmap = getLargeNotificationImage();
+        if (bitmap == null) {
+            bitmap = getDefaultLargeNotificationImage();
+        }
+
+        Bitmap secondaryImage = getLargeNotificationSecondaryImage();
+        if (secondaryImage == null) {
+            secondaryImage = getDefaultLargeNotificationSecondaryImage();
+        }
+
+        //Finish up the update
+        String title = currentPlaylistItem.getTitle();
+        String album = currentPlaylistItem.getAlbum();
+        String artist = currentPlaylistItem.getArtist();
+//        notificationHelper.setClickPendingIntent(getNotificationClickPendingIntent());
+        notificationHelper.updateNotificationInformation(title, album, artist, bitmap, secondaryImage, mediaState);
+    }
+
+    @Override
     protected void updateLargeNotificationImage(int size, OfflineAudioItemInterface playlistItem) {
-        mPicasso.load(new File(playlistItem.getThumbnailUrl())).into(notificationImageTarget);
+        mPicasso.load(new File(playlistItem.getArtworkUrl()))
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .resize(100, 100)
+                .centerCrop()
+                .into(notificationImageTarget);
     }
 
     @Override
     protected void updateLockScreenArtwork(OfflineAudioItemInterface playlistItem) {
-        mPicasso.load(new File(playlistItem.getArtworkUrl())).into(lockScreenImageTarget);
+        mPicasso.load(new File(playlistItem.getArtworkUrl()))
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .resize(100, 100)
+                .centerCrop().into(lockScreenImageTarget);
     }
 
     @Nullable

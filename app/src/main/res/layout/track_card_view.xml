@@ -1,153 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+
+<com.andexert.library.RippleView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="4dp"
-    android:layout_marginStart="4dp"
-    android:layout_marginEnd="4dp"
-    app:cardPreventCornerOverlap="false"
-    android:transitionName="@string/track_transition_string"
-    android:id="@+id/track_cv"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="58dp"
+    app:rv_color="@color/white"
+    app:rv_rippleDuration="100"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="53dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:padding="4dp"
+        android:id="@+id/track_cv"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <ImageView
-            android:layout_margin="2dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="fitCenter"
-            android:id="@+id/track_cover_avatar"
-            android:contentDescription="@null"
-            android:layout_marginEnd="8dp"
-            />
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:padding="4dp"
-            android:layout_height="match_parent">
+            android:layout_height="50dp"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:id="@+id/linearLayout">
+            <ImageView
+                android:src="@drawable/wallpaper"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                android:id="@+id/track_cover_avatar"
+                android:contentDescription="@null"
+                android:layout_marginEnd="8dp"
+                />
 
-                <RelativeLayout
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="3">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:id="@+id/track_info_view">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="3">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:gravity="start|center_vertical"
+                                android:text="Amen"
+                                android:textStyle="bold"
+                                android:singleLine="true"
+                                android:ellipsize="end"
+                                android:layout_width="0dp"
+                                android:layout_weight="7"
+                                android:layout_height="match_parent"
+                                android:textAllCaps="false"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:id="@+id/track_title_text_view"
+                                android:textColor="@color/white"/>
+
+
+                            <TextView
+                                android:text="2:30"
+                                android:singleLine="true"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="match_parent"
+                                android:textColor="@color/lightBlueBlack"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textSize="14sp"
+                                android:id="@+id/track_duration_text_view"
+                                android:gravity="start|center_vertical"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
 
                     <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:layout_height="0dp"
+                        android:layout_weight="2">
 
                         <TextView
-                            android:singleLine="true"
-                            android:ellipsize="end"
-                            android:layout_width="0dp"
-                            android:layout_weight="7"
-                            android:layout_height="wrap_content"
-                            android:textAllCaps="false"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:id="@+id/track_title_text_view"
-                            android:textColor="@color/blueBlack"/>
-
-
-                        <com.github.curioustechizen.ago.RelativeTimeTextView
+                            android:gravity="center_vertical"
+                            android:text="Pinana Pijo"
+                            android:textSize="12sp"
+                            android:textColor="@color/white_ash"
                             android:singleLine="true"
                             android:ellipsize="end"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/lighterBlueBlack"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textSize="10sp"
-                            android:id="@+id/track_release_date_text_view"
-                            android:gravity="end"/>
+                            android:id="@+id/artist_name_view"
+                            android:layout_height="match_parent"/>
+
+                        <RelativeLayout
+                            android:gravity="end"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="match_parent"
+                                android:id="@+id/info_track_stream"
+                                android:src="@drawable/ic_action_track_streams_info"
+                                android:layout_centerVertical="true"
+                                android:contentDescription="@null"/>
+
+                            <TextView
+                                android:gravity="center_vertical"
+                                android:text="20"
+                                android:textSize="12sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/white_ash"
+                                android:id="@+id/info_track_stream_text"
+                                android:layout_toEndOf="@+id/info_track_stream" />
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="match_parent"
+                                android:id="@+id/info_track_favorite"
+                                android:src="@drawable/ic_action_like_filled_whiteash"
+                                android:layout_marginStart="32dp"
+                                android:layout_toEndOf="@+id/info_track_stream_text"
+                                android:contentDescription="@null"/>
+
+                            <TextView
+                                android:gravity="center_vertical"
+                                android:text="20"
+                                android:textSize="12sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/white_ash"
+                                android:id="@+id/info_track_favorite_text"
+                                android:layout_alignBottom="@+id/info_track_stream_text"
+                                android:layout_toEndOf="@+id/info_track_favorite" />
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="match_parent"
+                                android:id="@+id/info_track_download"
+                                android:layout_alignBottom="@+id/info_track_stream"
+                                android:layout_toEndOf="@+id/info_track_favorite_text"
+                                android:layout_marginStart="32dp"
+                                android:src="@drawable/ic_action_downloads_whiteash"
+                                android:contentDescription="@null"/>
+
+                            <TextView
+                                android:gravity="center_vertical"
+                                android:text="20"
+                                android:textSize="12sp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/white_ash"
+                                android:id="@+id/info_track_download_text"
+                                android:layout_alignTop="@+id/info_track_favorite_text"
+                                android:layout_toEndOf="@+id/info_track_download" />
+
+                        </RelativeLayout>
 
                     </LinearLayout>
 
-                </RelativeLayout>
+                </LinearLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_weight="2"
-                    android:gravity="end">
+            </RelativeLayout>
 
-                    <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:id="@+id/info_track_stream"
-                        android:src="@drawable/ic_action_play_info_blueblack"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentStart="true"
-                        android:contentDescription="@null"/>
+        </LinearLayout>
 
-                    <TextView
-                        android:textSize="12sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/lighterBlueBlack"
-                        android:id="@+id/info_track_stream_text"
-                        android:layout_alignBottom="@+id/info_track_stream"
-                        android:layout_toEndOf="@+id/info_track_stream" />
+    </RelativeLayout>
 
-                    <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:id="@+id/info_track_favorite"
-                        android:src="@drawable/ic_action_like_fill_blueblack"
-                        android:layout_marginStart="32dp"
-                        android:layout_alignBottom="@+id/info_track_stream"
-                        android:layout_toEndOf="@+id/info_track_stream_text"
-                        android:contentDescription="@null"/>
-
-                    <TextView
-                        android:textSize="12sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/lighterBlueBlack"
-                        android:id="@+id/info_track_favorite_text"
-                        android:layout_alignBottom="@+id/info_track_stream_text"
-                        android:layout_toEndOf="@+id/info_track_favorite" />
-
-                    <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:id="@+id/info_track_download"
-                        android:layout_alignBottom="@+id/info_track_stream"
-                        android:layout_toEndOf="@+id/info_track_favorite_text"
-                        android:layout_marginStart="32dp"
-                        android:src="@drawable/ic_action_downloads_blueblack"
-                        android:contentDescription="@null"/>
-
-                    <TextView
-                        android:textSize="12sp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/lighterBlueBlack"
-                        android:id="@+id/info_track_download_text"
-                        android:layout_alignTop="@+id/info_track_favorite_text"
-                        android:layout_toEndOf="@+id/info_track_download" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-</android.support.v7.widget.CardView>
+</com.andexert.library.RippleView>

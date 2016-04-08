@@ -13,6 +13,7 @@ import rx.Subscriber;
 public class PreferencesHelper {
 
     public static final String PREF_FILE_NAME = "ryme_pref_file";
+    public static final String KEY_IS_VERIFIED = "is_verified";
     public static final String KEY_IS_LOGIN = "is_loggedIn";
     public static final String KEY_IS_READY = "is_ready";
     public static final String KEY_IS_ARTIST = "is_artist";
@@ -51,6 +52,17 @@ public class PreferencesHelper {
 
     public boolean isRequestActive(){
         return mPref.getBoolean(KEY_IS_REQUEST_ACTIVE, false);
+    }
+
+    public Observable<Boolean> isVerified(){
+        return Observable.just(
+                mPref.getBoolean(KEY_IS_VERIFIED, false)
+        );
+    }
+
+    public void setKeyIsVerified(boolean isVerified){
+        mPref.edit().putBoolean(KEY_IS_VERIFIED, isVerified)
+                .apply();
     }
 
     public String apiToken(){

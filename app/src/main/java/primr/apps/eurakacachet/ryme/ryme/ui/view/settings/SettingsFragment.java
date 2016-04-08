@@ -24,6 +24,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
         SharedPreferences.OnSharedPreferenceChangeListener{
 
     public static final int ARTIST_REQUEST_FORM_REQUEST_CODE = 2005;
+    public static final int NO_TOKEN_ERROR = 2;
+    public static final int ON_FAILURE = 3;
     @Inject SettingsFragmentPresenter mPresenter;
 
     SwitchPreferenceCompat mIsArtistSwitch;
@@ -97,20 +99,21 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
         FragmentManager fm = getFragmentManager();
         BeingArtistFormDialog formDialog = BeingArtistFormDialog.newInstance(mCategories);
         formDialog.setTargetFragment(this, ARTIST_REQUEST_FORM_REQUEST_CODE);
-        formDialog.show(fm, "being_artist_request_form");
+        formDialog.show(fm, "being_musician_request_form");
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode != Activity.RESULT_OK){
-            mIsArtistSwitch.setChecked(false);
-        }
         if(requestCode == ARTIST_REQUEST_FORM_REQUEST_CODE){
-            String stage_name = data.getStringExtra(BeingArtistFormDialog.EXTRA_STAGE_NAME);
-            String category = data.getStringExtra(BeingArtistFormDialog.EXTRA_CATEGORY);
-            mPresenter.sendRequest(stage_name, category);
-            Log.d("settings", "stage name => " + stage_name);
-            Log.d("settings", "artist category => " + category);
+            if(resultCode == Activity.RESULT_OK){
+                String stage_name = data.getStringExtra(BeingArtistFormDialog.EXTRA_STAGE_NAME);
+                String category = data.getStringExtra(BeingArtistFormDialog.EXTRA_CATEGORY);
+                mPresenter.sendRequest(stage_name, category);
+                Log.d("settings", "stage name => " + stage_name);
+                Log.d("settings", "artist category => " + category);
+            }else if(resultCode == Activity.RESULT_CANCELED) {
+                mIsArtistSwitch.setChecked(false);
+            }
         }
     }
 
@@ -149,8 +152,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     }
 
     @Override
-    public void disableArtistSwitch() {
-        mIsArtistSwitch.setEnabled(false);
+    public void hideArtistRequest() {
+        mIsArtistSwitch.setVisible(false);
     }
 
     @Override
@@ -178,8 +181,29 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     }
 
     @Override
-    public void showError() {
-        Toast.makeText(getActivity(), "Network error. Please Try again", Toast.LENGTH_SHORT).show();
+    public void showError(int code) {
+        String message = getErrorMessage(code);
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showSuccessDialog() {
+        FragmentManager fm = getFragmentManager();
+        RequestSuccessDialog formDialog = RequestSuccessDialog.newInstance();
+        formDialog.show(fm, "being_musician_request_successful");
+    }
+
+    private String getErrorMessage(int code) {
+        String message = null;
+        switch (code){
+            case NO_TOKEN_ERROR:
+                message = getString(R.string.no_token_available_text);
+                break;
+            case ON_FAILURE:
+                message = getString(R.string.please_try_again_text);
+                break;
+        }
+        return message;
     }
 
     @Override

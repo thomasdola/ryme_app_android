@@ -3,14 +3,14 @@
     <color name="orange">#FA0</color>
     <color name="colorPrimary">#607d8b</color>
     <!--<color name="colorPrimary">#FA0</color>-->
-    <color name="colorPrimaryDark">#455a64</color>
-    <color name="colorAccent">#00bcd4</color>
-    <color name="textColorPrimary">#212121</color>
-    <color name="windowBackground">#fafafa</color>
-    <color name="colorDivider">#b6b6b6</color>
-    <color name="colorSecondary">#79212121</color>
-    <color name="imageBlurFilter">#000000</color>
-    <color name="colorPrimaryLight">#cfd8dc</color>
+    <!--<color name="colorPrimaryDark">#455a64</color>-->
+    <!--<color name="colorAccent">#00bcd4</color>-->
+    <!--<color name="textColorPrimary">#212121</color>-->
+    <!--<color name="windowBackground">#fafafa</color>-->
+    <!--<color name="colorDivider">#b6b6b6</color>-->
+    <!--<color name="colorSecondary">#79212121</color>-->
+    <!--<color name="imageBlurFilter">#000000</color>-->
+    <!--<color name="colorPrimaryLight">#cfd8dc</color>-->
 
     <color name="redPink">#f0314a</color>
     <color name="blueBlack">#021f2d</color>
@@ -18,6 +18,7 @@
     <color name="lightBlueBlack">#17303c</color>
     <color name="lighterBlueBlack">#41545d</color>
     <color name="white_ash">#d4d6d7</color>
+    <color name="deep_color">#001016</color>
 
     <color name="white">#FFF</color>
     <color name="roange">#FDC749</color>

@@ -26,7 +26,6 @@ import primr.apps.eurakacachet.ryme.ryme.data.model.AddCommentResponse;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Artist;
 import primr.apps.eurakacachet.ryme.ryme.data.model.ArtistData;
 import primr.apps.eurakacachet.ryme.ryme.data.model.AuthResponse;
-import primr.apps.eurakacachet.ryme.ryme.data.model.CategoryToFU;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Comment;
 import primr.apps.eurakacachet.ryme.ryme.data.model.CommentsData;
 import primr.apps.eurakacachet.ryme.ryme.data.model.EventAd;
@@ -124,6 +123,19 @@ public class DataManager {
         return getPreferencesHelper().apiToken();
     }
 
+    public Observable<Boolean> isVerified(){
+        return Observable.defer(new Func0<Observable<Boolean>>() {
+            @Override
+            public Observable<Boolean> call() {
+                return mPreferencesHelper.isVerified();
+            }
+        });
+    }
+
+    public void setIsVerified(boolean isVerified){
+        mPreferencesHelper.setKeyIsVerified(isVerified);
+    }
+
     public boolean isAllowedToMakeRequest(){
         return getPreferencesHelper().isAllowedToMakeRequest();
     }
@@ -177,6 +189,7 @@ public class DataManager {
     }
 
     public void setReady(boolean isReady){
+        Log.d("following", "setting ready -> " + isReady);
         getPreferencesHelper().setIsReady(isReady);
     }
 
@@ -350,13 +363,18 @@ public class DataManager {
     }
 
     public Observable<Boolean> canUnfollow(){
-        return mStDatabaseHelper.getFollowedCategories()
-                .concatMap(new Func1<List<FollowedCategory>, Observable<? extends Boolean>>() {
-                    @Override
-                    public Observable<? extends Boolean> call(List<FollowedCategory> followedCategories) {
-                        return Observable.just(followedCategories.size() > 1);
-                    }
-                }).distinctUntilChanged().take(1);
+        return Observable.defer(new Func0<Observable<Boolean>>() {
+            @Override
+            public Observable<Boolean> call() {
+                return mStDatabaseHelper.getFollowedCategories()
+                        .concatMap(new Func1<List<FollowedCategory>, Observable<? extends Boolean>>() {
+                            @Override
+                            public Observable<? extends Boolean> call(List<FollowedCategory> followedCategories) {
+                                return Observable.just(followedCategories.size() > 1);
+                            }
+                        }).distinctUntilChanged().take(1);
+            }
+        });
     }
 
     public Observable<PutResult> saveFollowedCategory(final FollowedCategory category){
@@ -809,19 +827,19 @@ public class DataManager {
         });
     }
 
-    public void subToCategoryChannel(Category category) {
-        String name = category.name()+category.uuid();
-        String action = "follow";
-        CategoryToFU cat = CategoryToFU.newCat(name, action);
-        mEventPoster.postEventSafely(cat);
-    }
+//    public void subToCategoryChannel(Category category) {
+//        String name = category.name()+category.uuid();
+//        String action = "follow";
+//        CategoryToFU cat = CategoryToFU.newCat(name, action);
+//        mEventPoster.postEventSafely(cat);
+//    }
 
-    public void unsubFromCategoryChannel(Category category){
-        String name = category.name()+category.uuid();
-        String action = "unfollow";
-        CategoryToFU cat = CategoryToFU.newCat(name, action);
-        mEventPoster.postEventSafely(cat);
-    }
+//    public void unsubFromCategoryChannel(Category category){
+//        String name = category.name()+category.uuid();
+//        String action = "unfollow";
+//        CategoryToFU cat = CategoryToFU.newCat(name, action);
+//        mEventPoster.postEventSafely(cat);
+//    }
 
     public void subToArtistChannel(){}
 
@@ -902,7 +920,7 @@ public class DataManager {
         return Observable.defer(new Func0<Observable<ActionResponse>>() {
             @Override
             public Observable<ActionResponse> call() {
-                return mRymeService.uplaodTrack(payload);
+                return mRymeService.uploadTrack(payload);
             }
         });
     }

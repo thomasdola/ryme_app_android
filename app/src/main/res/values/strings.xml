@@ -8,7 +8,7 @@
     <string name="menu_favorites">Favorites</string>
     <string name="menu_categories">Categories</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sent_fragment">Hello Sent Fragment</string>
     <string name="primary_fragment">Hello Primary Fragment</string>
@@ -115,7 +115,7 @@
 
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="welcome_next_button">Sign Up</string>
-    <string name="purpose_text">Sign up to access unlimited musics.</string>
+    <string name="purpose_text">Sign up to the music catalogue.</string>
     <string name="sign_in_option">SIGN IN</string>
     <string name="join_button">Join</string>
     <string name="agreement_text">By Sign up, you agree to our Terms and Privacy Policy.</string>
@@ -156,7 +156,7 @@
     <string name="streams_view_test">2k</string>
     <string name="artist_track_title_view_test">Stone Boy - Pull Up ft Patoranky</string>
 
-    <string-array name="CountryCodes" >
+    <string-array name="CountryCodes">
         <item>+93</item>
         <item>+355</item>
         <item>+213</item>
@@ -364,183 +364,6 @@
         <item>+260</item>
         <item>+263</item>
     </string-array>
-    <string name="title_activity_just">JustActivity</string>
-
-    <!--<string name="app_name">Materialistic</string>-->
-    <!--<string name="action_settings">Settings</string>-->
-    <string name="title_activity_list">Top Stories</string>
-    <string name="title_activity_item">Comments</string>
-    <string name="filter_title_item">Materialistic</string>
-    <string name="loading_text">...</string>
-    <string name="title_activity_web">Story</string>
-    <string name="open_drawer">Open drawer</string>
-    <string name="close_drawer">Close drawer</string>
-    <string name="view_in_browser">View in external browser</string>
-    <string name="favorite_email_subject">Your Materialistic saved stories</string>
-    <string name="share">Share</string>
-    <string name="title_activity_about">About</string>
-    <string name="license_title">License</string>
-    <string name="license_text">
-        <![CDATA[
-            <p>Copyright 2015 Ha Duy Trung</p>
-            <p>Licensed under the Apache License, Version 2.0 (the "License");
-            you may not use this file except in compliance with the License.
-            You may obtain a copy of the License at</p>
-            <p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
-            <p>Unless required by applicable law or agreed to in writing, software
-            distributed under the License is distributed on an "AS IS" BASIS,
-            WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-            See the License for the specific language governing permissions and
-            limitations under the License.</p>
-        ]]>
-    </string>
-    <string name="developer_info_title">Developer Info</string>
-    <string name="developer_info_text">
-        <![CDATA[
-            <p>Ha Duy Trung</p>
-            <p><a href="https://twitter.com/hadt">@hadt</a></p>
-            <p><a href="https://github.com/hidroh">Github</a></p>
-            <p><a href="https://hidroh.github.io">Blog</a></p>
-        ]]>
-    </string>
-    <string name="application_info_title">Application Info</string>
-    <string name="application_info_text" formatted="false">
-        <![CDATA[
-            <p>Version: %s</p>
-            <p>This application is open source at <a href="https://github.com/hidroh/materialistic">github.com/hidroh/materialistic</a></p>
-        ]]>
-    </string>
-    <string name="libraries_title">Libraries</string>
-    <string name="libraries_text">
-        <![CDATA[
-            <p><a href="https://github.com/square/retrofit">Square Retrofit</a></p>
-            <p><a href="https://github.com/square/okhttp">Square OkHttp</a></p>
-            <p><a href="https://github.com/square/picasso">Square Picasso</a></p>
-            <p><a href="https://github.com/square/dagger">Square Dagger</a></p>
-            <p><a href="http://developer.android.com/tools/support-library/index.html">Android Support</a></p>
-            <p><a href="https://github.com/algolia/hn-search">algolia/hn-search</a></p>
-            <p><a href="https://www.readability.com/developers/api/parser">Readability Parser API</a></p>
-        ]]>
-    </string>
-    <string name="title_activity_favorite">Saved Stories</string>
-    <string name="saved" formatted="false">Saved %s</string>
-    <string name="toast_saved">Story saved!</string>
-    <string name="clear_all">Clear all</string>
-    <string name="toast_removed">Story unsaved</string>
-    <string name="no_saved_stories">No saved stories so far.\nLong press one to save it for later!</string>
-    <string name="no_comments">No comments found for this item</string>
-    <string name="confirm_clear">Clear all saved stories?</string>
-    <string name="email">Export via email</string>
-    <string name="preparing">Preparing...</string>
-    <string name="clear_selected">Clear selected</string>
-    <string name="confirm_clear_selected">Clear selected saved stories?</string>
-    <string name="search">Search</string>
-    <string name="hint_search_saved_stories">Search saved stories</string>
-    <string name="no_stories_search">No stories found matching your query</string>
-
-    <!-- preferences -->
-    <string name="pref_category_reading">Reading</string>
-    <string name="pref_category_search">Search</string>
-    <string name="pref_external">pref_external</string>
-    <string name="pref_external_title">Use external browser</string>
-    <string name="pref_external_summary">Read articles in external browser</string>
-    <string name="pref_color_code">pref_color_code</string>
-    <string name="pref_color_code_title">Color code comments</string>
-    <string name="pref_color_code_summary">Apply visual indicator to comments</string>
-    <string name="pref_highlight_updated">pref_highlight_updated</string>
-    <string name="pref_highlight_updated_title">Highlight updated stories</string>
-    <string name="pref_highlight_updated_summary">Show changes from last refresh</string>
-    <string name="pref_custom_tab">pref_custom_tab</string>
-    <string name="pref_custom_tab_title">Use custom Chrome tab (beta)</string>
-    <string name="pref_custom_tab_summary">Open Chrome tab instead of browser</string>
-    <string name="pref_item_click">pref_item_click</string> <!-- deprecated -->
-    <string name="pref_story_display">pref_story_display</string>
-    <string name="pref_story_display_title">Default story display</string>
-    <string name="pref_dark_theme">pref_dark_theme</string> <!-- deprecated -->
-    <string name="pref_theme">pref_theme</string>
-    <string name="pref_theme_title">Theme</string>
-    <string name="pref_item_search_recent">pref_item_search_recent</string> <!-- deprecated -->
-    <string name="pref_search_sort">pref_search_sort</string>
-    <string name="pref_search_sort_title">Sort by</string>
-    <string name="pref_text_size">pref_text_size</string>
-    <string name="pref_text_size_title">Font size</string>
-    <string name="pref_comment_display">pref_comment_display</string>
-    <string name="pref_comment_display_title">Comments and replies</string>
-    <string name="pref_popular_range">pref_popular_range</string>
-    <string name="pref_highlight_updated_help">pref_highlight_updated_help</string>
-
-    <string name="connection_error">Unable to connect to Hacker News. Check your connection or try again.</string>
-    <string name="select_story">Select a story to view</string>
-    <string name="download_external">View this file in another app</string>
-    <string name="try_me">try me!</string>
-    <string name="title_activity_jobs">Jobs</string>
-    <string name="title_activity_show">Show HN</string>
-    <string name="title_activity_ask">Ask HN</string>
-    <string name="title_activity_new">New Stories</string>
-    <string name="title_activity_search">Search HN</string>
-    <string name="clear_search_history">Clear search history</string>
-    <string name="clear_search_history_confirm">Clear search history?</string>
-    <string name="hide_comments" formatted="false">Hide comments (%s)</string>
-    <string name="show_comments" formatted="false">Show comments (%s)</string>
-    <string name="posted_reply" formatted="false">
-        <![CDATA[
-            %s <a href="#">in response to %s</a>
-        ]]>
-    </string>
-    <string name="undo">Undo</string>
-    <string name="score" formatted="false">%s pts</string>
-    <string name="comments">Comments</string>
-    <string name="comments_count" formatted="false">%s Comments</string>
-    <string name="article">Article</string>
-    <string name="fab_scrolling_view_behavior" translatable="false">io.github.hidroh.materialistic.ScrollAwareFABBehavior</string>
-    <string name="reset_settings">Reset all settings</string>
-    <string name="reset_settings_confirm">Reset all your preferences to app defaults?</string>
-    <string name="last_updated" formatted="false">Last updated %s</string>
-    <string name="feedback">Feedback</string>
-    <string name="send_feedback">Send Feedback</string>
-    <string name="title_hint">Title</string>
-    <string name="comment_hint">Comment</string>
-    <string name="feedback_note">Your feedback will be made public as a Materialistic Github issue.</string>
-    <string name="title_required">Title is required</string>
-    <string name="comment_required">Comment is required</string>
-    <string name="feedback_sent">Feedback sent. Thank you!</string>
-    <string name="feedback_failed">Failed to send, please try again</string>
-    <string name="chooser_title">Open with</string>
-    <string name="title_activity_popular">What\'s Hot</string>
-    <string name="range">Range</string>
-    <string name="popular_range_last_24h">Last 24h</string>
-    <string name="popular_range_past_week">Past week</string>
-    <string name="popular_range_past_month">Past month</string>
-    <string name="popular_range_past_year">Past year</string>
-    <string name="new_stories_count" formatted="false">%s new stories</string>
-    <string name="show_me">Show me</string>
-    <string name="showing_new_stories">Showing %s new stories</string>
-    <string name="show_all">Show all</string>
-    <string name="whats_this">What\'s this?</string>
-    <string name="got_it">Got it</string>
-    <string name="help_new_story">New story since last refresh</string>
-    <string name="help_promoted_story">Promoted story since last refresh</string>
-    <string name="help_new_comments">Story with new comments since last refresh</string>
-    <string name="readability">Readability</string>
-    <string name="text_size_extra_small">Extra small</string>
-    <string name="text_size_small">Small</string>
-    <string name="text_size_medium">Medium</string>
-    <string name="text_size_large">Large</string>
-    <string name="text_size_extra_large">Extra large</string>
-    <string name="readability_failed">Unable to parse article</string>
-    <string name="try_again">Try again</string>
-    <string name="theme_light">Light</string>
-    <string name="theme_dark">Dark</string>
-    <string name="comment_display_multiple">Multiple pages</string>
-    <string name="comment_display_single">Single page - auto expand</string>
-    <string name="comment_display_collapsed">Single page - collapsed</string>
-    <string name="story_display_article">Article</string>
-    <string name="story_display_comments">Comments</string>
-    <string name="search_sort_recent">More recent</string>
-    <string name="search_sort_popularity">Popularity</string>
-    <string name="story_display_readability">Readability</string>
-    <string name="title_activity_new_settings">Settings</string>
-
 
     <string-array name="colors">
         <item name="blueBlack">#021f2d</item>
@@ -553,22 +376,39 @@
     <string name="upload_menu_title">Uploads</string>
     <string name="settings_menu_title">Settings</string>
     <string name="title_activity_just_layout">Register</string>
-    <string name="moveForward">Let\'s Move Forward, The world is awaiting...</string>
+    <string name="moveForward">Let\'s Move Forward, The world is awaiting…</string>
     <string name="unfollowText">unfollow</string>
     <string name="followText">follow</string>
     <string name="profileText">" Profile"</string>
     <string name="errorWhileLoadingTheTrackMessage">"Network error, Please check your internet connection."</string>
-    <string name="pin_changepin_title">beign artist</string>
+    <string name="pin_changepin_title">being musician</string>
     <string name="terms_of_being_artist">
-        "Component elevations.\n\n"
+        "-> Must Read.\n\n"
 
-        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
-        "does not vary from 6dp in one app to 16dp in another app).\n"
-        "Components may have different resting elevations across platforms, depending on the depth "
-        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
+        "-> This feature is intended only for people who either own music content
+        for digital distribution or are Musician.\n"
+
+        "-> Your Approval as a Musician on the platform is solely by you having 100
+        people endorsing within a period of 14 days (2 weeks) upon making the request.\n"
+
+        "-> By Making this Request you agree to our Terms and Conditions.\n"
     </string>
+
+    <string name="what_to_do_within_pending_moment">
+        "-> How can people endorse ?\n\n"
+
+        "-> They have to search to search for you on the platform by your \"Stage name\",\n"
+
+        "-> And confirm they know you as Musician.\n"
+
+        "-> Remember, Your Approval as a Musician on the platform is solely by you having 100
+        people endorsing within a period of 14 days (2 weeks) upon making the request.\n"
+
+        "-> Good Luck.\n"
+    </string>
+
     <string name="artist_request_form_title">Artist Request</string>
-    <string name="uploading_track_text">Uploading...</string>
+    <string name="uploading_track_text">Uploading…</string>
     <string name="enter_code_instruction">Kindly Enter Code.</string>
     <string name="category_text_hint">Category</string>
     <string name="stage_name_text_hint">Stage Name</string>
@@ -587,12 +427,12 @@
     <string name="view_artist_profile_text">View Artist Profile</string>
     <string name="post_text">post</string>
     <string name="cancel_text">cancel</string>
-    <string name="please_wait_text">Please Wait...</string>
+    <string name="please_wait_text">Please Wait…</string>
     <string name="upload_text">Upload</string>
     <string name="track_title_text">Track Title</string>
     <string name="category_text">Category</string>
     <string name="any_featurings_text">Any Featuring(s) on this Track?</string>
-    <string name="artists_names_text">Artists Names...</string>
+    <string name="artists_names_text">Artists Names…</string>
     <string name="track_cover_text">Track Cover</string>
     <string name="released_date_text">Released Date :</string>
     <string name="pick_date_text">Pick Date</string>
@@ -600,6 +440,12 @@
     <string name="select_track_text">Select the track</string>
     <string name="submit_text">Submit</string>
     <string name="please_try_again_text">Network error. please check your internet and try again.</string>
+    <string name="female_text">Female</string>
+    <string name="male_text">Male</string>
+    <string name="gender_text">Gender</string>
+    <string name="no_token_available_text">Please check your Google Account, and try again.</string>
+    <string name="is_musician_question_text">Are You an Musician?</string>
+    <string name="ok_text">OK</string>
 
     <array name="loading_colors">
         <item>#ffdd2c00</item>
@@ -607,5 +453,7 @@
         <item name="md_pink_A400">#fff50057</item>
         <item name="md_cyan_A700">#ff00b8d4</item>
     </array>
+    <string name="title_activity_offline_track_list">OfflineTrackListActivity</string>
+    <string name="downloads_text">Downloads</string>
 
 </resources>

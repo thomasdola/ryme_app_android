@@ -6,7 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <primr.apps.eurakacachet.ryme.ryme.utils.helpers.layout.AutoFitRecyclerView
-        android:visibility="visible"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/blueBlack"
@@ -14,21 +14,32 @@
 
     </primr.apps.eurakacachet.ryme.ryme.utils.helpers.layout.AutoFitRecyclerView>
 
+    <ProgressBar
+        android:visibility="invisible"
+        android:layout_centerInParent="true"
+        android:id="@+id/loading_progress_bar"
+        style="?android:progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <RelativeLayout
         android:visibility="invisible"
         android:id="@+id/favorite_artist_list_empty_state"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
+            android:id="@+id/no_favorite_artist_empty_icon"
             android:src="@drawable/no_favorites"
+            android:layout_marginBottom="8dp"
             android:layout_marginTop="150dp"
             android:layout_centerHorizontal="true"
             android:layout_width="100dp"
             android:layout_height="100dp"/>
 
         <TextView
+            android:layout_below="@id/no_favorite_artist_empty_icon"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="No Favorite Artists"
             android:gravity="center"/>
     </RelativeLayout>

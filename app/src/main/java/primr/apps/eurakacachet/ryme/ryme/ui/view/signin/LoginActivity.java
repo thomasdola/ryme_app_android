@@ -3,6 +3,7 @@ package primr.apps.eurakacachet.ryme.ryme.ui.view.signin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
+
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -47,6 +50,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView{
     }
 
     private void initListeners() {
+        final Pattern no_space = Pattern.compile("[^\\s-]");
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,16 +69,32 @@ public class LoginActivity extends BaseActivity implements LoginMvpView{
                 .map(new Func1<CharSequence, Boolean>() {
                     @Override
                     public Boolean call(CharSequence charSequence) {
-                        return charSequence.length() >= 8;
+                        return charSequence.toString().trim().length() >= 8;
+//                                && no_space.matcher(charSequence).matches();
                     }
-                }).distinctUntilChanged();
+                }).distinctUntilChanged()
+                .map(new Func1<Boolean, Boolean>() {
+                    @Override
+                    public Boolean call(Boolean isValid) {
+                        updateTextView(isValid, mUsernameEdit);
+                        return isValid;
+                    }
+                });
+
         Observable<Boolean> passwordObservable = RxTextView.textChanges(mPasswordEdit)
                 .map(new Func1<CharSequence, Boolean>() {
                     @Override
                     public Boolean call(CharSequence charSequence) {
-                        return charSequence.length() >= 10;
+                        return charSequence.toString().trim().length() >= 10;
                     }
-                }).distinctUntilChanged();
+                }).distinctUntilChanged()
+                .map(new Func1<Boolean, Boolean>() {
+                    @Override
+                    public Boolean call(Boolean isValid) {
+                        updateTextView(isValid, mPasswordEdit);
+                        return isValid;
+                    }
+                });
 
         Observable.combineLatest(usernameObservable,
                 passwordObservable, new Func2<Boolean, Boolean, Boolean>() {
@@ -159,5 +179,15 @@ public class LoginActivity extends BaseActivity implements LoginMvpView{
     public void launchMainActivity() {
         Intent intent = MainActivity.newIntent(this);
         startActivity(intent);
+    }
+
+    private void updateTextView(Boolean isValid, TextView textView){
+        if (!isValid) {
+            textView.setTextColor(ContextCompat
+                    .getColor(LoginActivity.this, R.color.redPink));
+        }else {
+            textView.setTextColor(ContextCompat
+                    .getColor(LoginActivity.this, R.color.white_ash));
+        }
     }
 }

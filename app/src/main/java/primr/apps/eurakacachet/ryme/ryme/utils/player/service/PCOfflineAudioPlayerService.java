@@ -13,12 +13,16 @@ import android.support.annotation.Nullable;
 import com.devbrackets.android.playlistcore.api.AudioPlayerApi;
 import com.devbrackets.android.playlistcore.helper.AudioFocusHelper;
 import com.devbrackets.android.playlistcore.service.BasePlaylistService;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.io.File;
+import java.util.Random;
+
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.RymeApplication;
-import primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity;
+import primr.apps.eurakacachet.ryme.ryme.ui.view.offline.downloads.OfflineTrackListActivity;
 import primr.apps.eurakacachet.ryme.ryme.utils.player.dataInterface.PCOfflineAudioItemInterface;
 import primr.apps.eurakacachet.ryme.ryme.utils.player.helpers.AudioApi;
 import primr.apps.eurakacachet.ryme.ryme.utils.player.manager.PCOfflinePlaylistManager;
@@ -27,8 +31,8 @@ public class PCOfflineAudioPlayerService extends
         BasePlaylistService<PCOfflineAudioItemInterface, PCOfflinePlaylistManager>
         implements AudioFocusHelper.AudioFocusCallback{
 
-    private static final int NOTIFICATION_ID = 11111; //Arbitrary
-    private static final int FOREGROUND_REQUEST_CODE = 22222; //Arbitrary
+    private static final int NOTIFICATION_ID = 11111;
+    private static final int FOREGROUND_REQUEST_CODE = 22222;
     private static final float AUDIO_DUCK_VOLUME = 0.1f;
 
     private Bitmap defaultLargeNotificationImage;
@@ -47,6 +51,46 @@ public class PCOfflineAudioPlayerService extends
     }
 
     @Override
+    protected void performShuffle() {
+        int position = getRandomPosition();
+        getPlaylistManager().setCurrentPosition(position);
+        seekToPosition = 0;
+        immediatelyPause = false;
+        startItemPlayback();
+    }
+
+    private int getRandomPosition() {
+        Random random = new Random();
+        int min = 0;
+        int playlistSize = getPlaylistManager().getItemCount();
+        return random.nextInt(playlistSize - min + 1) + min;
+    }
+
+    @Override
+    protected void performNext() {
+        seekToPosition = 0;
+        immediatelyPause = false;
+
+        getPlaylistManager().next();
+        startItemPlayback();
+    }
+
+    @Override
+    protected void performRepeat() {
+        getPlaylistManager().setCurrentPosition(0);
+        seekToPosition = 0;
+        startItemPlayback();
+    }
+
+    @Override
+    protected void performOnMediaCompletion() {
+        if(getPlaylistManager().isNextAvailable()){
+            performNext();
+        }
+        performRepeat();
+    }
+
+    @Override
     protected int getNotificationId() {
         return NOTIFICATION_ID;
     }
@@ -54,7 +98,7 @@ public class PCOfflineAudioPlayerService extends
     @NonNull
     @Override
     protected PendingIntent getNotificationClickPendingIntent() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = OfflineTrackListActivity.newIntent(getApplicationContext());
         return PendingIntent.getActivity(getApplicationContext(),
                 FOREGROUND_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
@@ -98,12 +142,20 @@ public class PCOfflineAudioPlayerService extends
 
     @Override
     protected void updateLargeNotificationImage(int size, PCOfflineAudioItemInterface playlistItem) {
-        picasso.load(playlistItem.getThumbnailUrl()).into(notificationImageTarget);
+        picasso.load(new File(playlistItem.getArtworkUrl()))
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .resize(100, 100)
+                .centerCrop()
+                .into(notificationImageTarget);
     }
 
     @Override
     protected void updateRemoteViewArtwork(PCOfflineAudioItemInterface playlistItem) {
-        picasso.load(playlistItem.getArtworkUrl()).into(lockScreenImageTarget);
+        picasso.load(new File(playlistItem.getArtworkUrl()))
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .resize(100, 100)
+                .centerCrop()
+                .into(lockScreenImageTarget);
     }
 
     @Nullable

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.andexert.library.RippleView
+    android:layout_width="match_parent"
+    android:layout_height="58dp"
+    app:rv_color="@color/white"
+    app:rv_rippleDuration="100"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="4dp"
+        android:id="@+id/track_cv"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:src="@drawable/wallpaper"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                android:id="@+id/track_cover_avatar"
+                android:contentDescription="@null"
+                android:layout_marginEnd="8dp"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:id="@+id/track_info_view">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="3">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:gravity="start|center_vertical"
+                                android:text="Amen"
+                                android:textStyle="bold"
+                                android:singleLine="true"
+                                android:ellipsize="end"
+                                android:layout_width="0dp"
+                                android:layout_weight="7"
+                                android:layout_height="match_parent"
+                                android:textAllCaps="false"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:id="@+id/track_title_text_view"
+                                android:textColor="@color/white"/>
+
+
+                            <TextView
+                                android:text="2:30"
+                                android:singleLine="true"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="match_parent"
+                                android:textColor="@color/white_ash"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textSize="14sp"
+                                android:id="@+id/track_duration_text_view"
+                                android:gravity="start|bottom"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2">
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:text="Pinana Pijo"
+                            android:textSize="12sp"
+                            android:textColor="@color/white_ash"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:layout_width="match_parent"
+                            android:id="@+id/artist_name_view"
+                            android:layout_height="match_parent"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</com.andexert.library.RippleView>

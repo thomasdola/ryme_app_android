@@ -14,4 +14,6 @@ public interface SplashMvpView extends MvpView {
     void launchPublicTrackDisplayActivity(String track_id);
 
     void closeActivity();
+
+    void launchVerifyCodeActivity();
 }

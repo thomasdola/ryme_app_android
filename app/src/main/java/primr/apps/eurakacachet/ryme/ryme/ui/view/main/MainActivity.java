@@ -9,6 +9,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
@@ -38,7 +39,7 @@ import primr.apps.eurakacachet.ryme.ryme.ui.view.artist.profile.ArtistProfileAct
 import primr.apps.eurakacachet.ryme.ryme.ui.view.category.inApp.StoredCategoriesFragment;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.crop.CropImageActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.favorite.FavoritesFragment;
-import primr.apps.eurakacachet.ryme.ryme.ui.view.offline.downloads.DownloadsFragment;
+import primr.apps.eurakacachet.ryme.ryme.ui.view.offline.downloads.OfflineTrackListActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.settings.SettingsActivity;
 import primr.apps.eurakacachet.ryme.ryme.utils.helpers.image_effect.LetterImageView;
 
@@ -198,10 +199,11 @@ public class MainActivity extends BaseActivity implements MainMvpView{
     }
 
     private void selectDrawerItem(MenuItem item) {
-        mDrawerLayout.closeDrawers();
         FragmentManager drawerFragmentManager = getSupportFragmentManager();
+        Fragment fragment = drawerFragmentManager.findFragmentById(R.id.containerView);
         FragmentTransaction drawerFragmentTransaction = drawerFragmentManager.beginTransaction();
         drawerFragmentTransaction.setCustomAnimations(R.anim.activity_in, R.anim.activity_out);
+        mDrawerLayout.closeDrawers();
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.categories:
@@ -217,8 +219,10 @@ public class MainActivity extends BaseActivity implements MainMvpView{
                         .commit();
                 break;
             case R.id.downloads:
-                drawerFragmentTransaction.replace(R.id.containerView, DownloadsFragment.newInstance())
-                        .commit();
+//                drawerFragmentTransaction.replace(R.id.containerView, DownloadsFragment.newInstance())
+//                        .commit();
+                Intent downloadIntent = OfflineTrackListActivity.newIntent(this);
+                startActivity(downloadIntent);
                 break;
             case R.id.upload:
                 Intent uploadsIntent = ArtistProfileActivity.newIntent(this, mUserId);
@@ -235,7 +239,7 @@ public class MainActivity extends BaseActivity implements MainMvpView{
 
         }
 
-        item.setChecked(true);
+//        item.setChecked(true);
         if( itemId != R.id.main_settings){
             mToolbar.setTitle(item.getTitle());
         }
@@ -330,6 +334,15 @@ public class MainActivity extends BaseActivity implements MainMvpView{
     }
 
     @Override
+    public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        }else{
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public void hidePhotoAvatarView() {
         mHeaderPhotoAvatar.setVisibility(View.GONE);
         mHeaderLetterAvatar.setVisibility(View.VISIBLE);
@@ -364,4 +377,10 @@ public class MainActivity extends BaseActivity implements MainMvpView{
         mHeaderLetterAvatar.setVisibility(View.GONE);
         mHeaderPhotoAvatar.setVisibility(View.VISIBLE);
     }
+
+//    @Override
+//    public boolean onNavigationItemSelected(MenuItem item) {
+//        selectDrawerItem(item);
+//        return true;
+//    }
 }

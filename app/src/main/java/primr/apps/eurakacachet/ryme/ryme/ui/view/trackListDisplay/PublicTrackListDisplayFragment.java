@@ -18,6 +18,7 @@ import javax.inject.Inject;
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.data.model.Track;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
+import primr.apps.eurakacachet.ryme.ryme.utils.helpers.layout.DividerItemDecorator;
 import primr.apps.eurakacachet.ryme.ryme.utils.helpers.layout.EndlessRecyclerViewScrollListener;
 
 public class PublicTrackListDisplayFragment extends Fragment implements PublicTrackListFragmentMvpView {
@@ -69,6 +70,9 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
         View rootView = inflater.inflate(R.layout.fragment_public_track_list_display, container, false);
         initViews(rootView);
 
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecorator(getContext(),
+                R.drawable.track_list_divider);
+        mRecyclerView.addItemDecoration(itemDecoration);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         return rootView;
@@ -87,6 +91,7 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
                 refresh();
             }
         });
+
         mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
@@ -101,10 +106,12 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
         mFavoriteTracksEmptyState = (RelativeLayout) rootView.findViewById(R.id.favorite_track_list_empty_state);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.loading_progress_bar);
         mSwipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
-        mSwipeContainer.setColorSchemeColors(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+        mSwipeContainer.setColorSchemeResources(
+                R.color.redPink,
+                R.color.blueBlack,
+                R.color.lightBlueBlack,
+                R.color.lighterBlueBlack
+        );
         mRecyclerView = (RecyclerView) rootView.
                 findViewById(R.id.public_track_list_display_recycler_view);
     }
@@ -114,7 +121,7 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
         super.onActivityCreated(savedInstanceState);
         ((BaseActivity)getActivity()).getActivityComponent().inject(this);
         mPresenter.attachView(this);
-        mPresenter.downloadTracks(mType);
+        mPresenter.downloadTracks(mType, true);
         mRecyclerView.setAdapter(mDisplayAdapter);
         initListeners();
     }
@@ -189,5 +196,10 @@ public class PublicTrackListDisplayFragment extends Fragment implements PublicTr
     public void showFavoriteTracksEmptyState() {
         mRecyclerView.setVisibility(View.GONE);
         mFavoriteTracksEmptyState.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideRefreshLoading() {
+        mSwipeContainer.setRefreshing(false);
     }
 }

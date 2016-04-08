@@ -50,9 +50,9 @@ public class UploadTrackFragmentPresenter extends BasePresenter<UploadTrackFragm
             RequestBody trackBody = RequestBody.create(MediaType.parse("audio/*"),
                     new File(payload.get("path")));
             trackPayload.put("track\"; filename=\"track.mp3\" ", trackBody);
-//            RequestBody coverBody = RequestBody.create(MediaType.parse("image/*"),
-//                    new File(payload.get("cover")));
-//            trackPayload.put("cover\"; filename=\"cover.jpg\" ", coverBody);
+            RequestBody coverBody = RequestBody.create(MediaType.parse("image/*"),
+                    new File(payload.get("cover")));
+            trackPayload.put("cover\"; filename=\"cover.jpg\" ", coverBody);
             RequestBody titleBody = RequestBody.create(MediaType.parse("text/plain"),
                     payload.get("title"));
             trackPayload.put("title", titleBody);
@@ -65,11 +65,11 @@ public class UploadTrackFragmentPresenter extends BasePresenter<UploadTrackFragm
             RequestBody downloadableBody = RequestBody.create(MediaType.parse("text/plain"),
                     payload.get("downloadable"));
             trackPayload.put("downloadable", downloadableBody);
-            if(payload.containsKey("featured")){
-                RequestBody featuredBody = RequestBody.create(MediaType.parse("text/plain"),
-                        payload.get("featured"));
-                trackPayload.put("featurings", featuredBody);
-            }
+//            if(payload.containsKey("featured")){
+//                RequestBody featuredBody = RequestBody.create(MediaType.parse("text/plain"),
+//                        payload.get("featured"));
+//                trackPayload.put("featurings", featuredBody);
+//            }
             Log.d("upload", trackPayload.toString());
             mSubscription = mDataManager.uploadTrack(trackPayload)
                     .subscribeOn(Schedulers.io())
@@ -84,10 +84,12 @@ public class UploadTrackFragmentPresenter extends BasePresenter<UploadTrackFragm
                         public void onError(Throwable e) {
                             e.printStackTrace();
                             getMvpView().hideLoading();
+                            getMvpView().showError(e.getMessage());
                         }
 
                         @Override
                         public void onNext(ActionResponse actionResponse) {
+                            Log.d("upload", actionResponse.toString());
                             getMvpView().hideLoading();
                             if(actionResponse.code == Config.STATUS_OK){
                                 getMvpView().showSuccess();

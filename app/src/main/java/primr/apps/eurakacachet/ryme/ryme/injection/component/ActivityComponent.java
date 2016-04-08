@@ -22,6 +22,7 @@ import primr.apps.eurakacachet.ryme.ryme.ui.view.followCategory.FollowCategoryAc
 import primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.newTrackFeed.NewReleasedTracksFragment;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.offline.downloads.DownloadsFragment;
+import primr.apps.eurakacachet.ryme.ryme.ui.view.offline.downloads.OfflineTrackListActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.offline.trackDisplay.DownloadTrackDisplayFragment;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.offline.trackDisplay.TrackDisplayActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.search.SearchableActivity;
@@ -104,4 +105,6 @@ public interface ActivityComponent {
     void inject(ArtistTrackDisplayViewHolder artistTrackDisplayViewHolder);
 
     void inject(EventParentViewHolder eventParentViewHolder);
+
+    void inject(OfflineTrackListActivity offlineTrackListActivity);
 }

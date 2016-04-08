@@ -26,9 +26,6 @@ import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
 import primr.apps.eurakacachet.ryme.ryme.ui.view.main.MainActivity;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class CategoriesFragment extends Fragment implements CategoriesFragmentMvpView{
 
     @Inject CategoriesFragmentPresenter mCategoriesFragmentPresenter;

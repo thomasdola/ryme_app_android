@@ -39,13 +39,12 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
         ((BaseActivity) fragment.getActivity()).getActivityComponent().inject(this);
 
         mFragment = fragment;
-        if(mFragment instanceof CategoriesFragment){
+        if(fragment instanceof CategoriesFragment){
             mStartFab = (FloatingActionButton) fragment.getView().findViewById(R.id.start_fab);
         }
 
-        if(mFragment instanceof StoredCategoriesFragment){
-            mStoredCategoriesLayout = (RelativeLayout) fragment.getView()
-                    .findViewById(R.id.stored_category_layout);
+        if(fragment instanceof StoredCategoriesFragment){
+            mStoredCategoriesLayout = (RelativeLayout) fragment.getView().findViewById(R.id.stored_category_layout);
         }
 
         Log.d(TAG, "CategoryViewHolder called");
@@ -73,7 +72,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
             mPresenter.follow(mCategory);
         }else {
             if(mFragment instanceof StoredCategoriesFragment){
-                mPresenter.attemptUnfollow(mCategory, mFragment);
+                mPresenter.attemptUnfollow(mCategory);
             }else {
                 mPresenter.unFollow(mCategory);
             }

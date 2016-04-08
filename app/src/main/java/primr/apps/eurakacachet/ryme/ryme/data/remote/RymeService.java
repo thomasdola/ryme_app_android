@@ -47,7 +47,9 @@ import rx.Observable;
 
 public interface RymeService {
 
-    String ENDPOINT = "http://10.0.3.2:8000/api/";
+//    String ENDPOINT = "http://10.0.3.2:8000/api/";
+    String ENDPOINT = "http://192.168.74.1:8000/api/";
+//    String ENDPOINT = "https://ryme.herokuapp.com/api/";
 
     @FormUrlEncoded
     @POST("register")
@@ -151,8 +153,8 @@ public interface RymeService {
                                                RequestBody file ,@Part("type") RequestBody type);
 
     @Multipart
-    @POST("user/upload")
-    Observable<ActionResponse> uplaodTrack(@PartMap Map<String , RequestBody> trackPayload);
+    @POST("artist/upload")
+    Observable<ActionResponse> uploadTrack(@PartMap Map<String, RequestBody> trackPayload);
 
     @FormUrlEncoded
     @POST("request/make")

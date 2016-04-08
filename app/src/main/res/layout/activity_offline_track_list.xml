@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="primr.apps.eurakacachet.ryme.ryme.ui.view.offline.downloads.OfflineTrackListActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:layout_height="202dp">
+
+            <android.support.v7.widget.Toolbar
+                app:layout_collapseMode="pin"
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="202dp"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+            <RelativeLayout
+                android:background="@color/blueBlack"
+                android:visibility="invisible"
+                android:layout_gravity="bottom"
+                app:layout_scrollFlags="exitUntilCollapsed|scroll"
+                android:layout_width="match_parent"
+                android:layout_height="146dp"
+                android:padding="4dp"
+                android:id="@+id/track_cv"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+
+                <LinearLayout
+                    android:id="@+id/main_track_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:src="@drawable/wallpaper"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:scaleType="centerCrop"
+                        android:id="@+id/track_cover_avatar"
+                        android:contentDescription="@null"
+                        android:layout_marginEnd="8dp"
+                        />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:orientation="vertical"
+                            android:id="@+id/track_info_view">
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="3">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:gravity="start|center_vertical"
+                                        android:text="Amen"
+                                        android:textStyle="bold"
+                                        android:singleLine="true"
+                                        android:ellipsize="end"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="7"
+                                        android:layout_height="match_parent"
+                                        android:textAllCaps="false"
+                                        android:textAppearance="?android:attr/textAppearanceSmall"
+                                        android:id="@+id/current_track_title_text_view"
+                                        android:textColor="@color/white"/>
+
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="3">
+
+                                <TextView
+                                    android:gravity="center_vertical"
+                                    android:text="Pinana Pijo"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/white_ash"
+                                    android:singleLine="true"
+                                    android:ellipsize="end"
+                                    android:layout_width="match_parent"
+                                    android:id="@+id/artist_name_view"
+                                    android:layout_height="match_parent"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_below="@id/track_info_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp">
+
+                            <LinearLayout
+                                android:id="@+id/player_controls_view"
+                                android:orientation="vertical"
+                                android:layout_gravity="bottom"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:gravity="center"
+                                    android:layout_weight="1"
+                                    android:layout_height="0dp">
+
+                                    <android.support.v4.widget.Space
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1" />
+
+                                    <ImageButton
+                                        android:id="@+id/audio_player_previous"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@android:color/transparent"
+                                        android:src="@drawable/ic_action_previous_button_white_ash"
+                                        android:scaleType="centerInside"
+                                        android:visibility="gone"
+                                        tools:ignore="ContentDescription"/>
+
+                                    <android.support.v4.widget.Space
+                                        android:layout_width="44dp"
+                                        android:layout_height="match_parent" />
+
+                                    <ImageButton
+                                        android:id="@+id/audio_player_play_pause"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@android:color/transparent"
+                                        android:src="@drawable/ic_action_play_info_whiteash"
+                                        android:scaleType="centerInside"
+                                        tools:ignore="ContentDescription"/>
+
+                                    <android.support.v4.widget.Space
+                                        android:layout_width="44dp"
+                                        android:layout_height="match_parent" />
+
+                                    <ImageButton
+                                        android:id="@+id/audio_player_next"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@android:color/transparent"
+                                        android:src="@drawable/ic_action_next_button_white_ash"
+                                        android:scaleType="centerInside"
+                                        android:visibility="gone"
+                                        tools:ignore="ContentDescription"/>
+
+                                    <android.support.v4.widget.Space
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/main_track_info"
+                    android:layout_height="30dp">
+                    <TextView
+                        android:gravity="center_vertical"
+                        android:textSize="12sp"
+                        android:id="@+id/audio_player_position"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/white_ash"
+                        tools:text="00:00"
+                        tools:ignore="RtlHardcoded"/>
+                    <SeekBar
+                        android:id="@+id/audio_player_seek"
+                        style="?android:seekBarStyle"
+                        android:layout_width="0dp"
+                        android:layout_weight="5"
+                        android:thumb="@drawable/ic_action_circle_white"
+                        android:layout_height="30dp"/>
+                    <TextView
+                        android:textSize="12sp"
+                        android:gravity="center_vertical|end"
+                        android:id="@+id/audio_player_duration"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/white_ash"
+                        tools:text="00:00"
+                        tools:ignore="RelativeOverlap,RtlHardcoded"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_offline_track_list"/>
+
+</android.support.design.widget.CoordinatorLayout>

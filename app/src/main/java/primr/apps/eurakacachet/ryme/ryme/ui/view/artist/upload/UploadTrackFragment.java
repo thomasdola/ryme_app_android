@@ -42,6 +42,7 @@ import javax.inject.Inject;
 
 import primr.apps.eurakacachet.ryme.ryme.R;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BaseActivity;
+import primr.apps.eurakacachet.ryme.ryme.ui.view.crop.CropImageActivity;
 import primr.apps.eurakacachet.ryme.ryme.utils.helpers.layout.CustomAutoCompleteTextView;
 import primr.apps.eurakacachet.ryme.ryme.utils.helpers.time.DateFormatter;
 import rx.Observable;
@@ -274,12 +275,8 @@ public class UploadTrackFragment extends DialogFragment implements UploadTrackFr
     }
 
     private void onPickCover() {
-//        Intent intent = CropImageActivity.newIntent(getContext(), CropImageActivity.REQUEST_CROP_TRACK_COVER);
-//        startActivityForResult(intent, PICK_COVER_REQUEST_CODE);
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Cover "), PICK_COVER_REQUEST_CODE);
+        Intent intent = CropImageActivity.newIntent(getContext(), CropImageActivity.REQUEST_CROP_TRACK_COVER);
+        startActivityForResult(intent, PICK_COVER_REQUEST_CODE);
     }
 
     private void onPickTrack() {
@@ -300,13 +297,15 @@ public class UploadTrackFragment extends DialogFragment implements UploadTrackFr
                 Log.d("upload", "track file exist ? -> " + file.exists() + " => " + mTrackPath);
                 Log.d("upload", "track file uri -> " + uri.toString());
             }else if(requestCode == PICK_COVER_REQUEST_CODE){
-//                String path = data.getStringExtra(CropImageActivity.EXTRA_CROPPED_FILE_PATH);
-//                Log.d("upload", path);
-                Uri uri = data.getData();
-                Log.d("upload", "cover uri -> " + uri.toString());
-                mCoverPath = uri.getPath();
-                mCoverTextDisplay.setText(uri.getEncodedPath());
+                String path = data.getStringExtra(CropImageActivity.EXTRA_CROPPED_FILE_PATH);
+                Log.d("upload", path);
+                File file = new File(path);
+                Log.d("upload", "cover exist -> " + file.exists());
+                mCoverPath = path;
+                mCoverTextDisplay.setText(path);
                 mPicasso.load(new File(mCoverPath))
+                        .placeholder(R.drawable.wallpaper)
+                        .error(R.drawable.wallpaper)
                         .into(mUploadCover);
             }else if(requestCode == PICK_DATE_REQUEST_CODE){
                 Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
@@ -391,6 +390,7 @@ public class UploadTrackFragment extends DialogFragment implements UploadTrackFr
 
     @Override
     public void showSuccess() {
-
+        getDialog().dismiss();
+        Toast.makeText(getActivity(), "Track uploaded.", Toast.LENGTH_SHORT).show();
     }
 }

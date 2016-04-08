@@ -38,7 +38,7 @@ public class SavedTrack implements Parcelable {
     @StorIOSQLiteColumn(name = DownloadedTracksTable.COLUMN_EXTENSION)
     String extension;
 
-    @Nullable
+    @NonNull
     @StorIOSQLiteColumn(name = DownloadedTracksTable.COLUMN_DURATION)
     Long duration;
 
@@ -71,7 +71,7 @@ public class SavedTrack implements Parcelable {
         return path;
     }
 
-    @Nullable
+    @NonNull
     public Long duration() {
         return duration;
     }
@@ -87,7 +87,7 @@ public class SavedTrack implements Parcelable {
     }
 
     public static SavedTrack newTrack(@Nullable Long id, @NonNull String uuid, @NonNull String title,
-                                        @NonNull String artist, @NonNull String path, @Nullable Long duration,
+                                        @NonNull String artist, @NonNull String path, @NonNull Long duration,
                                         @Nullable String cover, @NonNull String extension) {
         SavedTrack track = new SavedTrack();
         track.id = id;

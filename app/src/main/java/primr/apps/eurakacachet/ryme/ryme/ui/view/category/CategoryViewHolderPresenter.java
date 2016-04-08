@@ -1,6 +1,5 @@
 package primr.apps.eurakacachet.ryme.ryme.ui.view.category;
 
-import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.pushtorefresh.storio.sqlite.operations.delete.DeleteResult;
@@ -16,7 +15,6 @@ import primr.apps.eurakacachet.ryme.ryme.data.local.storio.models.Category;
 import primr.apps.eurakacachet.ryme.ryme.data.local.storio.models.FollowedCategory;
 import primr.apps.eurakacachet.ryme.ryme.data.model.ActionResponse;
 import primr.apps.eurakacachet.ryme.ryme.ui.base.BasePresenter;
-import primr.apps.eurakacachet.ryme.ryme.ui.view.category.inApp.StoredCategoriesFragment;
 import primr.apps.eurakacachet.ryme.ryme.utils.Config;
 import rx.Subscriber;
 import rx.Subscription;
@@ -60,6 +58,7 @@ public class CategoryViewHolderPresenter extends BasePresenter<CategoryViewHolde
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.d("token", "could not get the gcm token");
                         e.printStackTrace();
                     }
 
@@ -86,8 +85,9 @@ public class CategoryViewHolderPresenter extends BasePresenter<CategoryViewHolde
                                         Log.d("adapter", "follow done with => " + actionResponse.code);
                                         if (actionResponse.code == Config.STATUS_OK) {
                                             onFollowSuccessful(category);
+                                        }else {
+                                            onOperationFailed();
                                         }
-                                        getMvpView().enableFollowButton();
                                     }
                                 });
                     }
@@ -102,7 +102,7 @@ public class CategoryViewHolderPresenter extends BasePresenter<CategoryViewHolde
         Log.d("adapter", "onFollowSuccessful Called");
         FollowedCategory followedCategory = FollowedCategory
                 .newCategory(null, category.name(), String.valueOf(category.uuid()));
-        mDataManager.saveFollowedCategory(followedCategory)
+        mSubscription = mDataManager.saveFollowedCategory(followedCategory)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<PutResult>() {
                     @Override
@@ -112,18 +112,17 @@ public class CategoryViewHolderPresenter extends BasePresenter<CategoryViewHolde
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("adapter", "Oops...Error..." + e.getMessage());
                         e.printStackTrace();
                         onOperationFailed();
                     }
 
                     @Override
                     public void onNext(PutResult putResult) {
-                        Log.d("adapter", String.valueOf(putResult.wasInserted()));
-                        mDataManager.subToCategoryChannel(category);
-                        getMvpView().beingFollowed(true);
-                        getMvpView().toggleFollowButton();
                         getMvpView().enableFollowButton();
+                        if(putResult.wasInserted()){
+                            getMvpView().beingFollowed(true);
+                            getMvpView().toggleFollowButton();
+                        }
                     }
                 });
     }
@@ -142,10 +141,13 @@ public class CategoryViewHolderPresenter extends BasePresenter<CategoryViewHolde
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        Log.d("token", "could not get the gcm token for unfollowing");
+                        onOperationFailed();
                     }
 
                     @Override
                     public void onNext(String token) {
+
                         mSubscription = mDataManager.unFollowCategory(category.uuid(), token)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
@@ -163,78 +165,85 @@ public class CategoryViewHolderPresenter extends BasePresenter<CategoryViewHolde
 
                                     @Override
                                     public void onNext(ActionResponse actionResponse) {
-                                        onUnFollowSuccessful(category);
+                                        if(actionResponse.code == Config.STATUS_OK){
+                                            onUnFollowSuccessful(category);
+                                        }else {
+                                            onOperationFailed();
+                                        }
                                     }
                                 });
                     }
                 });
     }
 
-    public void attemptUnfollow(Category category, Fragment fragment){
+    public void attemptUnfollow(Category category){
         checkViewAttached();
         getMvpView().disableFollowButton();
-        if(fragment instanceof StoredCategoriesFragment){
-            Log.d("adapter", "attemptUnfollow Called from StoredCategories");
-            final FollowedCategory followedCategory = FollowedCategory
-                    .newCategory(null, category.name(), String.valueOf(category.uuid()));
-            mSubscription = mDataManager.canUnfollow()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnError(new Action1<Throwable>() {
-                        @Override
-                        public void call(Throwable throwable) {
-                            throwable.printStackTrace();
+        Log.d("adapter", "attemptUnfollow Called from StoredCategories");
+        final FollowedCategory followedCategory = FollowedCategory
+                .newCategory(null, category.name(), String.valueOf(category.uuid()));
+        mSubscription = mDataManager.canUnfollow()
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        throwable.printStackTrace();
+                        onOperationFailed();
+                    }
+                })
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean canUnFollow) {
+                        if (canUnFollow) {
+                            Log.d("adapter", "attemptUnfollow Called from StoredCategories" );
+                            doUnFollow(followedCategory);
+                        } else {
+                            Log.d("adapter", "attemptUnfollow Called from StoredCategories with No");
+                            getMvpView().showError("Sorry! Should have on Category followed.");
                             onOperationFailed();
                         }
-                    })
-                    .subscribe(new Action1<Boolean>() {
-                        @Override
-                        public void call(Boolean yes) {
-                            if (yes) {
-                                Log.d("adapter", "attemptUnfollow Called from StoredCategories Yes");
-                                doUnFollow(followedCategory);
-                            } else {
-                                Log.d("adapter", "attemptUnfollow Called from StoredCategories with No");
-                                getMvpView().showError("Sorry! Should have on Category followed.");
-                                onOperationFailed();
-                            }
-                        }
-                    });
-        }
+                    }
+                });
     }
 
     public void onUnFollowSuccessful(final Category category) {
         Log.d("adapter", "attemptUnfollow Called");
         final FollowedCategory followedCategory = FollowedCategory
                 .newCategory(null, category.name(), String.valueOf(category.uuid()));
-        mDataManager.deleteFollowedCategory(followedCategory)
+        mSubscription = mDataManager.deleteFollowedCategory(followedCategory)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(new Action1<Throwable>() {
+                .subscribe(new Subscriber<DeleteResult>() {
                     @Override
-                    public void call(Throwable throwable) {
-                        onOperationFailed();
-                        throwable.printStackTrace();
+                    public void onCompleted() {
+
                     }
-                })
-                .subscribe(new Action1<DeleteResult>() {
+
                     @Override
-                    public void call(DeleteResult deleteResult) {
-                        mDataManager.unsubFromCategoryChannel(category);
-                        getMvpView().beingFollowed(false);
-                        getMvpView().toggleFollowButton();
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        onOperationFailed();
+                    }
+
+                    @Override
+                    public void onNext(DeleteResult deleteResult) {
                         getMvpView().enableFollowButton();
+                        if(deleteResult.numberOfRowsDeleted() == 1){
+                            getMvpView().beingFollowed(false);
+                            getMvpView().toggleFollowButton();
+                        }
                     }
                 });
     }
 
     public void doUnFollow(FollowedCategory followedCategory) {
-        Category category = Category.
-                newCategory(followedCategory.id(), followedCategory.name(), followedCategory.uuid());
+        Category category = Category.newCategory(followedCategory.id(), followedCategory.name(),
+                followedCategory.uuid());
         unFollow(category);
     }
 
     public void watching(){
         checkViewAttached();
-        mDataManager.loadFollowedCategories()
+        mSubscription = mDataManager.loadFollowedCategories()
                 .subscribe(new Action1<List<FollowedCategory>>() {
                     @Override
                     public void call(List<FollowedCategory> followedCategories) {
@@ -255,7 +264,7 @@ public class CategoryViewHolderPresenter extends BasePresenter<CategoryViewHolde
 
     public void isFollowing(final Category category){
         Log.d("adapter", "isFollowing Called");
-        mDataManager.loadBFCategories()
+        mSubscription = mDataManager.loadBFCategories()
                 .subscribe(new Subscriber<List<FollowedCategory>>() {
                     @Override
                     public void onCompleted() {

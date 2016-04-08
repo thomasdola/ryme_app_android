@@ -54,8 +54,7 @@ public class PCOnlineAudioItemInterface implements IPlaylistItem {
 
     @Override
     public String getMediaUrl() {
-//        return mediaUrl;
-        return "http://mp3loaf.com/music/down/32139660/1161193/ZmU1MDMrRnl5ellJMU1kZm1wNXBVdE0rRW1MTHFIUmhFM2Q0dWluWjJjcy82emZOQmc=/11.+Lady+In+A+Glass+Dress+%28Interlude%29.mp3";
+        return mediaUrl;
     }
 
     @Override

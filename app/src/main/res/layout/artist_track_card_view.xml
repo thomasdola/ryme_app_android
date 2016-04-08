@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="4dp"
-    android:layout_marginStart="4dp"
-    android:layout_marginEnd="4dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginStart="2dp"
+    android:layout_marginEnd="2dp"
     android:transitionName="@string/track_transition_string"
     app:cardCornerRadius="2dp"
     app:cardElevation="1dp"
@@ -36,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_alignParentTop="true"
-                android:id="@+id/linearLayout">
+                android:id="@+id/track_info_view">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
